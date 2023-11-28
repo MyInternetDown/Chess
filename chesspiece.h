@@ -13,8 +13,11 @@ class Board;
 class ChessPiece {
 	vector<int> pos;
 	bool Black;
+	vector<vector<int>> possibleMoves;
+
 public:
 	ChessPiece(int pos, bool black);
+	
 	virtual Colour getColour();
 
 	virtual ~ChessPiece()=0;
@@ -33,7 +36,7 @@ public:
 
 };
 
-int getPos(const std::string &cmd); // converts a coordinate in the form of letter-number
+vector<int> getPos(const std::string &cmd); // converts a coordinate in the form of letter-number
 // into the corresponding index in Board
 
 std::string getCor(int index); // converts an index from Board into the 
