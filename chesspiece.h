@@ -1,17 +1,24 @@
-#ifndef ___PIECE___
-#define ___PIECE___
+#ifndef ___ChessPiece___
+#define ___ChessPiece___
 #include <string>
 #include <iostream>
+#include <vector>
+#include "enum.h"
+
+using namespace std;
 
 class Board;
 
 
-class Piece {
-	int pos;
-	bool white;
+class ChessPiece {
+	vector<int> pos;
+	bool Black;
 public:
-	Piece(int pos, bool white);
-	virtual bool canMove(const std::string &start, const std::string &end, Piece ** b) const=0;  
+	ChessPiece(int pos, bool black);
+	virtual Colour getColour();
+
+	virtual ~ChessPiece()=0;
+	virtual bool canMove(const std::string &start, const std::string &end, ChessPiece ** b) const=0;  
 	bool isWhite() const;
 	virtual bool isEmpty() const=0;
 	int posn() const;
@@ -23,7 +30,7 @@ public:
 	virtual void moved();
 	virtual bool first() const;
 	virtual char Type() const=0;
-	virtual ~Piece()=0;
+
 };
 
 int getPos(const std::string &cmd); // converts a coordinate in the form of letter-number
