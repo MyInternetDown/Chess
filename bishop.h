@@ -6,10 +6,9 @@
 class Bishop : public ChessPiece {
 public:
     Bishop(vector<int> pos, bool Black);
-    string getName();
-    bool isValidMove(vector<int> pos);
-    bool isBlocked(vector<int> pos);
-    bool move (vector<int> pos);
+    bool canMove(const string &start, const string &end, ChessPiece **b) const override;
+    bool isEmpty() const override;
+    char Type() const override;
 };
 
 #endif
