@@ -2,9 +2,15 @@
 using namespace std;
 
 map<Colour, string> colourToStr = {
-    {Colour::NoColour, "NoColour"},
+    {Colour::Void, "NoColour"},
     {Colour::Black, "Black"},
     {Colour::White, "White"}
+};
+
+map<string, Colour> strToColour = {
+    { "NoColour", Colour::Void },
+    { "Black", Colour::Black },
+    { "White", Colour::White }
 };
 
 map<char, PieceType> charToPiece = {
