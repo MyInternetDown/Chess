@@ -5,23 +5,23 @@
 
 using namespace std;
 
-ChessPiece::ChessPiece(int pos, bool black) : pos{pos}, black{black} {}
+ChessPiece::ChessPiece(int pos, bool black) : black{black} {}
 
 
 
 
-virtual Colour getColour();
+Colour getColour();
 
-virtual vector<int> getPos();
+vector<int> getPos();
 
-virtual vector<vector<int>> getPossibleMoves();
+vector<vector<int>> getPossibleMoves();
 
-virtual char Type() const = 0;
+char Type() const = 0;
 
-virtual void moved();
+void moved();
 
 
-virtual ~ChessPiece() = 0;
+~ChessPiece() = 0;
 
 void move(vector<int> moveHere);
 
