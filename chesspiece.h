@@ -7,33 +7,43 @@
 
 using namespace std;
 
-class Board;
-
 
 class ChessPiece {
-	vector<int> pos;
+	vector<int> posItem;
+	string pos;
 	bool Black;
 	vector<vector<int>> possibleMoves;
 
 public:
+	// Constructor of the Chesspiece
 	ChessPiece(int pos, bool black);
-	
+
+	// Gets all possible moves on where this chesspiece and move to given a vector board of the locations of all the other pieces.
+	virtual vector<vector<int>> getAllMoves(const vector<int> position, const vector<vector<ChessPiece>>);
+
+	// Gets all possible locations where this piece would be under attack given its current position
+	virtual vector<vector<int>> getAllDangerMoves(const vector<int> position, const vector<vector<ChessPiece>>);
+
+	// Checks if the current piece can move to the current position noted down
+	virtual bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>>) const;  
+
+	// Get the Colour of the Piece
 	virtual Colour getColour();
-
-	virtual ~ChessPiece()=0;
-	virtual bool canMove(const std::string &start, const std::string &end, ChessPiece ** b) const=0;  
-	bool isWhite() const;
-	virtual bool isEmpty() const=0;
-	int posn() const;
-	void changePos(int posn);
-	bool onRightEdge() const;
-	bool onLeftEdge() const;
-	bool onTopEdge() const;
-	bool onBottomEdge() const;
-	virtual void moved();
-	virtual bool first() const;
+	// Get the position
+	virtual vector<int> getPos();
+	// Get the vecotrs of the possible moves
+	virtual vector<vector<int>> getPossibleMoves();
+	// Gets the type of Piece
 	virtual char Type() const=0;
+	// Gets the value of if the piece has moved
+	virtual void moved();
 
+
+	// Destructor
+	virtual ~ChessPiece()=0;
+
+	// Move Piece
+	void move(vector<int> moveHere);
 };
 
 vector<int> getPos(const std::string &cmd); // converts a coordinate in the form of letter-number
