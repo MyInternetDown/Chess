@@ -8,9 +8,7 @@ class King : public ChessPiece {
 public:
     King(vector<int> pos, bool Black);
     ~King();
-    bool canMove(const string &start, const string &end, ChessPiece **b) const override;
-    bool isEmpty() const override;
-    bool first() const override;
+    bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>>) const override;
     char Type() const override;
     void moved () override;
 };
