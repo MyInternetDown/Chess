@@ -1,5 +1,5 @@
-#ifndef __Knight__
-#define __Knight__
+#ifndef __KNIGHT__
+#define __KNIGHT__
 #include "chesspiece.h"
 #include <string>
 

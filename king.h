@@ -1,5 +1,5 @@
-#ifndef __King__
-#define __King__
+#ifndef __KING__
+#define __KING__
 #include "chesspiece.h"
 #include <string>
 
