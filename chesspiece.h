@@ -19,6 +19,15 @@ public:
 	// Constructor of the Chesspiece
 	ChessPiece(int pos, bool black);
 
+    // Copy constructor
+    ChessPiece(const ChessPiece &other);
+    // Move constructor
+    ChessPiece(ChessPiece &&other);
+    // Copy assignment operator
+    ChessPiece &operator=(const ChessPiece &other);
+    // Move assignment operator
+    ChessPiece &operator=(ChessPiece &&other);
+
 	// Gets all possible moves on where this chesspiece and move to given a vector board of the locations of all the other pieces.
 	virtual vector<vector<int>> getAllMoves(const vector<int> position, const vector<vector<ChessPiece>>board);
 
