@@ -8,8 +8,8 @@ class King : public ChessPiece {
 public:
     King(vector<int> pos, bool Black);
     ~King();
-    bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>>) const override;
-    bool isChecked(const vector<int> position, const vector<vector<ChessPiece>>);
+    bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>> board) const override;
+    bool isChecked(const vector<int> position, const vector<vector<ChessPiece>> board);
     char Type() const override;
     void moved () override;
 };
