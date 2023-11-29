@@ -13,6 +13,7 @@ class ChessPiece {
 	string pos;
 	bool Black;
 	vector<vector<int>> possibleMoves;
+	bool empty;
 
 public:
 	// Constructor of the Chesspiece
@@ -29,6 +30,8 @@ public:
 
 	// Checks if the current piece can move to the current position noted down
 	virtual bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>>board) const;  
+
+	
 
 	// Get the Colour of the Piece
 	virtual Colour getColour();
