@@ -7,6 +7,8 @@ class Knight : public ChessPiece {
 public:
     Knight(vector<int> pos, bool Black);
     ~Knight();
+    bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>>) const override;
+    char Type() const override;
 };
 
 #endif
