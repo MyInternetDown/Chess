@@ -51,7 +51,9 @@ public:
 	// Gets the type of Piece
 	virtual char Type() const=0;
 	// Gets the value of if the piece has moved
-	virtual void moved();
+	virtual bool moved();
+	// Check is Empty
+	virtual bool isEmpty();
 
 
 	// Destructor
