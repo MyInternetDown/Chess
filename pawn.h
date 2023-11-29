@@ -1,4 +1,4 @@
-#ifndef __Bishop__
+#ifndef __Pawn__
 #define __Pawn__
 #include "chesspiece.h"
 #include <string>
