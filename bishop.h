@@ -1,5 +1,5 @@
-#ifndef __Bishop__
-#define __Bishop__
+#ifndef __BISHOP__
+#define __BISHOP__
 #include "chesspiece.h"
 #include <string>
 
