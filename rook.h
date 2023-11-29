@@ -10,7 +10,7 @@ public:
     string getName();
     bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>> board) const override;
     char Type() const override;
-    void moved () override;
+    bool moved () override;
 };
 
 #endif

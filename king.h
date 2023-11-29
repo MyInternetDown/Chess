@@ -11,7 +11,7 @@ public:
     bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>> board) const override;
     bool isChecked(const vector<int> position, const vector<vector<ChessPiece>> board);
     char Type() const override;
-    void moved () override;
+    bool moved() override;
 };
 
 #endif
