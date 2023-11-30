@@ -15,6 +15,9 @@ public:
     // Override the getAllMoves function for the Rook
     vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const override;
 
+    // Override the getAllAttackMoves function for the Rook
+    vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, const vector<vector<ChessPiece>> &board) const override;
+
     // Get whether the rook has moved
     bool moved() override;
 };
