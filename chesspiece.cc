@@ -5,10 +5,20 @@
 
 using namespace std;
 
-ChessPiece::ChessPiece(int pos, bool black) : black{black} {}
+ChessPiece::ChessPiece(string pos, string white, string type)
+    : 	location{parseCoordinate(pos)},
+		piecetype{parsePieceType(type)},
+        colour{parseColour(white)} {
+	
+}
 
 
-
+Coordinate parseCoordinate(const std::string &pos) {
+    Coordinate c;
+    istringstream iss(pos);
+    iss >> c;
+    return c;
+}
 
 Colour getColour();
 
@@ -16,12 +26,9 @@ vector<int> getPos();
 
 vector<vector<int>> getPossibleMoves();
 
-char Type() const = 0;
+char getType();
 
 void moved();
-
-
-~ChessPiece() = 0;
 
 void move(vector<int> moveHere);
 

@@ -2,6 +2,8 @@
 #define ENUM_H
 #include <map>
 #include <string>
+#include <iostream>
+
 
 using namespace std;
 
@@ -13,5 +15,7 @@ extern map<Colour, std::string> colourToStr;
 extern map<std::string, Colour> strToColour;
 extern map<char, PieceType> charToPiece;
 extern map<std::string, PieceType> strToPiece;
+Colour parseColour(const string &colorStr);
+PieceType parsePieceType(const string &typeStr);
 
 #endif

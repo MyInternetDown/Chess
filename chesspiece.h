@@ -12,14 +12,16 @@ using namespace std;
 class ChessPiece {
 	Coordinate location;
 	PieceType piecetype;
+	Colour colour;
 	string pos;
-	bool Black;
+	string white;
+	string type;
 	vector<Coordinate> possibleMoves;
 	bool empty;
 
 public:
 	// Constructor of the Chesspiece
-	ChessPiece(string pos, bool black);
+	ChessPiece(string pos, string white, string type);
 
     // Copy constructor
     ChessPiece(const ChessPiece &other);
@@ -40,7 +42,9 @@ public:
 	virtual vector<vector<int>> getAllAttackMoves(const Coordinate position, const vector<vector<ChessPiece>>board);
 
 	// Checks if the current piece can move to the current position noted down
-	virtual bool canMove(const Coordinate position, const string destination, const vector<vector<ChessPiece>>board) const;  
+	virtual bool canMove(const Coordinate position, const string destination, const vector<vector<ChessPiece>>board);  
+
+	Coordinate parseCoordinate(const std::string &pos);
 
 	
 
@@ -51,7 +55,7 @@ public:
 	// Get the vecotrs of the possible moves
 	virtual vector<vector<int>> getPossibleMoves();
 	// Gets the type of Piece
-	virtual char Type() const=0;
+	virtual char getType() const=0;
 	// Gets the value of if the piece has moved
 	virtual bool moved();
 	// Check is Empty

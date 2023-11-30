@@ -2,6 +2,9 @@
 #define COORD_H
 #include <iostream>
 #include <map>
+#include <iostream>
+#include <istream>
+#include <sstream>
 
 using namespace std;
 
