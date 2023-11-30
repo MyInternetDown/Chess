@@ -100,7 +100,7 @@ PieceType ChessPiece::getPiece() const{
     return piecetype;
 }
 
-std::vector<Coordinate> ChessPiece::getAllDangerMoves(const Coordinate position, const std::vector<std::vector<ChessPiece>> &board) const {
+std::vector<Coordinate> ChessPiece::getAllDangerPositions(const Coordinate position, const std::vector<std::vector<ChessPiece>> &board) const {
     std::vector<Coordinate> dangerSquares;
 
     // Iterate through the entire board

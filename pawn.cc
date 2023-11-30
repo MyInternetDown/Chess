@@ -21,7 +21,7 @@ vector<Coordinate> Pawn::getAllMoves(const Coordinate position, const vector<vec
         moves.push_back(Coordinate(newRow, col));
 
         // Pawn's double move from starting position
-        if (!hasMoved && (getColour() == Colour::White && row == 6) || (getColour() == Colour::Black && row == 1)) {
+        if (!hasMoved) {
             newRow += forwardDirection;
             if (newRow >= 0 && newRow < 8 && board[newRow][col].isEmpty()) {
                 moves.push_back(Coordinate(newRow, col));
