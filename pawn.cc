@@ -3,7 +3,7 @@
 #include "pawn.h"
 
 Pawn::Pawn(string pos, string white)
-    : ChessPiece(pos, white, "P"), hasMoved(false) {  // Initialize hasMoved to false
+    : ChessPiece(pos, white, "P") {  // Initialize hasMoved to false
     // You can add additional initialization for the Pawn if needed
 }
 
@@ -40,6 +40,3 @@ vector<Coordinate> Pawn::getAllMoves(const Coordinate position, const vector<vec
     return moves;
 }
 
-bool Pawn::moved() {
-    return hasMoved;
-}
