@@ -6,7 +6,6 @@
 #include "chesspiece.h"
 
 class Pawn : public ChessPiece {
-    bool hasMoved;  // New variable to track whether the pawn has moved
 
 public:
     // Constructor
@@ -18,7 +17,6 @@ public:
     bool enPassant(vector<int>pos, vector<vector<int>>prevMove);
 
     // Get whether the pawn has moved
-    bool moved() override;
 };
 
 #endif

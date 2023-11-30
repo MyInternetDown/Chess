@@ -19,9 +19,9 @@ class ChessPiece : public Observer{
 	string white;
 	string type;
 	vector<Coordinate> possibleMoves;
-	bool hasMoved;
 
 public:
+	bool hasMoved;
 	// Constructor of the Chesspiece
 	ChessPiece(string pos, string white, string type);
 
