@@ -3,7 +3,7 @@
 #include "rook.h"
 
 Rook::Rook(string pos, string white)
-    : ChessPiece(pos, white, "R"), hasMoved(false) {  // Initialize hasMoved to false
+    : ChessPiece(pos, white, "R"){  // Initialize hasMoved to false
     // You can add additional initialization for the Rook if needed
 }
 
@@ -44,6 +44,3 @@ vector<Coordinate> Rook::getAllAttackMoves(const vector<Coordinate> moves, const
     return attackMoves;
 }
 
-bool Rook::moved() {
-    return hasMoved;
-}

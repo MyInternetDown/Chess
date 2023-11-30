@@ -34,8 +34,8 @@ vector<Coordinate> King::getAllMoves(const Coordinate position, const vector<vec
     // castling
     if (!hasMoved) {
         if (board[row][0].getPiece() == PieceType::R && board[row][0].getColour() == getColour()
-        && board[row][0].moved();
-        ) {
+        && board[row][0].moved());
+        {
 
         }
 
