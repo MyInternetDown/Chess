@@ -17,7 +17,6 @@ class ChessPiece {
 	string white;
 	string type;
 	vector<Coordinate> possibleMoves;
-	bool empty;
 
 public:
 	// Constructor of the Chesspiece
@@ -60,6 +59,8 @@ public:
 	virtual bool moved();
 	// Check is Empty
 	virtual bool isEmpty();
+
+	void setEmpty();
 
 
 	// Destructor
