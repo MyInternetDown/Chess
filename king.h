@@ -7,7 +7,6 @@
 
 
 class King : public ChessPiece {
-    bool hasMoved;  // New variable to track whether the king has moved
 
 public:
     // Constructor
