@@ -5,11 +5,13 @@
 #include <vector>
 #include "enum.h"
 #include "coordinate.h"
+#include <algorithm>
+#include "observer.h"
 
 using namespace std;
 
 
-class ChessPiece {
+class ChessPiece : public Observer{
 	Coordinate location;
 	PieceType piecetype;
 	Colour colour;
@@ -17,7 +19,6 @@ class ChessPiece {
 	string white;
 	string type;
 	vector<Coordinate> possibleMoves;
-	bool empty;
 
 public:
 	// Constructor of the Chesspiece
@@ -33,40 +34,48 @@ public:
     ChessPiece &operator=(ChessPiece &&other);
 
 	// Gets all possible moves on where this chesspiece and move to given a vector board of the locations of all the other pieces.
-	virtual vector<vector<int>> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>>board);
+	virtual vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>>&board) const;
 
 	// Gets all possible locations where this piece would be under attack given its current position
-	virtual vector<vector<int>> getAllDangerMoves(const Coordinate position, const vector<vector<ChessPiece>>board);
+	virtual vector<Coordinate> getAllDangerMoves(const Coordinate position, const vector<vector<ChessPiece>>&board) const;
 
 	// Gets all possible locations where this piece can eat another piece
-	virtual vector<vector<int>> getAllAttackMoves(const Coordinate position, const vector<vector<ChessPiece>>board);
+	virtual vector<Coordinate> getAllAttackMoves(const Coordinate position, const vector<vector<ChessPiece>>&board) const;
 
 	// Checks if the current piece can move to the current position noted down
-	virtual bool canMove(const Coordinate position, const string destination, const vector<vector<ChessPiece>>board);  
+	virtual bool canMove(const Coordinate position, const string destination, const vector<vector<ChessPiece>>&board) const;  
 
 	Coordinate parseCoordinate(const std::string &pos);
 
 	
 
 	// Get the Colour of the Piece
-	virtual Colour getColour();
+	virtual Colour getColour() const;
 	// Get the position
-	virtual vector<int> getPos();
+	virtual Coordinate getPos() const;
+
+	virtual PieceType getPiece() const;
 	// Get the vecotrs of the possible moves
 	virtual vector<vector<int>> getPossibleMoves();
 	// Gets the type of Piece
-	virtual char getType() const=0;
+	string getStrType() const;
 	// Gets the value of if the piece has moved
 	virtual bool moved();
 	// Check is Empty
-	virtual bool isEmpty();
+	virtual bool isEmpty() const;
+
+	void setEmpty();
+
+	void notify(Board &cb) override;
+	
+  	SubscriptionType subType() override;
 
 
 	// Destructor
-	virtual ~ChessPiece()=0;
+	~ChessPiece();
 
 	// Move Piece
-	void move(vector<int> moveHere);
+	void move(Coordinate moveHere);
 };
 
 vector<int> getPos(const std::string &cmd); // converts a coordinate in the form of letter-number

@@ -6,7 +6,6 @@ using namespace std;
 
 int main() {
   string cmd, aux;
-  int moves = 0;
 
   // You will need to make changes this code.
 

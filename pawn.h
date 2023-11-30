@@ -1,15 +1,25 @@
-#ifndef __Pawn__
-#define __Pawn__
+// pawn.h
+
+#ifndef PAWN_H
+#define PAWN_H
+
 #include "chesspiece.h"
-#include <string>
 
 class Pawn : public ChessPiece {
+    bool hasMoved;  // New variable to track whether the pawn has moved
+
 public:
-    Pawn(vector<int> pos, bool Black);
-    string getName();
+    // Constructor
+    Pawn(string pos, string white);
+
+    // Override the getAllMoves function for the Pawn
+    vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const override;
     bool isBlocked(vector<int> pos);
     bool promote(vector<int> pos);
     bool enPassant(vector<int>pos, vector<vector<int>>prevMove);
+
+    // Get whether the pawn has moved
+    bool moved() override;
 };
 
 #endif

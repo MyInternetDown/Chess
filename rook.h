@@ -1,16 +1,22 @@
-#ifndef __Rook__
-#define __Rook__
+// rook.h
+
+#ifndef ROOK_H
+#define ROOK_H
+
 #include "chesspiece.h"
-#include <string>
 
 class Rook : public ChessPiece {
+    bool hasMoved;  // New variable to track whether the rook has moved
+
 public:
-    Rook(vector<int> pos, bool Black);
-    ~Rook();
-    string getName();
-    bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>> board) const override;
-    char Type() const override;
-    bool moved () override;
+    // Constructor
+    Rook(string pos, string white);
+
+    // Override the getAllMoves function for the Rook
+    vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const override;
+
+    // Get whether the rook has moved
+    bool moved() override;
 };
 
 #endif

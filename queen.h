@@ -1,14 +1,17 @@
-#ifndef __QUEEN__
-#define __QUEEN__
+// queen.h
+
+#ifndef QUEEN_H
+#define QUEEN_H
+
 #include "chesspiece.h"
-#include <string>
 
 class Queen : public ChessPiece {
 public:
-    Queen(vector<int> pos, bool Black);
-    ~Queen();
-    bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>> board) const override;
-    char Type() const override;
+    // Constructor
+    Queen(string pos, string white);
+
+    // Override the getAllMoves function for the Queen
+    vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) override;
 };
 
 #endif
