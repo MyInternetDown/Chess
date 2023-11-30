@@ -2,7 +2,18 @@
 
 // Constructor
 Board::Board() {
-    
+    board.resize(8, std::vector<ChessPiece>(8, ChessPiece("a1", "NoColour", "V")));  // Assuming "a1" is the starting position
+
+    // Populate the board with ChessPiece objects at their respective positions
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            // Create a coordinate string for the current position
+            std::string coordStr = getCor(row * 8 + col);
+
+            // Create a ChessPiece with no color, void type, and the current coordinate
+            board[row][col] = ChessPiece(coordStr, "NoColour", "V");
+        }
+    }
 }
 
 // Copy constructor
