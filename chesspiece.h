@@ -4,20 +4,21 @@
 #include <iostream>
 #include <vector>
 #include "enum.h"
+#include "coordinate.h"
 
 using namespace std;
 
 
 class ChessPiece {
-	vector<int> posItem;
+	Coordinate posItem;
 	string pos;
 	bool Black;
-	vector<vector<int>> possibleMoves;
+	vector<Coordinate> possibleMoves;
 	bool empty;
 
 public:
 	// Constructor of the Chesspiece
-	ChessPiece(int pos, bool black);
+	ChessPiece(string pos, bool black);
 
     // Copy constructor
     ChessPiece(const ChessPiece &other);
@@ -29,16 +30,16 @@ public:
     ChessPiece &operator=(ChessPiece &&other);
 
 	// Gets all possible moves on where this chesspiece and move to given a vector board of the locations of all the other pieces.
-	virtual vector<vector<int>> getAllMoves(const vector<int> position, const vector<vector<ChessPiece>>board);
+	virtual vector<vector<int>> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>>board);
 
 	// Gets all possible locations where this piece would be under attack given its current position
-	virtual vector<vector<int>> getAllDangerMoves(const vector<int> position, const vector<vector<ChessPiece>>board);
+	virtual vector<vector<int>> getAllDangerMoves(const Coordinate position, const vector<vector<ChessPiece>>board);
 
 	// Gets all possible locations where this piece can eat another piece
-	virtual vector<vector<int>> getAllAttackMoves(const vector<int> position, const vector<vector<ChessPiece>>board);
+	virtual vector<vector<int>> getAllAttackMoves(const Coordinate position, const vector<vector<ChessPiece>>board);
 
 	// Checks if the current piece can move to the current position noted down
-	virtual bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>>board) const;  
+	virtual bool canMove(const vector<int> position, const Coordinate destination, const vector<vector<ChessPiece>>board) const;  
 
 	
 

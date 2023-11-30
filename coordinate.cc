@@ -10,6 +10,7 @@ int Coordinate::getRow(void) const {
 int Coordinate::getCol(void) const {
     return col;
 }
+Coordinate::~Coordinate() {}
 
 ostream &operator<<(ostream &out, const Coordinate &c) {
     out << c.idxToCol.at(c.getCol()) << c.getRow() + 1;

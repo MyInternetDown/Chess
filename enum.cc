@@ -20,6 +20,7 @@ map<char, PieceType> charToPiece = {
     { 'R', PieceType::R },
     { 'Q', PieceType::Q },
     { 'K', PieceType::K },
+    { 'V', PieceType::V }
 };
 
 map<string, PieceType> strToPiece = {
@@ -29,4 +30,5 @@ map<string, PieceType> strToPiece = {
     { "R", PieceType::R },
     { "Q", PieceType::Q },
     { "K", PieceType::K },
+    { "V", PieceType::V }
 };

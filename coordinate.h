@@ -37,6 +37,7 @@ class Coordinate {
         Coordinate(int row = 0, int col = 0);
         int getRow(void) const;
         int getCol(void) const;
+        ~Coordinate();
         friend std::istream &operator>>(std::istream &in, Coordinate &c);
 };
 
