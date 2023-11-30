@@ -8,7 +8,7 @@ Bishop::Bishop(string pos, string white)
     // You can add additional initialization for the Bishop if needed
 }
 
-vector<Coordinate> Bishop::getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) {
+vector<Coordinate> Bishop::getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const {
     // Implement the Bishop's move logic here
     vector<Coordinate> moves;
 
