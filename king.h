@@ -1,16 +1,22 @@
-#ifndef __KING__
-#define __KING__
+#ifndef KING_H
+#define KING_H
 #include "chesspiece.h"
 #include <string>
 
+// king.h
+
+
 class King : public ChessPiece {
-    bool hasMoved;
+    bool hasMoved;  // New variable to track whether the king has moved
+
 public:
-    King(vector<int> pos, bool Black);
-    ~King();
-    bool canMove(const Coordinate position, const string destination, const vector<vector<ChessPiece>> board) const override;
+    // Constructor
+    King(string pos, string white);
+
+    // Override the getAllMoves function for the King
+    vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const override;
     bool isChecked(const Coordinate position, const vector<vector<ChessPiece>> board);
-    char Type() const override;
+    // Get whether the king has moved
     bool moved() override;
 };
 

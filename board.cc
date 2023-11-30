@@ -14,6 +14,7 @@ Board::Board() {
             board[row][col] = ChessPiece(coordStr, "NoColour", "V");
         }
     }
+    
 }
 
 // Copy constructor
