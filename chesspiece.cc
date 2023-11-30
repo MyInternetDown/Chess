@@ -88,15 +88,15 @@ Coordinate parseCoordinate(const std::string &pos) {
     return c;
 }
 
-Colour ChessPiece::getColour() {
+Colour ChessPiece::getColour() const{
     return colour;
 }
 	// Get the position
-Coordinate ChessPiece::getPos() {
+Coordinate ChessPiece::getPos() const{
     return location;
 }
 
-PieceType ChessPiece::getPiece() {
+PieceType ChessPiece::getPiece() const{
     return piecetype;
 }
 

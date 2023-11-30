@@ -32,27 +32,27 @@ public:
     ChessPiece &operator=(ChessPiece &&other);
 
 	// Gets all possible moves on where this chesspiece and move to given a vector board of the locations of all the other pieces.
-	virtual vector<vector<int>> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>>board);
+	virtual vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>>&board);
 
 	// Gets all possible locations where this piece would be under attack given its current position
-	virtual vector<vector<int>> getAllDangerMoves(const Coordinate position, const vector<vector<ChessPiece>>board);
+	virtual vector<Coordinate> getAllDangerMoves(const Coordinate position, const vector<vector<ChessPiece>>&board);
 
 	// Gets all possible locations where this piece can eat another piece
-	virtual vector<vector<int>> getAllAttackMoves(const Coordinate position, const vector<vector<ChessPiece>>board);
+	virtual vector<Coordinate> getAllAttackMoves(const Coordinate position, const vector<vector<ChessPiece>>&board);
 
 	// Checks if the current piece can move to the current position noted down
-	virtual bool canMove(const Coordinate position, const string destination, const vector<vector<ChessPiece>>board);  
+	virtual bool canMove(const Coordinate position, const string destination, const vector<vector<ChessPiece>>&board);  
 
 	Coordinate parseCoordinate(const std::string &pos);
 
 	
 
 	// Get the Colour of the Piece
-	virtual Colour getColour();
+	virtual Colour getColour() const;
 	// Get the position
-	virtual Coordinate getPos();
+	virtual Coordinate getPos() const;
 
-	virtual PieceType getPiece();
+	virtual PieceType getPiece() const;
 	// Get the vecotrs of the possible moves
 	virtual vector<vector<int>> getPossibleMoves();
 	// Gets the type of Piece
@@ -60,7 +60,7 @@ public:
 	// Gets the value of if the piece has moved
 	virtual bool moved();
 	// Check is Empty
-	virtual bool isEmpty();
+	virtual bool isEmpty() const;
 
 	void setEmpty();
 

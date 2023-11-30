@@ -1,14 +1,17 @@
-#ifndef __BISHOP__
-#define __BISHOP__
+// bishop.h
+
+#ifndef BISHOP_H
+#define BISHOP_H
+
 #include "chesspiece.h"
-#include <string>
 
 class Bishop : public ChessPiece {
 public:
-    Bishop(vector<int> pos, bool Black);
-    ~Bishop();
-    bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>> board) const override;
-    char Type() const override;
+    // Constructor
+    Bishop(string pos, string white);
+
+    // Override the getAllMoves function for the Bishop
+    vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) override;
 };
 
 #endif
