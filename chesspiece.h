@@ -81,7 +81,4 @@ public:
 vector<int> getPos(const std::string &cmd); // converts a coordinate in the form of letter-number
 // into the corresponding index in Board
 
-std::string getCor(int index); // converts an index from Board into the 
-// corresponding coordinate in the form letter-number
-
 #endif 
