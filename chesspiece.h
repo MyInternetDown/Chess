@@ -6,11 +6,12 @@
 #include "enum.h"
 #include "coordinate.h"
 #include <algorithm>
+#include "observer.h"
 
 using namespace std;
 
 
-class ChessPiece {
+class ChessPiece : public Observer{
 	Coordinate location;
 	PieceType piecetype;
 	Colour colour;
@@ -64,6 +65,10 @@ public:
 	virtual bool isEmpty() const;
 
 	void setEmpty();
+
+	void notify(Board &cb) override;
+	
+  	SubscriptionType subType() override;
 
 
 	// Destructor
