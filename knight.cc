@@ -9,7 +9,7 @@ Knight::Knight(string pos, string white)
 }
 
 vector<Coordinate> Knight::getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const {
-    // Implement Knight's move logic here
+    // Implement the Knight's move logic here
     vector<Coordinate> moves;
 
     // Knight moves in an L-shaped pattern
@@ -42,7 +42,7 @@ vector<Coordinate> Knight::getAllMoves(const Coordinate position, const vector<v
 }
 
 vector<Coordinate> Knight::getAllAttackMoves(const vector<Coordinate> moves, const vector<vector<ChessPiece>> &board) const {
-    // Implement Knight's attack moves logic here
+    // Implement the Knight's attack moves logic here
     vector<Coordinate> attackMoves;
 
     for (const auto &move : moves) {

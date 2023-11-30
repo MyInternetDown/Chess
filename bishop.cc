@@ -9,7 +9,7 @@ Bishop::Bishop(string pos, string white)
 }
 
 vector<Coordinate> Bishop::getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const {
-    // Implement Bishop's move logic here
+    // Implement the Bishop's move logic here
     vector<Coordinate> moves;
 
     // Bishop moves diagonally
@@ -48,7 +48,7 @@ vector<Coordinate> Bishop::getAllMoves(const Coordinate position, const vector<v
 }
 
 vector<Coordinate> Bishop::getAllAttackMoves(const vector<Coordinate> moves, const vector<vector<ChessPiece>> &board) const {
-    // Implement Bishop's attack moves logic here
+    // Implement the Bishop's attack moves logic here
     vector<Coordinate> attackMoves;
 
     for (const auto &move : moves) {
