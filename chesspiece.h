@@ -40,7 +40,7 @@ public:
 	virtual vector<vector<int>> getAllAttackMoves(const Coordinate position, const vector<vector<ChessPiece>>board);
 
 	// Checks if the current piece can move to the current position noted down
-	virtual bool canMove(const vector<int> position, const Coordinate destination, const vector<vector<ChessPiece>>board) const;  
+	virtual bool canMove(const Coordinate position, const string destination, const vector<vector<ChessPiece>>board) const;  
 
 	
 
