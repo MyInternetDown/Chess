@@ -4,10 +4,48 @@
 #include <string>
 #include "player.h"
 #include "graphicsdisplay.h"
+#include "chesspiece.h"
+#include "enum.h"
+#include <vector>
 
-class Piece;
+class Board {
+private:
+    std::vector<std::vector<ChessPiece>> board;
+
+public:
+    // Constructor
+    Board();
+
+    // Copy constructor
+    Board(const Board &other);
+
+    // Move constructor
+    Board(Board &&other);
+
+    // Copy assignment operator
+    Board &operator=(const Board &other);
+
+    // Move assignment operator
+    Board &operator=(Board &&other);
+
+    // Function to get a reference to the chess piece at a specific position
+    ChessPiece &at(const Coordinate &pos);
+
+    // Function to get a const reference to the chess piece at a specific position
+    const ChessPiece &at(const Coordinate &pos) const;
+
+    // Function to check if a position is within the bounds of the board
+    bool isValidPosition(const Coordinate &pos) const;
+
+    // Destructor
+    ~Board();
+};
+
+#endif
 
 
+
+/*
 // Board objects 
 class Board {
 	Piece **board; // an array of 64 Piece pointers
@@ -65,8 +103,6 @@ public:
 
 	std::string findKing(bool isWhite) const;
 };
-
-
-#endif
+*/
 
 
