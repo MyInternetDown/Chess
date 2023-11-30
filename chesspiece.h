@@ -55,7 +55,7 @@ public:
 	// Get the vecotrs of the possible moves
 	virtual vector<vector<int>> getPossibleMoves();
 	// Gets the type of Piece
-	virtual char getType() const=0;
+	char getType() const;
 	// Gets the value of if the piece has moved
 	virtual bool moved();
 	// Check is Empty
@@ -63,7 +63,7 @@ public:
 
 
 	// Destructor
-	virtual ~ChessPiece()=0;
+	~ChessPiece();
 
 	// Move Piece
 	void move(vector<int> moveHere);
