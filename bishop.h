@@ -5,10 +5,12 @@
 
 class Bishop : public ChessPiece {
 public:
-    Bishop(vector<int> pos, bool Black);
-    ~Bishop();
-    bool canMove(const vector<int> position, const vector<int> destination, const vector<vector<ChessPiece>> board) const override;
+    Bishop(string white, string type, string pos);
+    bool canMove(
+        const Coordinate position, const string destination, 
+        const vector<vector<ChessPiece>>board
+    ) const override;
     char Type() const override;
 };
-
+ 
 #endif
