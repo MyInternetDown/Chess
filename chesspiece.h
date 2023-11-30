@@ -37,7 +37,7 @@ public:
 	virtual vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>>&board) const;
 
 	// Gets all possible locations where this piece would be under attack given its current position
-	virtual vector<Coordinate> getAllDangerMoves(const Coordinate position, const vector<vector<ChessPiece>>&board) const;
+	virtual vector<Coordinate> getAllDangerPositions(const Coordinate position, const vector<vector<ChessPiece>>&board) const;
 
 	// Gets all possible locations where this piece can eat another piece
 	virtual vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, const vector<vector<ChessPiece>> &board) const;
