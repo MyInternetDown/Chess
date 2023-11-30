@@ -11,8 +11,7 @@ public:
     Bishop(string pos, string white);
 
     // Override the getAllMoves function for the Bishop
-    vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) override;
->>>>>>> 570d2e62dd90c96c09fc771e17a668d45387d77e
+    vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const override;
 };
  
 #endif
