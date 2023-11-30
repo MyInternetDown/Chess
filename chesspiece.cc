@@ -100,7 +100,29 @@ PieceType ChessPiece::getPiece() const{
     return piecetype;
 }
 
-vector<vector<int>> getPossibleMoves();
+std::vector<Coordinate> ChessPiece::getAllDangerMoves(const Coordinate position, const std::vector<std::vector<ChessPiece>> &board) const {
+    std::vector<Coordinate> dangerSquares;
+
+    // Iterate through the entire board
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            const ChessPiece &currentPiece = board[i][j];
+
+            // Check if the current piece is of the opposing color and not an empty square
+            if (!currentPiece.isEmpty() && currentPiece.getColour() != getColour()) {
+                // Get all possible moves for the current piece and add them to dangerSquares
+                std::vector<Coordinate> enemyMoves = currentPiece.getAllMoves(Coordinate(i, j), board);
+                dangerSquares.insert(dangerSquares.end(), enemyMoves.begin(), enemyMoves.end());
+            }
+        }
+    }
+
+    // Sort and remove duplicates
+    std::sort(dangerSquares.begin(), dangerSquares.end());
+    dangerSquares.erase(std::unique(dangerSquares.begin(), dangerSquares.end()), dangerSquares.end());
+
+    return dangerSquares;
+}
 
 string ChessPiece::getStrType() const {
     return type;
