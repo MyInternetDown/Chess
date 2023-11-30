@@ -8,7 +8,7 @@ Knight::Knight(string pos, string white)
     // You can add additional initialization for the Knight if needed
 }
 
-vector<Coordinate> Knight::getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) {
+vector<Coordinate> Knight::getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const {
     // Implement the Knight's move logic here
     vector<Coordinate> moves;
 
