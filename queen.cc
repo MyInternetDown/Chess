@@ -47,3 +47,17 @@ vector<Coordinate> Queen::getAllMoves(const Coordinate position, const vector<ve
 
     return moves;
 }
+
+vector<Coordinate> Queen::getAllAttackMoves(const vector<Coordinate> moves, const vector<vector<ChessPiece>> &board) const {
+    // Implement the Queen's attack moves logic here
+    vector<Coordinate> attackMoves;
+
+    for (const auto &move : moves) {
+        // Add move to attack moves if an opponent's piece is encountered
+        if (board[move.getRow()][move.getCol()].getColour() != getColour()) {
+            attackMoves.push_back(move);
+        }
+    }
+
+    return attackMoves;
+}
