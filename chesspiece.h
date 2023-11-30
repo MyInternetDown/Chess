@@ -10,7 +10,8 @@ using namespace std;
 
 
 class ChessPiece {
-	Coordinate posItem;
+	Coordinate location;
+	PieceType piecetype;
 	string pos;
 	bool Black;
 	vector<Coordinate> possibleMoves;
