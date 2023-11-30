@@ -40,7 +40,7 @@ public:
 	virtual vector<Coordinate> getAllDangerMoves(const Coordinate position, const vector<vector<ChessPiece>>&board) const;
 
 	// Gets all possible locations where this piece can eat another piece
-	virtual vector<Coordinate> getAllAttackMoves(const Coordinate position, const vector<vector<ChessPiece>>&board) const;
+	virtual vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, const vector<vector<ChessPiece>> &board) const;
 
 	// Checks if the current piece can move to the current position noted down
 	virtual bool canMove(const Coordinate position, const string destination, const vector<vector<ChessPiece>>&board) const;  
