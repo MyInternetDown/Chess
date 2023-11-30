@@ -19,6 +19,7 @@ class ChessPiece : public Observer{
 	string white;
 	string type;
 	vector<Coordinate> possibleMoves;
+	bool hasMoved;
 
 public:
 	// Constructor of the Chesspiece
@@ -60,7 +61,7 @@ public:
 	// Gets the type of Piece
 	string getStrType() const;
 	// Gets the value of if the piece has moved
-	virtual bool moved();
+	virtual bool moved() const;
 	// Check is Empty
 	virtual bool isEmpty() const;
 

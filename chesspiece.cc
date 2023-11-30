@@ -12,7 +12,8 @@ ChessPiece::ChessPiece(string pos, string white, string type)
       colour(parseColour(white)),
       pos(pos),
       white(white),
-      type(type){
+      type(type),
+      hasMoved(false){
     // Initialize other members if needed
 }
 
@@ -128,7 +129,9 @@ string ChessPiece::getStrType() const {
     return type;
 }
 
-void moved();
+bool ChessPiece::moved() const{
+    return hasMoved;
+}
 
 void move(vector<int> moveHere);
 
