@@ -50,11 +50,13 @@ public:
 	// Get the Colour of the Piece
 	virtual Colour getColour();
 	// Get the position
-	virtual vector<int> getPos();
+	virtual Coordinate getPos();
+
+	virtual PieceType getPiece();
 	// Get the vecotrs of the possible moves
 	virtual vector<vector<int>> getPossibleMoves();
 	// Gets the type of Piece
-	char getType() const;
+	string getStrType() const;
 	// Gets the value of if the piece has moved
 	virtual bool moved();
 	// Check is Empty
@@ -67,7 +69,7 @@ public:
 	~ChessPiece();
 
 	// Move Piece
-	void move(vector<int> moveHere);
+	void move(Coordinate moveHere);
 };
 
 vector<int> getPos(const std::string &cmd); // converts a coordinate in the form of letter-number

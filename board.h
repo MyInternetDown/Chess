@@ -13,6 +13,7 @@ using namespace std;
 class Board {
 private:
     std::vector<std::vector<ChessPiece>> board;
+	
 
 public:
     // Constructor
