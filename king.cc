@@ -3,7 +3,7 @@
 #include "king.h"
 
 King::King(string pos, string white)
-    : ChessPiece(pos, white, "K"), hasMoved(false) {  // Initialize hasMoved to false
+    : ChessPiece(pos, white, "K") {  // Initialize hasMoved to false
     // You can add additional initialization for the King if needed
 }
 
@@ -49,6 +49,3 @@ vector<Coordinate> King::getAllMoves(const Coordinate position, const vector<vec
     return moves;
 }
 
-bool King::moved() {
-    return hasMoved;
-}

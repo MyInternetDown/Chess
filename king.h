@@ -16,7 +16,6 @@ public:
     vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const override;
     bool isChecked(const Coordinate position, const vector<vector<ChessPiece>> board);
     // Get whether the king has moved
-    bool moved() override;
 };
 
 #endif
