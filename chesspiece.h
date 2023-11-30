@@ -47,7 +47,7 @@ public:
 
 	Coordinate parseCoordinate(const std::string &pos);
 
-	
+
 
 	// Get the Colour of the Piece
 	virtual Colour getColour() const;
