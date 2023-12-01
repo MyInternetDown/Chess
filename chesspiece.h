@@ -48,8 +48,6 @@ public:
 
 	Coordinate parseCoordinate(const std::string &pos);
 
-
-
 	// Get the Colour of the Piece
 	virtual Colour getColour() const;
 	// Get the position
@@ -81,5 +79,7 @@ public:
 
 vector<int> getPos(const std::string &cmd); // converts a coordinate in the form of letter-number
 // into the corresponding index in Board
+
+std::string getCor(int index);
 
 #endif 
