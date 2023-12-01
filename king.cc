@@ -31,17 +31,17 @@ vector<Coordinate> King::getAllMoves(const Coordinate position, const vector<vec
     }
 
     
-    // castling
+    // castling (but no checks yet)
     if (!hasMoved) {
         if (board[row][0].getPiece() == PieceType::R && board[row][0].getColour() == getColour()
-        && board[row][0].moved());
+        && !board[row][0].moved() && board[row][col - 1].isEmpty() && board[row][col - 2].isEmpty())
         {
-
+            moves.push_back({row, col - 2});
         }
 
         if (board[row][7].getPiece() == PieceType::R && board[row][7].getColour() == getColour()
-        && board[row][7].moved()) {
-
+        && !board[row][7].moved() && board[row][col + 1].isEmpty() && board[row][col + 2].isEmpty()) {
+            moves.push_back({row, col + 2});
         }
     }
 
