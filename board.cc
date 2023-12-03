@@ -81,6 +81,32 @@ bool Board::getTurn(){
     return turn;
 }
 
+void Board::reset(){
+    for (ChessPiece* piece : player1Pieces) {
+        delete piece;
+    }
+    for (ChessPiece* piece : player2Pieces) {
+        delete piece;
+    }
+    player1Pieces.clear();
+    player2Pieces.clear();
+
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            chessBoard[row][col] = nullptr;
+            if ((row * 8 + col) % 2 == 0) {
+                chessDisplay[row][col] = WHITE;
+            } else {
+                chessDisplay[row][col] = BLACK;
+            }
+        }
+    }
+    player1 = H;
+    player2 = H;
+    isWon = false;
+    turn = false;
+}
+
 // Setup Piece
 void Board::init(const std::string position, const std::string type, const std::string color) {
     // Find the row and column indices based on the location string
@@ -89,6 +115,8 @@ void Board::init(const std::string position, const std::string type, const std::
     pos >> coord;
     int row = coord.getRow();
     int col = coord.getCol();
+
+    removePiece(coord);
 
     // Create the appropriate ChessPiece based on the type
     if (type == "K") {
@@ -113,20 +141,46 @@ void Board::init(const std::string position, const std::string type, const std::
         player2Pieces.push_back(chessBoard[row][col]);
     }
 
+    chessDisplay[row][col] = chessBoard[row][col]->getCharType();
+
 
     notifyAllObservers();
     // Handle other piece types as needed
+    
 }
 
 // Remove
-void Board::removePiece(const string position){
-    Coordinate coord;
-    istringstream pos(position);
-    pos >> coord;
+void Board::removePiece(Coordinate coord, bool needNotify){
     int row = coord.getRow();
     int col = coord.getCol();
-    delete chessBoard[row][col];
-    chessBoard[row][col] = nullptr;
+    if (chessBoard[row][col] != nullptr) {
+        if (chessBoard[row][col]->getColour() == White) {
+            for(int i = 0; i < player1Pieces.size(); i++) {
+                if (player1Pieces[i] == chessBoard[row][col]) {
+                    player1Pieces.erase(player1Pieces.begin()+i);
+                    break;
+                }
+            }
+        } else {
+            for(int i = 0; i < player2Pieces.size(); i++) {
+                if (player1Pieces[i] == chessBoard[row][col]) {
+                    player2Pieces.erase(player2Pieces.begin()+i);
+                    break;
+                }
+            }
+        }
+        delete chessBoard[row][col];
+        chessBoard[row][col] = nullptr;
+        if (row * 8 + col % 2 == 0) {
+            chessDisplay[row][col] == WHITE;
+        }
+        else {
+            chessDisplay[row][col] == BLACK;
+        }
+    }
+    if (needNotify) {
+        notifyAllObservers();
+    }
 }
 
 
@@ -162,7 +216,12 @@ void Board::move() {
     }
 }
 // Destructor
-Board::~Board() {}
+Board::~Board() {
+    reset();
+    delete td;
+    delete gd;
+    observers.clear();
+}
 
 void Board::notify(Board *cb) {
   

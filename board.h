@@ -59,7 +59,9 @@ public:
 
 	void create(const string playerA, const string playerB);
 
-	void removePiece(string position);
+	void removePiece(Coordinate pos, bool needNotify = false);
+
+	void reset();
 
 	bool getTurn();
     // Copy assignment operator

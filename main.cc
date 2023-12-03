@@ -9,6 +9,7 @@ int main() {
   string cmd, aux;
   Board game;
   // You will need to make changes this code.
+  int point1, point2 = 0;
 
   while (true) {
     cin >> cmd;
@@ -18,7 +19,12 @@ int main() {
       game.create(player1, player2);
     }
     else if (cmd == "resign") {
-      // making it
+      if(game.getTurn() == true) {
+        point2++;
+      } else {
+        point1++;
+      }
+      game.reset();
     }
     else if (cmd == "move") {
       //first check compter
@@ -60,7 +66,10 @@ int main() {
         } else if (cmd2 == "-") {
           string location;
           cin >> location;
-          game.removePiece(location);
+          Coordinate coord;
+          istringstream pos(location);
+          pos >> coord;
+          game.removePiece(coord, false);
           //remove piece at location
         } else if (cmd2 == "=") {
           string colour;
