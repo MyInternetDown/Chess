@@ -40,16 +40,17 @@ public:
 	~ChessPiece();
 
 	// Gets all possible moves on where this chesspiece and move to given a vector board of the locations of all the other pieces.
-	virtual vector<Coordinate> getAllMoves(const Coordinate position, ChessPiece* board[8][8]);
+	virtual vector<Coordinate> getAllMoves(const Coordinate position, ChessPiece* board[8][8]) = 0;
 
 	// Gets all possible locations where this piece would be under attack given its current position
 	virtual vector<Coordinate> getAllDangerPositions(const Coordinate position, ChessPiece* board[8][8]) const;
 
 	// Gets all possible locations where this piece can eat another piece
-	virtual vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const;
+	virtual vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const =0;
 
 	// Checks if the current piece can move to the current position noted down
-	virtual bool canMove(const Coordinate position, const string destination, ChessPiece* board[8][8]) const;  
+	// to do
+	//virtual bool canMove(const Coordinate position, const string destination, ChessPiece* board[8][8]) const;  
 
 	Coordinate parseCoordinate(const std::string pos);
 
@@ -60,7 +61,7 @@ public:
 
 	virtual PieceType getPiece() const;
 	// Get the vecotrs of the possible moves
-	virtual vector<vector<int>> getPossibleMoves();
+	//virtual vector<vector<int>> getPossibleMoves();
 	// Gets the type of Piece
 	string getStrType() const;
 	// Gets the value of if the piece has moved
@@ -70,14 +71,16 @@ public:
 
 	void setEmpty();
 
-	void notify(Board &cb) override;
+	//void notify(Board &cb) override;
 	
-  	SubscriptionType subType() override;
+  	//SubscriptionType subType() override;
 
 	virtual bool isChecked(ChessPiece* board[8][8]) const;
 
 	// Move Piece
-	void move(Coordinate moveHere);
+	void move(Coordinate moveHere) {
+		//to do
+	}
 };
 
 static vector<int> getPos(const std::string &cmd); // converts a coordinate in the form of letter-number

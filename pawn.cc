@@ -40,3 +40,19 @@ vector<Coordinate> Pawn::getAllMoves(const Coordinate position, ChessPiece* boar
     return moves;
 }
 
+
+vector<Coordinate> Pawn::getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const {
+    // Implement the Queen's attack moves logic here
+    vector<Coordinate> attackMoves;
+
+    for (const auto &move : moves) {
+        // Add move to attack moves if an opponent's piece is encountered
+        if (board[move.getRow()][move.getCol()]->getColour() != getColour()) {
+            attackMoves.push_back(move);
+        }
+    }
+
+    return attackMoves;
+}
+
+

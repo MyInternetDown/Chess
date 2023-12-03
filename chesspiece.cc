@@ -69,7 +69,7 @@ void ChessPiece::setEmpty() {
 
 
 
-Coordinate parseCoordinate(const std::string pos) {
+Coordinate ChessPiece::parseCoordinate(const std::string pos) {
     Coordinate c;
     istringstream iss(pos);
     iss >> c;
@@ -113,6 +113,10 @@ std::vector<Coordinate> ChessPiece::getAllDangerPositions(const Coordinate posit
     return dangerSquares;
 }
 
+ChessPiece::~ChessPiece() {
+    // to do
+}
+
 string ChessPiece::getStrType() const {
 }
 
@@ -120,7 +124,17 @@ bool ChessPiece::moved() const{
     return hasMoved;
 }
 
-void move(vector<int> moveHere);
+bool ChessPiece::isChecked(ChessPiece* board[8][8]) const {
+    return false;
+    // to do
+}
+bool ChessPiece::isEmpty() const {
+    return false;
+    // to do
+}
+
+
+//void move(vector<int> moveHere);
 
 vector<int> getPos(const std::string &cmd)
 {

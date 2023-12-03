@@ -13,8 +13,10 @@ class GraphicsDisplay: public Observer {
   const int gridSize;
  public:
   GraphicsDisplay(Xwindow *winFrame, int n);
+  /*
   void notify(Board &cb) override;
   SubscriptionType subType() override;
+  */
   ~GraphicsDisplay();
 };
 

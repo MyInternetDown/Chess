@@ -6,8 +6,8 @@ enum class SubscriptionType {All};
 
 class Observer {
  public:
-  virtual void notify(Board &cb) = 0;  
-  virtual SubscriptionType subType() = 0;
-  virtual ~Observer() = default;
+  // virtual void notify(Board &cb) = 0;  
+  // virtual SubscriptionType subType() = 0;
+  virtual ~Observer() {};
 };
 #endif

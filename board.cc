@@ -63,8 +63,8 @@ bool Board::isValidSetup()  {
 
 void Board::create(const string playerA, const string playerB){
     int n = 0;
-    td = new TextDisplay(n);
-    gd = new GraphicsDisplay(windowX ,n);
+    //td = new TextDisplay(n);
+    //gd = new GraphicsDisplay(windowX ,n);
     player1 = convertStringToMoveType(playerA);
     player2 = convertStringToMoveType(playerB);
 }
