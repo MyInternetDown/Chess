@@ -7,7 +7,7 @@ Rook::Rook(string pos, string white)
     // You can add additional initialization for the Rook if needed
 }
 
-vector<Coordinate> Rook::getAllMoves(const Coordinate position, const ChessPiece ***board) {
+vector<Coordinate> Rook::getAllMoves(const Coordinate position, ChessPiece* board[8][8]) {
     vector<Coordinate> moves;
 
     const int row = position.getRow();
@@ -30,7 +30,7 @@ vector<Coordinate> Rook::getAllMoves(const Coordinate position, const ChessPiece
     return moves;
 }
 
-vector<Coordinate> Rook::getAllAttackMoves(const vector<Coordinate> moves, const ChessPiece ***board) const {
+vector<Coordinate> Rook::getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const {
     // Implement the Rook's attack moves logic here
     vector<Coordinate> attackMoves;
 

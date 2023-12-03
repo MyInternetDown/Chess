@@ -3,9 +3,9 @@
 // Constructor
 Board::Board() : 
     turn{true}, 
-    player1(P),   
+    player1(H),   
     player1Pieces(),
-    player2(P),
+    player2(H),
     player2Pieces(),
     isWon(false),
     td{nullptr}, 

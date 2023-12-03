@@ -34,7 +34,7 @@ map<string, PieceType> strToPiece = {
 };
 
 map<string, MoveType> strToMoveType = {
-    {"human", P},
+    {"human", H},
     {"computer1", L1},
     {"computer2", L2},
     {"computer3", L3},

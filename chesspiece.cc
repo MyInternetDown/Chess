@@ -106,7 +106,8 @@ std::vector<Coordinate> ChessPiece::getAllDangerPositions(const Coordinate posit
     }
 
     // Sort and remove duplicates
-    std::sort(dangerSquares.begin(), dangerSquares.end());
+    // to do
+    //std::sort(dangerSquares.begin(), dangerSquares.end());
     dangerSquares.erase(std::unique(dangerSquares.begin(), dangerSquares.end()), dangerSquares.end());
 
     return dangerSquares;
