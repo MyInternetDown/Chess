@@ -1,19 +1,19 @@
-CXX = g++-11
-CXXFLAGS = -std=c++20 -Wall -g -MMD
-LIBFLAGS = -lX11
-SOURCES = $(wildcard *.cc)
-OBJECTS = ${SOURCES:.cc=.o}
-DEPENDS = ${OBJECTS:.o=.d}
-EXEC = chess
+CXX = g++-11 -std=c++20
+CXXFLAGS = -Wall -g -MMD  # use -MMD to generate dependencies
+SOURCES = $(wildcard *.cc)  # list of all .cc files in the current directory, excluding window.cc
+OBJECTS = ${SOURCES:.cc=.o}  # .o files depend upon .cc files with same names
+DEPENDS = ${OBJECTS:.o=.d}   # .d file is list of dependencies for corresponding .cc file
+EXEC=a4q2
 
+# First target in the makefile is the default target.
 $(EXEC): $(OBJECTS)
-    $(CXX) $(CXXFLAGS) $(OBJECTS) -o $(EXEC) $(LIBFLAGS)
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $(EXEC)  $(LIBFLAGS) -lX11
 
-%.o: %.cc
-    $(CXX) -c -o $@ $< $(CXXFLAGS) $(LIBFLAGS)
+%.o: %.cc 
+	$(CXX) -c -o $@ $< $(CXXFLAGS) $(LIBFLAGS)
 
 -include ${DEPENDS}
 
 .PHONY: clean tests
 clean:
-    rm -f $(OBJECTS) $(DEPENDS) $(EXEC)
+	rm  -f $(OBJECTS) $(DEPENDS) $(EXEC)
