@@ -1,10 +1,7 @@
 #ifndef KING_H
 #define KING_H
-#include "chesspiece.h"
 #include <string>
-
-// king.h
-
+#include "chesspiece.h"
 
 class King : public ChessPiece {
 

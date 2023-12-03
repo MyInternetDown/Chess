@@ -1,8 +1,6 @@
-// bishop.h
-
 #ifndef BISHOP_H
 #define BISHOP_H
-
+#include <string>
 #include "chesspiece.h"
 
 class Bishop : public ChessPiece {
@@ -18,6 +16,5 @@ public:
 };
  
 
-Coordinate parseCoordinate(const std::string pos);
 
 #endif

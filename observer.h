@@ -6,7 +6,7 @@ enum class SubscriptionType {All};
 
 class Observer {
  public:
-  virtual void notify(ChessPiece *chessBoard[8][8]) = 0;  
+  virtual void notify(Board *cb) = 0;  
   virtual SubscriptionType subType() = 0;
   virtual ~Observer() {};
 };

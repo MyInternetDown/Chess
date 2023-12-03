@@ -1,6 +1,7 @@
 // king.cc
 
 #include "king.h"
+#include <iostream>
 
 King::King(string pos, string white)
     : ChessPiece(pos, white, "K") {  // Initialize hasMoved to false

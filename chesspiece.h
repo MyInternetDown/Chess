@@ -1,15 +1,12 @@
 #ifndef ___ChessPiece___
 #define ___ChessPiece___
-#include <string>
+
 #include <iostream>
 #include <vector>
 #include "enum.h"
 #include "coordinate.h"
 #include <algorithm>
 #include "observer.h"
-#include "board.h"
-
-using namespace std;
 
 class Board;
 
@@ -72,9 +69,9 @@ public:
 
 	void setEmpty();
 
-	void notify(ChessPiece *chessBoard[8][8]) override;
+	void notify(Board *cb) override;
 	
-  	SubscriptionType subType() override;
+  	SubscriptionType subType();
 
 	virtual bool isChecked(ChessPiece* board[8][8]) const;
 

@@ -6,7 +6,6 @@
 #include "textdisplay.h"
 #include "graphicsdisplay.h"
 #include "coordinate.h"
-#include "chesspiece.h"
 #include "king.h"
 #include "queen.h"
 #include "bishop.h"
@@ -16,12 +15,12 @@
 #include "enum.h"
 #include "window.h"
 #include <vector>
+#include "observer.h"
 
 using namespace std;
 
 class Board {
 private:
-	ChessPiece *chessBoard[8][8];
 	bool turn;
 	MoveType player1;
 	vector<ChessPiece> player1Pieces;
@@ -37,6 +36,7 @@ private:
 	
 
 public:
+	ChessPiece *chessBoard[8][8];
     // Constructor
     Board();
 
@@ -76,11 +76,15 @@ public:
 
     ~Board();
 
-	void notify(ChessPiece *chessBoard[8][8]);
+	void notify(Board *cb);
 
 	SubscriptionType subType();
 
 	void notifyAllObservers();
+
+	void attach(Observer *o);
+
+	void detach(Observer *o);
 };
 
 #endif

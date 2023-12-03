@@ -3,7 +3,6 @@
 #include <sstream>
 #include <vector>
 
-using namespace std;
 
 // Constructor
 ChessPiece::ChessPiece(string pos, string white, string type)
@@ -134,9 +133,8 @@ bool ChessPiece::isEmpty() const {
 }
 
 
-void ChessPiece::notify(ChessPiece *chessBoard[8][8]){
-    getAllMoves(location, chessBoard);
-    
+void ChessPiece::notify(Board *cb){
+    getAllMoves(location, cb->chessBoard);
 }
 	
 SubscriptionType subType(){

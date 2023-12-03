@@ -128,16 +128,24 @@ bool Board::isValidPosition(const Coordinate &pos) const {
 // Destructor
 Board::~Board() {}
 
-void Board::notify(ChessPiece *chessBoard[8][8]) {
+void Board::notify(Board *cb) {
   
 }
 
 void Board::notifyAllObservers() {
   for (auto &observer : observers) {
         if (observer->subType() == SubscriptionType::All) {
-            observer->notify(this->chessBoard);
+            observer->notify(this);
         }
     }
+}
+
+void Board::attach(Observer *o) { 
+  observers.emplace_back(o);
+}
+
+void Board::detach(Observer *o){
+    observers.erase(std::remove(observers.begin(), observers.end(), o), observers.end());
 }
 
 
