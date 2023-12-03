@@ -134,6 +134,16 @@ bool ChessPiece::isEmpty() const {
 }
 
 
+void ChessPiece::notify(ChessPiece *chessBoard[8][8]){
+    getAllMoves(location, chessBoard);
+    
+}
+	
+SubscriptionType subType(){
+    return SubscriptionType::All;
+}
+
+
 //void move(vector<int> moveHere);
 
 vector<int> getPos(const std::string &cmd)

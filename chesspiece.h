@@ -7,6 +7,7 @@
 #include "coordinate.h"
 #include <algorithm>
 #include "observer.h"
+#include "board.h"
 
 using namespace std;
 
@@ -71,9 +72,9 @@ public:
 
 	void setEmpty();
 
-	//void notify(Board &cb) override;
+	void notify(ChessPiece *chessBoard[8][8]) override;
 	
-  	//SubscriptionType subType() override;
+  	SubscriptionType subType() override;
 
 	virtual bool isChecked(ChessPiece* board[8][8]) const;
 

@@ -31,6 +31,7 @@ private:
 	TextDisplay *td; // The text display.
   	GraphicsDisplay *gd; // graphics display
   	Xwindow *windowX;
+	std::vector<Observer*> observers;
 
 
 	
@@ -70,7 +71,16 @@ public:
     bool isValidPosition(const Coordinate &pos) const;
 
     // Destructor
+
+	void move();
+
     ~Board();
+
+	void notify(ChessPiece *chessBoard[8][8]);
+
+	SubscriptionType subType();
+
+	void notifyAllObservers();
 };
 
 #endif

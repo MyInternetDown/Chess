@@ -6,14 +6,14 @@
 class Board;
 
 class TextDisplay: public Observer {
-  //std::vector<std::vector<char>> theDisplay;
+  std::vector<std::vector<char>> theDisplay;
  public:
   TextDisplay();
 
-  //void notify(Board &cb) override;
-  //SubscriptionType subType() override;
+  void notify(ChessPiece *chessBoard[8][8]) override;
+  SubscriptionType subType() override;
 
-  //~TextDisplay();
+  ~TextDisplay();
 
   friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td);
 };

@@ -128,6 +128,18 @@ bool Board::isValidPosition(const Coordinate &pos) const {
 // Destructor
 Board::~Board() {}
 
+void Board::notify(ChessPiece *chessBoard[8][8]) {
+  
+}
+
+void Board::notifyAllObservers() {
+  for (auto &observer : observers) {
+        if (observer->subType() == SubscriptionType::All) {
+            observer->notify(this->chessBoard);
+        }
+    }
+}
+
 
 Coordinate parseCoordinate(const std::string pos) {
     Coordinate c;
