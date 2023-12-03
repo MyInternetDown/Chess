@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
   string cmd, aux;
-
+  Board game;
   // You will need to make changes this code.
 
   while (true) {
@@ -14,13 +14,13 @@ int main() {
     if (cmd == "game") {
       string player1, player2;
       cin >> player1 >> player2;
-      //init game
+      game.create(player1, player2);
     }
     else if (cmd == "resign") {
-      //end game
+      // making it
     }
     else if (cmd == "move") {
-      //first check computer
+      //first check compter
 
       string moveAt, moveTo;
       cin >> moveAt >> moveTo;
@@ -30,7 +30,7 @@ int main() {
       while (true) {
         cin >> cmd2;
         if (cmd2 == "done") {
-          break; //done setup
+          break; 
         } else if (cmd2 == "+") {
           string piece, location;
           cin >> piece >> location;

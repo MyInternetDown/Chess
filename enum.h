@@ -15,7 +15,9 @@ extern map<Colour, std::string> colourToStr;
 extern map<std::string, Colour> strToColour;
 extern map<char, PieceType> charToPiece;
 extern map<std::string, PieceType> strToPiece;
-Colour parseColour(const string &colorStr);
-PieceType parsePieceType(const string &typeStr);
+extern map<string, MoveType> strToMoveType;
+Colour parseColour(const string colorStr);
+PieceType parsePieceType(const string typeStr);
+MoveType convertStringToMoveType(const std::string playerType);
 
 #endif

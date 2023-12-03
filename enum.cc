@@ -33,7 +33,20 @@ map<string, PieceType> strToPiece = {
     { "V", PieceType::V }
 };
 
-Colour parseColour(const std::string &colorStr) {
+map<string, MoveType> strToMoveType = {
+    {"human", P},
+    {"computer1", L1},
+    {"computer2", L2},
+    {"computer3", L3},
+    {"computer4", L4}
+};
+
+MoveType convertStringToMoveType(const std::string playerType) {
+    auto it = strToMoveType.find(playerType);
+    return it->second;
+}
+
+Colour parseColour(const std::string colorStr) {
     auto it = strToColour.find(colorStr);
     if (it != strToColour.end()) {
         return it->second;
@@ -41,7 +54,7 @@ Colour parseColour(const std::string &colorStr) {
     throw std::invalid_argument("Invalid color string");
 }
 
-PieceType parsePieceType(const std::string &typeStr) {
+PieceType parsePieceType(const std::string typeStr) {
     auto it = strToPiece.find(typeStr);
     if (it != strToPiece.end()) {
         return it->second;

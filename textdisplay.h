@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "observer.h"
-class Cell;
+class Board;
 
 class TextDisplay: public Observer {
   std::vector<std::vector<char>> theDisplay;
@@ -11,7 +11,7 @@ class TextDisplay: public Observer {
  public:
   TextDisplay(int n);
 
-  void notify(Cell &c) override;
+  void notify(Board &cb) override;
   SubscriptionType subType() override;
 
   ~TextDisplay();

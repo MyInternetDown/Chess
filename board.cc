@@ -1,7 +1,17 @@
 #include "board.h"
 
 // Constructor
-Board::Board() {
+Board::Board() : 
+    turn{true}, 
+    player1(P),   
+    player1Pieces(),
+    player2(P),
+    player2Pieces(),
+    isWon(false),
+    td{nullptr}, 
+    gd{nullptr}, 
+    windowX{new Xwindow()} 
+    {
     // Populate the board with ChessPiece objects at their respective positions
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
@@ -10,6 +20,54 @@ Board::Board() {
         }
     }
 }
+
+bool Board::isValidSetup() const {
+    // Check if there is exactly one white king and one black king
+    int whiteKingCount = 0;
+    int blackKingCount = 0;
+
+    // Check if no pawns are on the first or last row
+    for (int col = 0; col < 8; ++col) {
+        if (chessBoard[0][col]->getStrType() == "P" || chessBoard[7][col]->getStrType() == "P") {
+            return false;  // Pawn found on the first or last row
+        }
+    }
+
+    // Check neither king is in check (you need to implement this logic in ChessPiece)
+    // Assume there's a function isValidMove in ChessPiece that checks if a move is valid
+    // and a function isChecked in ChessPiece that checks if a king is in check
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            if (chessBoard[row][col]->getStrType() == "K") {
+                if (chessBoard[row][col]->getColour() == Colour::White) {
+                    ++whiteKingCount;
+                    if (chessBoard[row][col]->isChecked(chessBoard)) {
+                        return false;  // White king is in check
+                    }
+                } else {
+                    ++blackKingCount;
+                    if (chessBoard[row][col]->isChecked(chessBoard)) {
+                        return false;  // Black king is in check
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+void Board::create(const string playerA, const string playerB){
+    int n = 0;
+    td = new TextDisplay(n);
+    gd = new GraphicsDisplay(windowX ,n);
+    player1 = convertStringToMoveType(playerA);
+    player2 = convertStringToMoveType(playerB);
+}
+
+bool Board::getTurn(){
+    return turn;
+}
+
 
 void Board::init(const std::string position, const std::string type, const std::string color) {
     // Find the row and column indices based on the location string

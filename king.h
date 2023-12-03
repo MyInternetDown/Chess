@@ -14,7 +14,7 @@ public:
 
     // Override the getAllMoves function for the King
     vector<Coordinate> getAllMoves(const Coordinate position, const ChessPiece ***board) override;
-    bool isChecked(const Coordinate position, const vector<vector<ChessPiece>> board);
+    bool isChecked(ChessPiece ***board) override;
     // Get whether the king has moved
 };
 

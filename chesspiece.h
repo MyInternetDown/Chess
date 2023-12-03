@@ -74,7 +74,7 @@ public:
 	
   	SubscriptionType subType() override;
 
-
+	virtual bool isChecked(ChessPiece ***board);
 
 	// Move Piece
 	void move(Coordinate moveHere);

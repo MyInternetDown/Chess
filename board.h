@@ -3,6 +3,7 @@
 
 #include <string>
 #include "player.h"
+#include "textdisplay.h"
 #include "graphicsdisplay.h"
 #include "coordinate.h"
 #include "chesspiece.h"
@@ -13,6 +14,7 @@
 #include "rook.h"
 #include "pawn.h"
 #include "enum.h"
+#include "window.h"
 #include <vector>
 
 using namespace std;
@@ -26,6 +28,10 @@ private:
 	MoveType player2;
 	vector<ChessPiece> player2Pieces;
 	bool isWon;
+	TextDisplay *td; // The text display.
+  	GraphicsDisplay *gd; // graphics display
+  	Xwindow *windowX;
+
 
 	
 
@@ -41,11 +47,16 @@ public:
 
 	void init(const std::string position, const std::string type, const std::string color);
 
+	void create(const string playerA, const string playerB);
+
+	bool getTurn();
     // Copy assignment operator
     Board &operator=(const Board &other);
 
     // Move assignment operator
     Board &operator=(Board &&other);
+
+	bool isValidSetup() const;
 
     // Function to get a reference to the chess piece at a specific position
     ChessPiece &at(const Coordinate &pos);
