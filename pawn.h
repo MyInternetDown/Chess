@@ -12,7 +12,7 @@ public:
     Pawn(string pos, string white);
 
     // Override the getAllMoves function for the Pawn
-    vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const override;
+    vector<Coordinate> getAllMoves(const Coordinate position, const ChessPiece ***board) override;
     bool promote(vector<int> pos);
     bool enPassant(vector<int>pos, vector<vector<int>>prevMove);
 

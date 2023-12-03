@@ -4,7 +4,14 @@
 #include <string>
 #include "player.h"
 #include "graphicsdisplay.h"
+#include "coordinate.h"
 #include "chesspiece.h"
+#include "king.h"
+#include "queen.h"
+#include "bishop.h"
+#include "knight.h"
+#include "rook.h"
+#include "pawn.h"
 #include "enum.h"
 #include <vector>
 
@@ -12,7 +19,14 @@ using namespace std;
 
 class Board {
 private:
-    std::vector<std::vector<ChessPiece>> board;
+	ChessPiece *chessBoard[8][8];
+	bool turn;
+	MoveType player1;
+	vector<ChessPiece> player1Pieces;
+	MoveType player2;
+	vector<ChessPiece> player2Pieces;
+	bool isWon;
+
 	
 
 public:
@@ -24,6 +38,8 @@ public:
 
     // Move constructor
     Board(Board &&other);
+
+	void init(const std::string position, const std::string type, const std::string color);
 
     // Copy assignment operator
     Board &operator=(const Board &other);

@@ -10,9 +10,6 @@ ChessPiece::ChessPiece(string pos, string white, string type)
     : location(parseCoordinate(pos)),
       piecetype(parsePieceType(type)),
       colour(parseColour(white)),
-      pos(pos),
-      white(white),
-      type(type),
       hasMoved(false){
     // Initialize other members if needed
 }
@@ -22,10 +19,8 @@ ChessPiece::ChessPiece(const ChessPiece &other)
     : location(other.location),
       piecetype(other.piecetype),
       colour(other.colour),
-      pos(other.pos),
-      white(other.white),
-      type(other.type)
-         {
+      hasMoved(other.hasMoved)
+    {
     // Copy other members if needed
 }
 
@@ -34,9 +29,7 @@ ChessPiece::ChessPiece(ChessPiece &&other)
     : location(std::move(other.location)),
       piecetype(std::move(other.piecetype)),
       colour(std::move(other.colour)),
-      pos(std::move(other.pos)),
-      white(std::move(other.white)),
-      type(std::move(other.type)) {
+      hasMoved(std::move(other.hasMoved)) {
     // Move other members if needed
 }
 
@@ -46,9 +39,7 @@ ChessPiece &ChessPiece::operator=(const ChessPiece &other) {
         location = other.location;
         piecetype = other.piecetype;
         colour = other.colour;
-        pos = other.pos;
-        white = other.white;
-        type = other.type;
+        hasMoved = other.hasMoved;
         // Copy other members if needed
     }
     return *this;
@@ -60,9 +51,7 @@ ChessPiece &ChessPiece::operator=(ChessPiece &&other) {
         location = std::move(other.location);
         piecetype = std::move(other.piecetype);
         colour = std::move(other.colour);
-        pos = std::move(other.pos);
-        white = std::move(other.white);
-        type = std::move(other.type);
+        hasMoved = std:: move(other.hasMoved);
         // Move other members if needed
     }
     return *this;
@@ -82,7 +71,7 @@ void ChessPiece::setEmpty() {
 
 
 
-Coordinate parseCoordinate(const std::string &pos) {
+Coordinate parseCoordinate(const std::string pos) {
     Coordinate c;
     istringstream iss(pos);
     iss >> c;
@@ -101,18 +90,18 @@ PieceType ChessPiece::getPiece() const{
     return piecetype;
 }
 
-std::vector<Coordinate> ChessPiece::getAllDangerPositions(const Coordinate position, const std::vector<std::vector<ChessPiece>> &board) const {
+std::vector<Coordinate> ChessPiece::getAllDangerPositions(const Coordinate position, const ChessPiece ***board) const {
     std::vector<Coordinate> dangerSquares;
 
     // Iterate through the entire board
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
-            const ChessPiece &currentPiece = board[i][j];
+            const ChessPiece *currentPiece = board[i][j];
 
             // Check if the current piece is of the opposing color and not an empty square
-            if (!currentPiece.isEmpty() && currentPiece.getColour() != getColour()) {
+            if (!currentPiece->isEmpty() && currentPiece->getColour() != getColour()) {
                 // Get all possible moves for the current piece and add them to dangerSquares
-                std::vector<Coordinate> enemyMoves = currentPiece.getAllMoves(Coordinate(i, j), board);
+                std::vector<Coordinate> enemyMoves = this->possibleMoves;
                 dangerSquares.insert(dangerSquares.end(), enemyMoves.begin(), enemyMoves.end());
             }
         }

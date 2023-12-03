@@ -2,53 +2,49 @@
 
 // Constructor
 Board::Board() {
-    board.resize(8, std::vector<ChessPiece>(8, ChessPiece("a1", "NoColour", "V")));  // Assuming "a1" is the starting position
-
     // Populate the board with ChessPiece objects at their respective positions
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
-            // Create a coordinate string for the current position
-            std::string coordStr = getCor(row * 8 + col);
-
-            // Create a ChessPiece with no color, void type, and the current coordinate
-            board[row][col] = ChessPiece(coordStr, "NoColour", "V");
+            // create an empty pointer to that place
+            chessBoard[row][col] = nullptr;
         }
     }
-    
 }
 
-// Copy constructor
-Board::Board(const Board &other) : board(other.board) {}
+void Board::init(const std::string position, const std::string type, const std::string color) {
+    // Find the row and column indices based on the location string
+    Coordinate coord = parseCoordinate(position);
+    int row = coord.getRow();
+    int col = coord.getCol();
 
-// Move constructor
-Board::Board(Board &&other) noexcept : board(std::move(other.board)) {}
-
-// Copy assignment operator
-Board &Board::operator=(const Board &other) {
-    if (this != &other) {
-        board = other.board;
+    // Create the appropriate ChessPiece based on the type
+    if (type == "K") {
+        chessBoard[row][col] = new King(position, color);
+    } else if (type == "Q") {
+        chessBoard[row][col] =  new Queen(position, color);
+    } else if (type == "B") {
+        chessBoard[row][col] = new Bishop(position, color);
+    } else if (type == "N") {
+        chessBoard[row][col] = new Knight(position, color);
+    } else if (type == "R") {
+        chessBoard[row][col] = new Rook(position, color);
+    } else if (type == "P") {
+        chessBoard[row][col] = new Pawn(position, color);
     }
-    return *this;
+    // Handle other piece types as needed
 }
 
-// Move assignment operator
-Board &Board::operator=(Board &&other) noexcept {
-    if (this != &other) {
-        board = std::move(other.board);
-    }
-    return *this;
-}
 
 // Function to get a reference to the chess piece at a specific position
 ChessPiece &Board::at(const Coordinate &pos) {
     // Add boundary checking if needed
-    return board[pos.getRow()][pos.getCol()];
+    return *chessBoard[pos.getRow()][pos.getCol()];
 }
 
 // Function to get a const reference to the chess piece at a specific position
 const ChessPiece &Board::at(const Coordinate &pos) const {
     // Add boundary checking if needed
-    return board[pos.getRow()][pos.getCol()];
+    return *chessBoard[pos.getRow()][pos.getCol()];
 }
 
 // Function to check if a position is within the bounds of the board
@@ -59,3 +55,11 @@ bool Board::isValidPosition(const Coordinate &pos) const {
 
 // Destructor
 Board::~Board() {}
+
+
+Coordinate parseCoordinate(const std::string pos) {
+    Coordinate c;
+    istringstream iss(pos);
+    iss >> c;
+    return c;
+}

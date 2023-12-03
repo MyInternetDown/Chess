@@ -25,6 +25,7 @@ public:
 	// Constructor of the Chesspiece
 	ChessPiece(string pos, string white, string type);
 
+
     // Copy constructor
     ChessPiece(const ChessPiece &other);
     // Move constructor
@@ -34,19 +35,23 @@ public:
     // Move assignment operator
     ChessPiece &operator=(ChessPiece &&other);
 
+	
+	// Destructor
+	~ChessPiece();
+
 	// Gets all possible moves on where this chesspiece and move to given a vector board of the locations of all the other pieces.
-	virtual vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>>&board) const;
+	virtual vector<Coordinate> getAllMoves(const Coordinate position, const ChessPiece ***board);
 
 	// Gets all possible locations where this piece would be under attack given its current position
-	virtual vector<Coordinate> getAllDangerPositions(const Coordinate position, const vector<vector<ChessPiece>>&board) const;
+	virtual vector<Coordinate> getAllDangerPositions(const Coordinate position, const ChessPiece ***board) const;
 
 	// Gets all possible locations where this piece can eat another piece
-	virtual vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, const vector<vector<ChessPiece>> &board) const;
+	virtual vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, const ChessPiece ***board) const;
 
 	// Checks if the current piece can move to the current position noted down
-	virtual bool canMove(const Coordinate position, const string destination, const vector<vector<ChessPiece>>&board) const;  
+	virtual bool canMove(const Coordinate position, const string destination, const ChessPiece ***board) const;  
 
-	Coordinate parseCoordinate(const std::string &pos);
+	Coordinate parseCoordinate(const std::string pos);
 
 	// Get the Colour of the Piece
 	virtual Colour getColour() const;
@@ -70,16 +75,14 @@ public:
   	SubscriptionType subType() override;
 
 
-	// Destructor
-	~ChessPiece();
 
 	// Move Piece
 	void move(Coordinate moveHere);
 };
 
-vector<int> getPos(const std::string &cmd); // converts a coordinate in the form of letter-number
+static vector<int> getPos(const std::string &cmd); // converts a coordinate in the form of letter-number
 // into the corresponding index in Board
 
-std::string getCor(int index);
+static std::string getCor(int index);
 
 #endif 

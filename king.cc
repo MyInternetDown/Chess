@@ -7,7 +7,7 @@ King::King(string pos, string white)
     // You can add additional initialization for the King if needed
 }
 
-vector<Coordinate> King::getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const{
+vector<Coordinate> King::getAllMoves(const Coordinate position, const ChessPiece ***board) {
     vector<Coordinate> moves;
 
     const int row = position.getRow();
@@ -25,7 +25,7 @@ vector<Coordinate> King::getAllMoves(const Coordinate position, const vector<vec
         int newCol = col + move.second;
 
         if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8 &&
-            (board[newRow][newCol].isEmpty() || board[newRow][newCol].getColour() != getColour())) {
+            (board[newRow][newCol] == nullptr || board[newRow][newCol]->getColour() != getColour())) {
             moves.push_back({newRow, newCol});
         }
     }
@@ -33,14 +33,14 @@ vector<Coordinate> King::getAllMoves(const Coordinate position, const vector<vec
     
     // castling (but no checks yet)
     if (!hasMoved) {
-        if (board[row][0].getPiece() == PieceType::R && board[row][0].getColour() == getColour()
-        && !board[row][0].moved() && board[row][col - 1].isEmpty() && board[row][col - 2].isEmpty())
+        if (board[row][0]->getPiece() == PieceType::R && board[row][0]->getColour() == getColour()
+        && !board[row][0]->moved() && board[row][col - 1] == nullptr && board[row][col - 2] == nullptr)
         {
             moves.push_back({row, col - 2});
         }
 
-        if (board[row][7].getPiece() == PieceType::R && board[row][7].getColour() == getColour()
-        && !board[row][7].moved() && board[row][col + 1].isEmpty() && board[row][col + 2].isEmpty()) {
+        if (board[row][7]->getPiece() == PieceType::R && board[row][7]->getColour() == getColour()
+        && !board[row][7]->moved() && board[row][col + 1] == nullptr && board[row][col + 2] == nullptr) {
             moves.push_back({row, col + 2});
         }
     }

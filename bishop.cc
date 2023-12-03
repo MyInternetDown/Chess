@@ -8,7 +8,7 @@ Bishop::Bishop(string pos, string white)
     // You can add additional initialization for the Bishop if needed
 }
 
-vector<Coordinate> Bishop::getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const {
+vector<Coordinate> Bishop::getAllMoves(const Coordinate position, const ChessPiece ***board) {
     // Implement the Bishop's move logic here
     vector<Coordinate> moves;
 
@@ -30,9 +30,9 @@ vector<Coordinate> Bishop::getAllMoves(const Coordinate position, const vector<v
 
         while (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
             // Check if the destination is empty or contains an opponent's piece
-            if (board[newRow][newCol].isEmpty()) {
+            if (board[newRow][newCol] == nullptr) {
                 moves.push_back(Coordinate(newRow, newCol));
-            } else if (board[newRow][newCol].getColour() != getColour()) {
+            } else if (board[newRow][newCol]->getColour() != getColour()) {
                 moves.push_back(Coordinate(newRow, newCol));
                 break;  // Stop if an opponent's piece is encountered
             } else {
@@ -47,13 +47,13 @@ vector<Coordinate> Bishop::getAllMoves(const Coordinate position, const vector<v
     return moves;
 }
 
-vector<Coordinate> Bishop::getAllAttackMoves(const vector<Coordinate> moves, const vector<vector<ChessPiece>> &board) const {
+vector<Coordinate> Bishop::getAllAttackMoves(const vector<Coordinate> moves, const ChessPiece ***board) const {
     // Implement the Bishop's attack moves logic here
     vector<Coordinate> attackMoves;
 
     for (const auto &move : moves) {
         // Add move to attack moves if an opponent's piece is encountered
-        if (board[move.getRow()][move.getCol()].getColour() != getColour()) {
+        if (board[move.getRow()][move.getCol()]->getColour() != getColour()) {
             attackMoves.push_back(move);
         }
     }

@@ -13,7 +13,7 @@ public:
     King(string pos, string white);
 
     // Override the getAllMoves function for the King
-    vector<Coordinate> getAllMoves(const Coordinate position, const vector<vector<ChessPiece>> &board) const override;
+    vector<Coordinate> getAllMoves(const Coordinate position, const ChessPiece ***board) override;
     bool isChecked(const Coordinate position, const vector<vector<ChessPiece>> board);
     // Get whether the king has moved
 };
