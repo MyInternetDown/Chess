@@ -8,7 +8,7 @@ Knight::Knight(string pos, string white)
     // You can add additional initialization for the Knight if needed
 }
 
-vector<Coordinate> Knight::getAllMoves(const Coordinate position, const ChessPiece ***board) {
+vector<Coordinate> Knight::getAllMoves(const Coordinate position, ChessPiece* board[8][8]) {
     // Implement the Knight's move logic here
     vector<Coordinate> moves;
 
@@ -41,7 +41,7 @@ vector<Coordinate> Knight::getAllMoves(const Coordinate position, const ChessPie
     return moves;
 }
 
-vector<Coordinate> Knight::getAllAttackMoves(const vector<Coordinate> moves, const ChessPiece ***board) const {
+vector<Coordinate> Knight::getAllAttackMoves(const vector<Coordinate> moves,ChessPiece* board[8][8]) const {
     // Implement the Knight's attack moves logic here
     vector<Coordinate> attackMoves;
 

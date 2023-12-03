@@ -7,7 +7,7 @@ Pawn::Pawn(string pos, string white)
     // You can add additional initialization for the Pawn if needed
 }
 
-vector<Coordinate> Pawn::getAllMoves(const Coordinate position, const ChessPiece ***board) {
+vector<Coordinate> Pawn::getAllMoves(const Coordinate position, ChessPiece* board[8][8]) {
     vector<Coordinate> moves;
 
     const int row = position.getRow();

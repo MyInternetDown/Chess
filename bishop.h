@@ -11,10 +11,10 @@ public:
     Bishop(string pos, string white);
 
     // Override the getAllMoves function for the Bishop
-    vector<Coordinate> getAllMoves(const Coordinate position, const ChessPiece ***board) override;
+    vector<Coordinate> getAllMoves(const Coordinate position, ChessPiece* board[8][8]) override;
 
     // Override the getAllAttackMoves function for the Bishop
-    vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, const ChessPiece ***board) const override;
+    vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const override;
 };
  
 

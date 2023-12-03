@@ -62,8 +62,6 @@ void ChessPiece::setEmpty() {
     colour = Colour::Void;
     piecetype = PieceType::V;
     // Set type and white based on the default values in the maps
-    type = strToPiece.at("V");
-    white = strToColour.at("NoColour");
     // You might want to reset other members to their default values
     // or update them according to your specific requirements
     possibleMoves.clear();
@@ -90,7 +88,7 @@ PieceType ChessPiece::getPiece() const{
     return piecetype;
 }
 
-std::vector<Coordinate> ChessPiece::getAllDangerPositions(const Coordinate position, const ChessPiece ***board) const {
+std::vector<Coordinate> ChessPiece::getAllDangerPositions(const Coordinate position, ChessPiece* board[8][8]) const {
     std::vector<Coordinate> dangerSquares;
 
     // Iterate through the entire board
@@ -115,7 +113,6 @@ std::vector<Coordinate> ChessPiece::getAllDangerPositions(const Coordinate posit
 }
 
 string ChessPiece::getStrType() const {
-    return type;
 }
 
 bool ChessPiece::moved() const{

@@ -49,6 +49,8 @@ public:
 
 	void create(const string playerA, const string playerB);
 
+	void removePiece(string position);
+
 	bool getTurn();
     // Copy assignment operator
     Board &operator=(const Board &other);
@@ -56,7 +58,7 @@ public:
     // Move assignment operator
     Board &operator=(Board &&other);
 
-	bool isValidSetup() const;
+	bool isValidSetup();
 
     // Function to get a reference to the chess piece at a specific position
     ChessPiece &at(const Coordinate &pos);

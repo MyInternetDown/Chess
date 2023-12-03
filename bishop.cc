@@ -8,7 +8,7 @@ Bishop::Bishop(string pos, string white)
     // You can add additional initialization for the Bishop if needed
 }
 
-vector<Coordinate> Bishop::getAllMoves(const Coordinate position, const ChessPiece ***board) {
+vector<Coordinate> Bishop::getAllMoves(const Coordinate position,ChessPiece* board[8][8]) {
     // Implement the Bishop's move logic here
     vector<Coordinate> moves;
 
@@ -47,7 +47,7 @@ vector<Coordinate> Bishop::getAllMoves(const Coordinate position, const ChessPie
     return moves;
 }
 
-vector<Coordinate> Bishop::getAllAttackMoves(const vector<Coordinate> moves, const ChessPiece ***board) const {
+vector<Coordinate> Bishop::getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const {
     // Implement the Bishop's attack moves logic here
     vector<Coordinate> attackMoves;
 

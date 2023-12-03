@@ -30,14 +30,18 @@ int main() {
       while (true) {
         cin >> cmd2;
         if (cmd2 == "done") {
-          break; 
+          if (game.isValidSetup()) {
+            break;
+          }
         } else if (cmd2 == "+") {
           string piece, location;
           cin >> piece >> location;
+          
           //move piece to location
         } else if (cmd2 == "-") {
           string location;
           cin >> location;
+          game.removePiece(location);
           //remove piece at location
         } else if (cmd2 == "=") {
           string colour;

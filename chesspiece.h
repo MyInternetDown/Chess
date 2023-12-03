@@ -10,14 +10,14 @@
 
 using namespace std;
 
+class Board;
 
 class ChessPiece : public Observer{
 	Coordinate location;
 	PieceType piecetype;
 	Colour colour;
 	string pos;
-	string white;
-	string type;
+	
 
 public:
 	vector<Coordinate> possibleMoves;
@@ -40,16 +40,16 @@ public:
 	~ChessPiece();
 
 	// Gets all possible moves on where this chesspiece and move to given a vector board of the locations of all the other pieces.
-	virtual vector<Coordinate> getAllMoves(const Coordinate position, const ChessPiece ***board);
+	virtual vector<Coordinate> getAllMoves(const Coordinate position, ChessPiece* board[8][8]);
 
 	// Gets all possible locations where this piece would be under attack given its current position
-	virtual vector<Coordinate> getAllDangerPositions(const Coordinate position, const ChessPiece ***board) const;
+	virtual vector<Coordinate> getAllDangerPositions(const Coordinate position, ChessPiece* board[8][8]) const;
 
 	// Gets all possible locations where this piece can eat another piece
-	virtual vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, const ChessPiece ***board) const;
+	virtual vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const;
 
 	// Checks if the current piece can move to the current position noted down
-	virtual bool canMove(const Coordinate position, const string destination, const ChessPiece ***board) const;  
+	virtual bool canMove(const Coordinate position, const string destination, ChessPiece* board[8][8]) const;  
 
 	Coordinate parseCoordinate(const std::string pos);
 
@@ -74,7 +74,7 @@ public:
 	
   	SubscriptionType subType() override;
 
-	virtual bool isChecked(ChessPiece ***board);
+	virtual bool isChecked(ChessPiece* board[8][8]) const;
 
 	// Move Piece
 	void move(Coordinate moveHere);

@@ -21,7 +21,7 @@ Board::Board() :
     }
 }
 
-bool Board::isValidSetup() const {
+bool Board::isValidSetup()  {
     // Check if there is exactly one white king and one black king
     int whiteKingCount = 0;
     int blackKingCount = 0;
@@ -37,6 +37,7 @@ bool Board::isValidSetup() const {
     // Assume there's a function isValidMove in ChessPiece that checks if a move is valid
     // and a function isChecked in ChessPiece that checks if a king is in check
     for (int row = 0; row < 8; ++row) {
+        Coordinate temp = (1, 0);
         for (int col = 0; col < 8; ++col) {
             if (chessBoard[row][col]->getStrType() == "K") {
                 if (chessBoard[row][col]->getColour() == Colour::White) {
@@ -53,6 +54,10 @@ bool Board::isValidSetup() const {
             }
         }
     }
+    if (whiteKingCount == 1 && blackKingCount == 1) {
+        return true;
+    }
+    return false;
 }
 
 
@@ -90,6 +95,15 @@ void Board::init(const std::string position, const std::string type, const std::
         chessBoard[row][col] = new Pawn(position, color);
     }
     // Handle other piece types as needed
+}
+
+
+void Board::removePiece(const string position){
+    Coordinate coord = parseCoordinate(position);
+    int row = coord.getRow();
+    int col = coord.getCol();
+    delete chessBoard[row][col];
+    chessBoard[row][col] = nullptr;
 }
 
 

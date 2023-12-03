@@ -8,7 +8,7 @@ Queen::Queen(string pos, string white)
     // You can add additional initialization for the Queen if needed
 }
 
-vector<Coordinate> Queen::getAllMoves(const Coordinate position, const ChessPiece ***board) {
+vector<Coordinate> Queen::getAllMoves(const Coordinate position,ChessPiece* board[8][8]) {
     // Implement the Queen's move logic here
     vector<Coordinate> moves;
 
@@ -48,7 +48,7 @@ vector<Coordinate> Queen::getAllMoves(const Coordinate position, const ChessPiec
     return moves;
 }
 
-vector<Coordinate> Queen::getAllAttackMoves(const vector<Coordinate> moves, const ChessPiece ***board) const {
+vector<Coordinate> Queen::getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const {
     // Implement the Queen's attack moves logic here
     vector<Coordinate> attackMoves;
 
