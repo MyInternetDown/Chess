@@ -19,13 +19,20 @@
 
 using namespace std;
 
+
+
+
 class Board {
+
+
+
 private:
+
 	bool turn;
 	MoveType player1;
-	vector<ChessPiece> player1Pieces;
+	vector<ChessPiece*> player1Pieces;
 	MoveType player2;
-	vector<ChessPiece> player2Pieces;
+	vector<ChessPiece*> player2Pieces;
 	bool isWon;
 	TextDisplay *td; // The text display.
   	GraphicsDisplay *gd; // graphics display
@@ -36,7 +43,9 @@ private:
 	
 
 public:
+
 	ChessPiece *chessBoard[8][8];
+	char chessDisplay[8][8];
     // Constructor
     Board();
 
@@ -85,6 +94,7 @@ public:
 	void attach(Observer *o);
 
 	void detach(Observer *o);
+
 };
 
 #endif

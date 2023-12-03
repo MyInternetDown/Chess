@@ -7,11 +7,11 @@ class King : public ChessPiece {
 
 public:
     // Constructor
-    King(string pos, string white);
+    King(Coordinate pos, string white);
 
     // Override the getAllMoves function for the King
-    vector<Coordinate> getAllMoves(const Coordinate position, ChessPiece* board[8][8]) override;
-    vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const override;
+    void getAllMoves(ChessPiece* board[8][8]) override;
+    vector<Coordinate> getAllAttackMoves(ChessPiece* board[8][8]) const override;
     bool isChecked(ChessPiece* board[8][8]) const override;
     // Get whether the king has moved
 };

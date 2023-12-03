@@ -20,7 +20,7 @@ TextDisplay::TextDisplay()
 
 
 // When notified, checks the cell and changes the value if it is on or off
-void TextDisplay::notify(Board &cb)
+void TextDisplay::notify(char chessBoard[8][8])
 {
 
 }

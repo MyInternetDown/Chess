@@ -2,39 +2,37 @@
 
 #include "rook.h"
 
-Rook::Rook(string pos, string white)
+Rook::Rook(Coordinate pos, string white)
     : ChessPiece(pos, white, "R"){  // Initialize hasMoved to false
     // You can add additional initialization for the Rook if needed
 }
 
-vector<Coordinate> Rook::getAllMoves(const Coordinate position, ChessPiece* board[8][8]) {
-    vector<Coordinate> moves;
+void Rook::getAllMoves(ChessPiece* board[8][8]) {
+    possibleMoves.clear();
 
-    const int row = position.getRow();
-    const int col = position.getCol();
+    const int row = location.getRow();
+    const int col = location.getCol();
 
     // Rook moves vertically
     for (int newRow = 0; newRow < 8; ++newRow) {
         if (newRow != row) {
-            moves.push_back(Coordinate(newRow, col));
+            possibleMoves.push_back(Coordinate(newRow, col));
         }
     }
 
     // Rook moves horizontally
     for (int newCol = 0; newCol < 8; ++newCol) {
         if (newCol != col) {
-            moves.push_back(Coordinate(row, newCol));
+            possibleMoves.push_back(Coordinate(row, newCol));
         }
     }
-
-    return moves;
 }
 
-vector<Coordinate> Rook::getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const {
+vector<Coordinate> Rook::getAllAttackMoves(ChessPiece* board[8][8]) const {
     // Implement the Rook's attack moves logic here
     vector<Coordinate> attackMoves;
 
-    for (const auto &move : moves) {
+    for (const auto &move : possibleMoves) {
         // Add move to attack moves if an opponent's piece is encountered
         if (board[move.getRow()][move.getCol()]->getColour() != getColour()) {
             attackMoves.push_back(move);

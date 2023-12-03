@@ -3,16 +3,16 @@
 #include "king.h"
 #include <iostream>
 
-King::King(string pos, string white)
+King::King(Coordinate pos, string white)
     : ChessPiece(pos, white, "K") {  // Initialize hasMoved to false
     // You can add additional initialization for the King if needed
 }
 
-vector<Coordinate> King::getAllMoves(const Coordinate position, ChessPiece* board[8][8]) {
-    vector<Coordinate> moves;
+void King::getAllMoves(ChessPiece* board[8][8]) {
+    possibleMoves.clear();
 
-    const int row = position.getRow();
-    const int col = position.getCol();
+    const int row = location.getRow();
+    const int col = location.getCol();
 
     // King moves one square in any direction
     vector<pair<int, int>> kingMoves = {
@@ -27,7 +27,7 @@ vector<Coordinate> King::getAllMoves(const Coordinate position, ChessPiece* boar
 
         if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8 &&
             (board[newRow][newCol] == nullptr || board[newRow][newCol]->getColour() != getColour())) {
-            moves.push_back({newRow, newCol});
+            possibleMoves.push_back({newRow, newCol});
         }
     }
 
@@ -37,25 +37,23 @@ vector<Coordinate> King::getAllMoves(const Coordinate position, ChessPiece* boar
         if (board[row][0]->getPiece() == PieceType::R && board[row][0]->getColour() == getColour()
         && !board[row][0]->moved() && board[row][col - 1] == nullptr && board[row][col - 2] == nullptr)
         {
-            moves.push_back({row, col - 2});
+            possibleMoves.push_back({row, col - 2});
         }
 
         if (board[row][7]->getPiece() == PieceType::R && board[row][7]->getColour() == getColour()
         && !board[row][7]->moved() && board[row][col + 1] == nullptr && board[row][col + 2] == nullptr) {
-            moves.push_back({row, col + 2});
+            possibleMoves.push_back({row, col + 2});
         }
     }
 
-
-    return moves;
 }
 
 
-vector<Coordinate> King::getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const {
+vector<Coordinate> King::getAllAttackMoves(ChessPiece* board[8][8]) const {
     // to do
     vector<Coordinate> attackMoves;
 
-    for (const auto &move : moves) {
+    for (const auto &move : possibleMoves) {
         // Add move to attack moves if an opponent's piece is encountered
         if (board[move.getRow()][move.getCol()]->getColour() != getColour()) {
             attackMoves.push_back(move);

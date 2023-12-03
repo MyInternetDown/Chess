@@ -3,20 +3,20 @@
 #include "knight.h"
 #include <iostream>  // Include necessary headers for Coordinate class
 
-Knight::Knight(string pos, string white)
+Knight::Knight(Coordinate pos, string white)
     : ChessPiece(pos, white, "N") {
     // You can add additional initialization for the Knight if needed
 }
 
-vector<Coordinate> Knight::getAllMoves(const Coordinate position, ChessPiece* board[8][8]) {
+void Knight::getAllMoves(ChessPiece* board[8][8]) {
     // Implement the Knight's move logic here
-    vector<Coordinate> moves;
+    possibleMoves.clear();
 
     // Knight moves in an L-shaped pattern
     // Adding all possible L-shaped moves for the Knight
 
-    const int row = position.getRow();
-    const int col = position.getCol();
+    const int row = location.getRow();
+    const int col = location.getCol();
 
     // Possible moves relative to the current position
     vector<pair<int, int>> knightMoves = {
@@ -33,19 +33,18 @@ vector<Coordinate> Knight::getAllMoves(const Coordinate position, ChessPiece* bo
         if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
             // Check if the destination is empty or contains an opponent's piece
             if (board[newRow][newCol] == nullptr || board[newRow][newCol]->getColour() != getColour()) {
-                moves.push_back(Coordinate(newRow, newCol));
+                possibleMoves.push_back(Coordinate(newRow, newCol));
             }
         }
     }
 
-    return moves;
 }
 
-vector<Coordinate> Knight::getAllAttackMoves(const vector<Coordinate> moves,ChessPiece* board[8][8]) const {
+vector<Coordinate> Knight::getAllAttackMoves(ChessPiece* board[8][8]) const {
     // Implement the Knight's attack moves logic here
     vector<Coordinate> attackMoves;
 
-    for (const auto &move : moves) {
+    for (const auto &move : possibleMoves) {
         // Add move to attack moves if an opponent's piece is encountered
         if (board[move.getRow()][move.getCol()]->getColour() != getColour()) {
             attackMoves.push_back(move);

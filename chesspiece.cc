@@ -5,8 +5,8 @@
 
 
 // Constructor
-ChessPiece::ChessPiece(string pos, string white, string type)
-    : location(parseCoordinate(pos)),
+ChessPiece::ChessPiece(Coordinate pos, string white, string type)
+    : location(pos),
       piecetype(parsePieceType(type)),
       colour(parseColour(white)),
       hasMoved(false){
@@ -66,15 +66,6 @@ void ChessPiece::setEmpty() {
     possibleMoves.clear();
 }
 
-
-
-Coordinate ChessPiece::parseCoordinate(const std::string pos) {
-    Coordinate c;
-    istringstream iss(pos);
-    iss >> c;
-    return c;
-}
-
 Colour ChessPiece::getColour() const{
     return colour;
 }
@@ -87,7 +78,7 @@ PieceType ChessPiece::getPiece() const{
     return piecetype;
 }
 
-std::vector<Coordinate> ChessPiece::getAllDangerPositions(const Coordinate position, ChessPiece* board[8][8]) const {
+std::vector<Coordinate> ChessPiece::getAllDangerPositions(ChessPiece* board[8][8]) const {
     std::vector<Coordinate> dangerSquares;
 
     // Iterate through the entire board
@@ -119,6 +110,14 @@ ChessPiece::~ChessPiece() {
 string ChessPiece::getStrType() const {
 }
 
+char ChessPiece::getCharType() const {
+    if (colour == White) {
+        return getCharFromPieceType(piecetype);
+    } else if (colour == Black) {
+        return getCharFromPieceType(piecetype) + 32;
+    }
+}
+
 bool ChessPiece::moved() const{
     return hasMoved;
 }
@@ -133,20 +132,12 @@ bool ChessPiece::isEmpty() const {
 }
 
 
-void ChessPiece::notify(Board *cb){
-    getAllMoves(location, cb->chessBoard);
-}
-	
-SubscriptionType subType(){
-    return SubscriptionType::All;
-}
 
 
 //void move(vector<int> moveHere);
 
 vector<int> getPos(const std::string &cmd)
 {
-
 	int col = cmd[0] - 'a';
 	int row = cmd[1] - '1';
 	vector<int> position = {row, col};
@@ -161,3 +152,4 @@ std::string getCor(int index) {
     char colChar = 'a' + col;
     return std::string(1, colChar) + std::to_string(row + 1);
 }
+

@@ -10,18 +10,18 @@
 
 class Board;
 
-class ChessPiece : public Observer{
-	Coordinate location;
+class ChessPiece {
 	PieceType piecetype;
 	Colour colour;
 	string pos;
 	
 
 public:
+	Coordinate location;
 	vector<Coordinate> possibleMoves;
 	bool hasMoved;
 	// Constructor of the Chesspiece
-	ChessPiece(string pos, string white, string type);
+	ChessPiece(Coordinate pos, string white, string type);
 
 
     // Copy constructor
@@ -38,13 +38,13 @@ public:
 	~ChessPiece();
 
 	// Gets all possible moves on where this chesspiece and move to given a vector board of the locations of all the other pieces.
-	virtual vector<Coordinate> getAllMoves(const Coordinate position, ChessPiece* board[8][8]) = 0;
+	virtual void getAllMoves(ChessPiece* board[8][8]) = 0;
 
 	// Gets all possible locations where this piece would be under attack given its current position
-	virtual vector<Coordinate> getAllDangerPositions(const Coordinate position, ChessPiece* board[8][8]) const;
+	virtual vector<Coordinate> getAllDangerPositions(ChessPiece* board[8][8]) const;
 
 	// Gets all possible locations where this piece can eat another piece
-	virtual vector<Coordinate> getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const =0;
+	virtual vector<Coordinate> getAllAttackMoves(ChessPiece* board[8][8]) const =0;
 
 	// Checks if the current piece can move to the current position noted down
 	// to do
@@ -57,6 +57,9 @@ public:
 	// Get the position
 	virtual Coordinate getPos() const;
 
+	int getPieceRow() const;
+	int getPieceCol() const;
+
 	virtual PieceType getPiece() const;
 	// Get the vecotrs of the possible moves
 	//virtual vector<vector<int>> getPossibleMoves();
@@ -67,11 +70,9 @@ public:
 	// Check is Empty
 	virtual bool isEmpty() const;
 
-	void setEmpty();
+	char getCharType() const;
 
-	void notify(Board *cb) override;
-	
-  	SubscriptionType subType();
+	void setEmpty();
 
 	virtual bool isChecked(ChessPiece* board[8][8]) const;
 

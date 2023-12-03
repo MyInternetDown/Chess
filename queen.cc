@@ -3,20 +3,20 @@
 #include "queen.h"
 #include <iostream>
 
-Queen::Queen(string pos, string white)
+Queen::Queen(Coordinate pos, string white)
     : ChessPiece(pos, white, "Q") {
     // You can add additional initialization for the Queen if needed
 }
 
-vector<Coordinate> Queen::getAllMoves(const Coordinate position,ChessPiece* board[8][8]) {
+void Queen::getAllMoves(ChessPiece* board[8][8]) {
     // Implement the Queen's move logic here
     vector<Coordinate> moves;
 
     // Queen moves diagonally and linearly (horizontally and vertically)
     // Adding all possible moves for the Queen
 
-    const int row = position.getRow();
-    const int col = position.getCol();
+    const int row = location.getRow();
+    const int col = location.getCol();
 
     // Possible moves relative to the current position
     vector<pair<int, int>> queenMoves = {
@@ -32,9 +32,9 @@ vector<Coordinate> Queen::getAllMoves(const Coordinate position,ChessPiece* boar
         while (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
             // Check if the destination is empty or contains an opponent's piece
             if (board[newRow][newCol] == nullptr) {
-                moves.push_back(Coordinate(newRow, newCol));
+                possibleMoves.push_back(Coordinate(newRow, newCol));
             } else if (board[newRow][newCol]->getColour() != getColour()) {
-                moves.push_back(Coordinate(newRow, newCol));
+                possibleMoves.push_back(Coordinate(newRow, newCol));
                 break;  // Stop if an opponent's piece is encountered
             } else {
                 break;  // Stop if own piece is encountered
@@ -45,14 +45,13 @@ vector<Coordinate> Queen::getAllMoves(const Coordinate position,ChessPiece* boar
         }
     }
 
-    return moves;
 }
 
-vector<Coordinate> Queen::getAllAttackMoves(const vector<Coordinate> moves, ChessPiece* board[8][8]) const {
+vector<Coordinate> Queen::getAllAttackMoves(ChessPiece* board[8][8]) const {
     // Implement the Queen's attack moves logic here
     vector<Coordinate> attackMoves;
 
-    for (const auto &move : moves) {
+    for (const auto &move : possibleMoves) {
         // Add move to attack moves if an opponent's piece is encountered
         if (board[move.getRow()][move.getCol()]->getColour() != getColour()) {
             attackMoves.push_back(move);

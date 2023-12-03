@@ -23,6 +23,16 @@ map<char, PieceType> charToPiece = {
     { 'V', PieceType::V }
 };
 
+map<PieceType, char> pieceToChar = {
+    { PieceType::P, 'P' },
+    { PieceType::B, 'B' },
+    { PieceType::N, 'N' },
+    { PieceType::R, 'R' },
+    { PieceType::Q, 'Q' },
+    { PieceType::K, 'K' },
+    { PieceType::V, 'V' }
+};
+
 map<string, PieceType> strToPiece = {
     { "P", PieceType::P },
     { "B", PieceType::B },
@@ -60,4 +70,12 @@ PieceType parsePieceType(const std::string typeStr) {
         return it->second;
     }
     throw std::invalid_argument("Invalid piece type string");
+}
+
+char getCharFromPieceType(PieceType piece) {
+    auto it = pieceToChar.find(piece);
+    if (it != pieceToChar.end()) {
+        return it->second;
+    }
+    return ' ';  // Return a default value if not found
 }

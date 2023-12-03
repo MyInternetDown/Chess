@@ -10,7 +10,7 @@ class TextDisplay: public Observer {
  public:
   TextDisplay();
 
-  void notify(Board &cb) override;
+  void notify(char board[8][8]) override;
   SubscriptionType subType() override;
 
   ~TextDisplay();
