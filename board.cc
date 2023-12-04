@@ -306,9 +306,10 @@ void Board::move() {
                     return;
                 }
             }
-        }
-        if (player1 == L2) {
-            
+        } else if (player1 == L2) {
+            for (ChessPiece* piece : player1Pieces) {
+                
+            }
         }
     }
 
@@ -340,6 +341,58 @@ Board::~Board() {
     //delete gd;
     observers.clear();
 }
+bool Board::checkStale(Colour player) {
+    if (player == White) {
+        for (ChessPiece* piece : player1Pieces) {
+            if(piece->getPiece() == K) {
+                if (piece->isChecked(chessBoard) == false) {
+                    if (piece->possibleMoves.size() == 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+    } else {
+        for (ChessPiece* piece : player2Pieces) {
+            if(piece->getPiece() == K) {
+                if (piece->isChecked(chessBoard) == false) {
+                    if (piece->possibleMoves.size() == 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+vector<int> Board::checkWin(Colour player) {
+    if (player == White) {
+        for (ChessPiece* piece : player1Pieces) {
+            if(piece->getPiece() == K) {
+                if (piece->isChecked(chessBoard) == true) {
+                    if (piece->possibleMoves.size() == 0) {
+                        isWon = true;
+                        return {1, 0};
+                    }
+                }
+            }
+        }
+    } else {
+        for (ChessPiece* piece : player2Pieces) {
+            if(piece->getPiece() == K) {
+                if (piece->isChecked(chessBoard) == true) {
+                    if (piece->possibleMoves.size() == 0) {
+                        isWon = true;
+                        return {0, 1};
+                    }
+                }
+            }
+        }
+    }
+    return {0, 0};
+}
+
 
 
 void Board::notifyAllObservers() {

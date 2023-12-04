@@ -6,6 +6,7 @@
 class King : public ChessPiece {
 
 public:
+    bool checked;
     // Constructor
     King(Coordinate pos, string white);
 

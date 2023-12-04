@@ -86,6 +86,10 @@ public:
     // Function to check if a position is within the bounds of the board
     bool isValidPosition(const Coordinate &pos) const;
 
+	vector<int> checkWin(Colour player);
+	
+	bool checkStale(Colour player) ;
+
     // Destructor
 
 	void changeTurn(string color);
