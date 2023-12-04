@@ -35,7 +35,7 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
 
     
     
-    if (!hasMoved) {
+    if (!moved()) {
         if (col == 4 && board[row][0]->getPiece() == PieceType::R && board[row][0]->getColour() == getColour()
         && !board[row][0]->moved() && board[row][col - 1] == nullptr && board[row][col - 2] == nullptr)
         {
