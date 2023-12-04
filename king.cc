@@ -34,22 +34,20 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
     }
 
     
-    // to do castle
-    /*
-    // castling (but no checks yet)
+    
     if (!hasMoved) {
-        if (board[row][0]->getPiece() == PieceType::R && board[row][0]->getColour() == getColour()
+        if (col == 4 && board[row][0]->getPiece() == PieceType::R && board[row][0]->getColour() == getColour()
         && !board[row][0]->moved() && board[row][col - 1] == nullptr && board[row][col - 2] == nullptr)
         {
             possibleMoves.push_back({row, col - 2});
         }
 
-        if (board[row][7]->getPiece() == PieceType::R && board[row][7]->getColour() == getColour()
+        if (col == 4 && board[row][7]->getPiece() == PieceType::R && board[row][7]->getColour() == getColour()
         && !board[row][7]->moved() && board[row][col + 1] == nullptr && board[row][col + 2] == nullptr) {
             possibleMoves.push_back({row, col + 2});
         }
     }
-    */
+    
     
 
 }
