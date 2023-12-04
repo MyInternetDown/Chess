@@ -14,16 +14,48 @@ void Rook::getAllMoves(ChessPiece* board[8][8]) {
     const int col = location.getCol();
 
     // Rook moves vertically
-    for (int newRow = 0; newRow < 8; ++newRow) {
-        if (newRow != row) {
+    for (int newRow = row + 1; newRow < 8; ++newRow) {
+        if (board[newRow][col] == nullptr) {
             possibleMoves.push_back(Coordinate(newRow, col));
+        } else if (board[newRow][col]->getColour() != getColour()) {
+            possibleMoves.push_back(Coordinate(newRow, col));
+	    break;
+        } else {
+            break;
+        }
+    }
+    for (int newRow = row - 1; newRow >= 0; --newRow) {
+        if (board[newRow][col] == nullptr) {
+            possibleMoves.push_back(Coordinate(newRow, col));
+        } else if (board[newRow][col]->getColour() != getColour()) {
+            possibleMoves.push_back(Coordinate(newRow, col));
+	    break;
+        } else {
+            break;
         }
     }
 
+
     // Rook moves horizontally
-    for (int newCol = 0; newCol < 8; ++newCol) {
-        if (newCol != col) {
+    for (int newCol = col + 1; newCol < 8; ++newCol) {
+        if (board[row][newCol] == nullptr) {
             possibleMoves.push_back(Coordinate(row, newCol));
+        } else if (board[row][newCol]->getColour() != getColour()) {
+            possibleMoves.push_back(Coordinate(row, newCol));
+	    break;
+        } else {
+            break;
+        }
+    }
+
+    for (int newCol = col - 1; newCol >= 0; --newCol) {
+        if (board[row][newCol] == nullptr) {
+            possibleMoves.push_back(Coordinate(row, newCol));
+        } else if (board[row][newCol]->getColour() != getColour()) {
+            possibleMoves.push_back(Coordinate(row, newCol));
+	    break;
+        } else {
+            break;
         }
     }
 }

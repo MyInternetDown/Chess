@@ -30,7 +30,7 @@ Board::Board() :
 }
 
 bool Board::isValidSetup()  {
-    cerr << "enter valid" << endl;
+    //cerr << "enter valid" << endl;
     gameStart = false;
     // Check if there is exactly one white king and one black king
     int whiteKingCount = 0;
@@ -39,13 +39,13 @@ bool Board::isValidSetup()  {
     // Check if no pawns are on the first or last row
     for (int col = 0; col < 8; ++col) {
         if (chessBoard[0][col] != nullptr && chessBoard[7][col] != nullptr){
-            cerr << col << "checking......" << endl;
+            //cerr << col << "checking......" << endl;
             if (chessBoard[0][col]->getCharType() == 'p' || chessBoard[7][col]->getCharType() == 'P') {
                 return false;  // Pawn found on the first or last row
             }
         }
     }
-    cerr << "pawn ok" << endl;
+    //cerr << "pawn ok" << endl;
 
     // Check neither king is in check (you need to implement this logic in ChessPiece)
     // Assume there's a function isValidMove in ChessPiece that checks if a move is valid
@@ -215,7 +215,7 @@ void Board::defaultSetup(){
 void Board::removePiece(Coordinate coord, bool needNotify){
     int row = coord.getRow();
     int col = coord.getCol();
-    cerr << "remove" << endl;
+    //cerr << "remove" << endl;
     if (chessBoard[row][col] != nullptr) {
         cerr << "in remove not null" << endl;
         if (chessBoard[row][col]->getColour() == White) {
@@ -243,7 +243,7 @@ void Board::removePiece(Coordinate coord, bool needNotify){
         }
     }
 
-    cerr << "out" << endl;
+    //cerr << "out" << endl;
     if (needNotify) {
         notifyAllObservers();
     }
@@ -255,6 +255,7 @@ void Board::updatePieces() {
         for (int col = 0; col < 8; ++col) {
             // create an empty pointer to that place
             if (chessBoard[row][col] != nullptr) {
+                cerr << "updatein  " << row << " " << col << endl;
                 chessBoard[row][col]->getAllMoves(chessBoard);
             }
         }
@@ -291,9 +292,10 @@ void Board::changeTurn(string color) {
 
 void Board::move() {
     // check error handling if ther are no more pieces to move to do
-    cerr << " computer time to move" << endl;
+    
     bool found = false;
     if (turn && player1 != H) {
+        cerr << " computer 1 " << endl;
         if (player1 == L1) {
             while (!found) {
                 int randomIndex = rand() % player1Pieces.size();
@@ -301,12 +303,14 @@ void Board::move() {
                 if (!piece->possibleMoves.empty()) {
                     found = true;
                     absMove(piece->location, piece->getRandMove());
+                    return;
                 }
             }
         }
     }
 
     if (!turn && player2 != H) {
+        cerr << " computer 2" << endl;
         //cerr << "computer turn" << endl;
         if (player2 == L1) {
             //cerr << " level robot" <<endl;

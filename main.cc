@@ -12,6 +12,7 @@ int main() {
   Board game;
   // You will need to make changes this code.
   int point1, point2 = 0;
+  int count = 1;
 
   while (true) {
     cin >> cmd;
@@ -38,6 +39,8 @@ int main() {
       } else {
         game.move();
       }
+      cerr << count << endl;
+      count ++;
     }
     else if (cmd == "setup") {
       string cmd2;
