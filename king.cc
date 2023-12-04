@@ -14,6 +14,8 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
     const int row = location.getRow();
     const int col = location.getCol();
 
+    cerr << "enter king moves" << endl;
+
     // King moves one square in any direction
     vector<pair<int, int>> kingMoves = {
         {-1, -1}, {-1, 0}, {-1, 1},
@@ -32,6 +34,8 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
     }
 
     
+    // to do castle
+    /*
     // castling (but no checks yet)
     if (!hasMoved) {
         if (board[row][0]->getPiece() == PieceType::R && board[row][0]->getColour() == getColour()
@@ -45,6 +49,8 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
             possibleMoves.push_back({row, col + 2});
         }
     }
+    */
+    
 
 }
 

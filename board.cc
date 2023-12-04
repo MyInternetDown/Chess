@@ -350,6 +350,7 @@ void Board::detach(Observer *o){
 
 
 void Board::humanMove(string startPos, string endPos, char promote) {
+    cerr << "enter human mover" << endl;
     Coordinate coordStart;
     Coordinate coordEnd;
     istringstream pos1(startPos);
@@ -357,6 +358,7 @@ void Board::humanMove(string startPos, string endPos, char promote) {
     pos1 >> coordStart;
     pos2 >> coordEnd;
     if (canMove(coordStart, coordEnd)) {
+        cerr << "can moves piece" << endl;
         absMove(coordStart, coordEnd);
     }
 }

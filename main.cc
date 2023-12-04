@@ -33,6 +33,7 @@ int main() {
         ||(game.player2 == H && !game.getTurn())) {
         string moveAt, moveTo;
         cin >> moveAt >> moveTo;
+        cerr << moveAt << " " << moveTo << endl;
         game.humanMove(moveAt, moveTo);
       } else {
         game.move();

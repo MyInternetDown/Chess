@@ -1,11 +1,8 @@
-game computer1 computer1
+game human computer1
 setup
-+ K a1
-+ k a6
-+ N b2
-+ n c5
+default
 done
+move a2 a3
 move
-move
-move
+
 
