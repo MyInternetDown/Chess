@@ -13,7 +13,7 @@ void Pawn::getAllMoves(ChessPiece* board[8][8]) {
     const int row = location.getRow();
     const int col = location.getCol();
 
-    int forwardDirection = (getColour() == Colour::White) ? -1 : 1;
+    int forwardDirection = (getColour() == Colour::White) ? 1 : -1;
 
     // Pawn moves forward
     int newRow = row + forwardDirection;
