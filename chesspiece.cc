@@ -149,9 +149,8 @@ void ChessPiece::getAllEvadeMoves(ChessPiece* board[8][8]) {
     }
 }
 
-void getAllBlockKing(ChessPiece* board[8][8]) {
+//void getAllBlockKing(ChessPiece* board[8][8]) {
 
-}
 
 
 ChessPiece::~ChessPiece() {

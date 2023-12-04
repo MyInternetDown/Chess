@@ -34,6 +34,8 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
         }
     }
 
+
+
     
     
     if (!moved()) {
@@ -46,6 +48,12 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
         if (col == 4 && board[row][7] != nullptr && board[row][7]->getPiece() == PieceType::R && board[row][7]->getColour() == getColour()
         && !board[row][7]->moved() && board[row][col + 1] == nullptr && board[row][col + 2] == nullptr) {
             possibleMoves.push_back({row, col + 2});
+        }
+    }
+
+    for (const auto& coord : possibleMoves) {
+        if (std::find(dangerSquares.begin(), dangerSquares.end(), coord) == dangerSquares.end()) {
+            evadeMoves.push_back(coord);
         }
     }
     
@@ -62,11 +70,13 @@ bool King::isChecked(ChessPiece* board[8][8]) {
     for (int i = 0; i < 8; i++){
         for (int j = 0; j < 8; j++) {
             if(board[i][j] != nullptr && i != row && j != col) {
-                //cerr << "found piece validating" << endl;
+
+                cerr << "found piece validating" << endl;
                 for (const Coordinate &move: board[i][j]->possibleMoves) {
+                    cerr << board[i][j]->getCharType() << " ...." << move << endl;
                     if (location == move) {
                         cerr << "location found equal" << endl;
-                        getBlockPlaces(board[i][j]->location, board);
+                        //getBlockPlaces(board[i][j]->location, board);
                         return true;
                     }
                 }
@@ -80,6 +90,5 @@ void King::getAllCheckMoves(ChessPiece* board[8][8]) {
     checkMoves.clear();
 }
 
-void getBlockPlaces(Coordinate attacker, ChessPiece* board[8][8]) {
+//void getBlockPlaces(Coordinate attacker, ChessPiece* board[8][8]) {
 
-}

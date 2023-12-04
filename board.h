@@ -90,7 +90,7 @@ public:
 
 	void checkWin(Colour player);
 	
-	bool checkStale(Colour player) ;
+	bool checkStale(Colour player);
 
     // Destructor
 

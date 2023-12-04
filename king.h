@@ -15,7 +15,7 @@ public:
     bool isChecked(ChessPiece* board[8][8]) override;
     // Get whether the king has moved
     void getAllCheckMoves(ChessPiece* board[8][8]) override;
-    void getBlockPlaces(Coordinate attacker, ChessPiece* board[8][8]);
+    //void getBlockPlaces(Coordinate attacker, ChessPiece* board[8][8]);
 };
 
 #endif
