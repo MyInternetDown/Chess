@@ -28,6 +28,19 @@ void TextDisplay::notify(char chessBoard[8][8])
       theDisplay[i][j] = chessBoard[i][j];
     }
   }
+
+  int count = 8;
+  for (int i = 7; i >= 0; --i)
+  {
+    cerr << count << " "; 
+    --count;
+    for (int j = 0; j < 8; ++j)
+    {
+      cerr << theDisplay[i][j];
+    }
+    cerr << endl;
+  }
+  cerr << "  abcdefgh" << endl;
 }
 
 TextDisplay::~TextDisplay() {}

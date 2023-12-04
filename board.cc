@@ -20,10 +20,10 @@ Board::Board() :
         for (int col = 0; col < 8; ++col) {
             // create an empty pointer to that place
             chessBoard[row][col] = nullptr;
-            if ((row * 8 + col) % 2 == 0) {
-                chessDisplay[row][col] = WHITE;
-            } else {
+            if ((row + col) % 2 == 0) {
                 chessDisplay[row][col] = BLACK;
+            } else {
+                chessDisplay[row][col] = WHITE;
             }
         }
     }
@@ -83,6 +83,7 @@ void Board::create(const string playerA, const string playerB){
     //cerr << "3" << endl;
     player2 = convertStringToMoveType(playerB);
     //cerr << "4" << endl;
+
 }
 
 bool Board::getTurn(){
@@ -156,7 +157,6 @@ void Board::init(const std::string position, const std::string type, const std::
     }
 
     chessDisplay[row][col] = chessBoard[row][col]->getCharType();
-
 
     notifyAllObservers();
     // Handle other piece types as needed
