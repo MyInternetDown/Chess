@@ -46,29 +46,3 @@ void Bishop::getAllMoves(ChessPiece* board[8][8]) {
 
 }
 
-vector<Coordinate> Bishop::getAllAttackMoves(ChessPiece* board[8][8]) const {
-    // Implement the Bishop's attack moves logic here
-    vector<Coordinate> attackMoves;
-
-    for (const auto &move : possibleMoves) {
-        // Add move to attack moves if an opponent's piece is encountered
-        if (board[move.getRow()][move.getCol()]->getColour() != getColour()) {
-            attackMoves.push_back(move);
-        }
-    }
-
-    return attackMoves;
-}
-
-vector<Coordinate> Bishop::getAllCheckMoves(ChessPiece* board[8][8]) {
-    vector<Coordinate> checkMoves;
-
-    for (const auto &move : possibleMoves) {
-        // Add move to attack moves if an opponent's piece is encountered
-        if (board[move.getRow()][move.getCol()]->getPiece() == K) {
-            checkMoves.push_back(move);
-        }
-    }
-
-    return checkMoves;
-}

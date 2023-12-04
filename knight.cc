@@ -39,7 +39,7 @@ void Knight::getAllMoves(ChessPiece* board[8][8]) {
     }
 
 }
-
+/*
 vector<Coordinate> Knight::getAllAttackMoves(ChessPiece* board[8][8]) const {
     // Implement the Knight's attack moves logic here
     vector<Coordinate> attackMoves;
@@ -66,3 +66,4 @@ vector<Coordinate> Knight::getAllCheckMoves(ChessPiece* board[8][8]) {
 
     return checkMoves;
 }
+*/

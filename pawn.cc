@@ -39,7 +39,7 @@ void Pawn::getAllMoves(ChessPiece* board[8][8]) {
     }
 }
 
-
+/*
 vector<Coordinate> Pawn::getAllAttackMoves(ChessPiece* board[8][8]) const {
     // Implement the Queen's attack moves logic here
     vector<Coordinate> attackMoves;
@@ -66,4 +66,5 @@ vector<Coordinate> Pawn::getAllCheckMoves(ChessPiece* board[8][8]) {
 
     return checkMoves;
 }
+*/
 

@@ -13,12 +13,14 @@ public:
 
     // Override the getAllMoves function for the Pawn
     void getAllMoves(ChessPiece* board[8][8]) override;
-    vector<Coordinate> getAllAttackMoves(ChessPiece* board[8][8]) const override;
+    
+    //vector<Coordinate> getAllAttackMoves(ChessPiece* board[8][8]) const override;
     //bool promote(vector<int> pos);
     //bool enPassant(vector<int>pos, vector<vector<int>>prevMove);
 
     // Get whether the pawn has moved
-    vector<Coordinate> getAllCheckMoves(ChessPiece* board[8][8]) override;
+    //vector<Coordinate> getAllCheckMoves(ChessPiece* board[8][8]) override;
+    
 };
 
 #endif

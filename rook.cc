@@ -59,6 +59,7 @@ void Rook::getAllMoves(ChessPiece* board[8][8]) {
         }
     }
 }
+/*
 
 vector<Coordinate> Rook::getAllAttackMoves(ChessPiece* board[8][8]) const {
     // Implement the Rook's attack moves logic here
@@ -87,3 +88,4 @@ vector<Coordinate> Rook::getAllCheckMoves(ChessPiece* board[8][8]) {
     return checkMoves;
 }
 
+*/

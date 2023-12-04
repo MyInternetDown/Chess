@@ -46,7 +46,7 @@ void Queen::getAllMoves(ChessPiece* board[8][8]) {
     }
 
 }
-
+/*
 vector<Coordinate> Queen::getAllAttackMoves(ChessPiece* board[8][8]) const {
     // Implement the Queen's attack moves logic here
     vector<Coordinate> attackMoves;
@@ -73,3 +73,4 @@ vector<Coordinate> Queen::getAllCheckMoves(ChessPiece* board[8][8]) {
 
     return checkMoves;
 }
+*/

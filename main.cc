@@ -38,6 +38,7 @@ int main() {
         game.humanMove(moveAt, moveTo);
       } else {
         game.move();
+        
       }
       cerr << count << endl;
       count ++;

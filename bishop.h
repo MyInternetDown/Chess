@@ -11,10 +11,6 @@ public:
     // Override the getAllMoves function for the Bishop
     void getAllMoves(ChessPiece* board[8][8]) override;
 
-    // Override the getAllAttackMoves function for the Bishop
-    vector<Coordinate> getAllAttackMoves(ChessPiece* board[8][8]) const override;
-
-    vector<Coordinate> getAllCheckMoves(ChessPiece* board[8][8]) override;
 };
  
 

@@ -308,7 +308,7 @@ void Board::move() {
             }
         } else if (player1 == L2) {
             for (ChessPiece* piece : player1Pieces) {
-                
+
             }
         }
     }

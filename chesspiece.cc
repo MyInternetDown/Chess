@@ -81,18 +81,45 @@ PieceType ChessPiece::getPiece() const{
     return piecetype;
 }
 
-std::vector<Coordinate> ChessPiece::getAllDangerPositions(ChessPiece* board[8][8]) const {
-    std::vector<Coordinate> dangerSquares;
+void ChessPiece::getAllAttackMoves(ChessPiece* board[8][8]){
+
+    attackMoves.clear();
+
+    for (const auto &move : possibleMoves) {
+        // Add move to attack moves if an opponent's piece is encountered
+        if (board[move.getRow()][move.getCol()]->getColour() != getColour()) {
+            attackMoves.push_back(move);
+        }
+    }
+
+
+}
+
+void ChessPiece::getAllCheckMoves(ChessPiece* board[8][8]) {
+
+    checkMoves.clear();
+    for (const auto &move : possibleMoves) {
+        // Add move to attack moves if an opponent's piece is encountered
+        if (board[move.getRow()][move.getCol()]->getPiece() == K) {
+            checkMoves.push_back(move);
+        }
+    }
+
+
+}
+
+void ChessPiece::getAllDangerPositions(ChessPiece* board[8][8]) {
+    dangerSquares.clear();
 
     // Iterate through the entire board
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
-            const ChessPiece *currentPiece = board[i][j];
+            const ChessPiece* currentPiece = board[i][j];
 
             // Check if the current piece is of the opposing color and not an empty square
-            if (!currentPiece->isEmpty() && currentPiece->getColour() != getColour()) {
+            if (currentPiece != nullptr && currentPiece->getColour() != getColour()) {
                 // Get all possible moves for the current piece and add them to dangerSquares
-                std::vector<Coordinate> enemyMoves = this->possibleMoves;
+                std::vector<Coordinate> enemyMoves = currentPiece->possibleMoves;
                 dangerSquares.insert(dangerSquares.end(), enemyMoves.begin(), enemyMoves.end());
             }
         }
@@ -102,9 +129,8 @@ std::vector<Coordinate> ChessPiece::getAllDangerPositions(ChessPiece* board[8][8
     // to do
     //std::sort(dangerSquares.begin(), dangerSquares.end());
     dangerSquares.erase(std::unique(dangerSquares.begin(), dangerSquares.end()), dangerSquares.end());
-
-    return dangerSquares;
 }
+
 
 ChessPiece::~ChessPiece() {
     possibleMoves.clear();

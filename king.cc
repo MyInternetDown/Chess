@@ -51,21 +51,6 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
     
 }
 
-
-vector<Coordinate> King::getAllAttackMoves(ChessPiece* board[8][8]) const {
-    // to do
-    vector<Coordinate> attackMoves;
-
-    for (const auto &move : possibleMoves) {
-        // Add move to attack moves if an opponent's piece is encountered
-        if (board[move.getRow()][move.getCol()]->getColour() != getColour()) {
-            attackMoves.push_back(move);
-        }
-    }
-
-    return attackMoves;
-}
-
 bool King::isChecked(ChessPiece* board[8][8]) const {
     const int row = location.getRow();
     const int col = location.getCol();
@@ -88,8 +73,6 @@ bool King::isChecked(ChessPiece* board[8][8]) const {
     return false;
 }
 
-vector<Coordinate> King::getAllCheckMoves(ChessPiece* board[8][8]) {
-    vector<Coordinate> checkMoves;
-    // can't check cause it will check itself
-    return checkMoves;
+void King::getAllCheckMoves(ChessPiece* board[8][8]) {
+    checkMoves.clear();
 }

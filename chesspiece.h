@@ -19,6 +19,10 @@ class ChessPiece {
 
 public:
 	Coordinate location;
+	vector<Coordinate> attackMoves;
+	vector<Coordinate> dangerSquares;
+	vector<Coordinate> checkMoves;
+
 	vector<Coordinate> possibleMoves;
 	bool hasMoved;
 	// Constructor of the Chesspiece
@@ -42,12 +46,12 @@ public:
 	virtual void getAllMoves(ChessPiece* board[8][8]) = 0;
 
 	// Gets all possible locations where this piece would be under attack given its current position
-	virtual vector<Coordinate> getAllDangerPositions(ChessPiece* board[8][8]) const;
+	virtual void getAllDangerPositions(ChessPiece* board[8][8]);
 
 	// Gets all possible locations where this piece can eat another piece
-	virtual vector<Coordinate> getAllAttackMoves(ChessPiece* board[8][8]) const =0;
+	virtual void getAllAttackMoves(ChessPiece* board[8][8]);
 
-	virtual vector<Coordinate> getAllCheckMoves(ChessPiece* board[8][8]) = 0;
+	virtual void getAllCheckMoves(ChessPiece* board[8][8]);
 
 	// Checks if the current piece can move to the current position noted down
 	// to do
