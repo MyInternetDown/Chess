@@ -255,7 +255,7 @@ void Board::updatePieces() {
         for (int col = 0; col < 8; ++col) {
             // create an empty pointer to that place
             if (chessBoard[row][col] != nullptr) {
-                cerr << "updatein  " << row << " " << col << endl;
+                cerr << "updatein  " << row << " " << col << " " << chessBoard[row][col]->getCharType() <<endl;
                 chessBoard[row][col]->getAllMoves(chessBoard);
             }
         }
@@ -412,7 +412,7 @@ void Board::absMove(Coordinate startPos, Coordinate endPos){
     chessDisplay[endPos.getRow()][endPos.getCol()] = pieceToMove->getCharType();
     chessDisplay[startPos.getRow()][startPos.getCol()] = 
     (startPos.getRow() + endPos.getCol() & 2 == 0) ? BLACK : WHITE;
-
+    pieceToMove->hasMoved = true;
 
     updatePieces();
     turn = !turn;
