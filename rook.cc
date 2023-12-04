@@ -19,7 +19,7 @@ void Rook::getAllMoves(ChessPiece* board[8][8]) {
             possibleMoves.push_back(Coordinate(newRow, col));
         } else if (board[newRow][col]->getColour() != getColour()) {
             possibleMoves.push_back(Coordinate(newRow, col));
-	    break;
+	        break;
         } else {
             break;
         }
@@ -29,7 +29,7 @@ void Rook::getAllMoves(ChessPiece* board[8][8]) {
             possibleMoves.push_back(Coordinate(newRow, col));
         } else if (board[newRow][col]->getColour() != getColour()) {
             possibleMoves.push_back(Coordinate(newRow, col));
-	    break;
+	        break;
         } else {
             break;
         }
@@ -42,7 +42,7 @@ void Rook::getAllMoves(ChessPiece* board[8][8]) {
             possibleMoves.push_back(Coordinate(row, newCol));
         } else if (board[row][newCol]->getColour() != getColour()) {
             possibleMoves.push_back(Coordinate(row, newCol));
-	    break;
+	        break;
         } else {
             break;
         }
@@ -53,7 +53,7 @@ void Rook::getAllMoves(ChessPiece* board[8][8]) {
             possibleMoves.push_back(Coordinate(row, newCol));
         } else if (board[row][newCol]->getColour() != getColour()) {
             possibleMoves.push_back(Coordinate(row, newCol));
-	    break;
+	        break;
         } else {
             break;
         }
