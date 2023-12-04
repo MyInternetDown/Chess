@@ -30,6 +30,7 @@ Board::Board() :
 }
 
 bool Board::isValidSetup()  {
+    cerr << "enter valid" << endl;
     gameStart = false;
     // Check if there is exactly one white king and one black king
     int whiteKingCount = 0;
@@ -37,10 +38,14 @@ bool Board::isValidSetup()  {
 
     // Check if no pawns are on the first or last row
     for (int col = 0; col < 8; ++col) {
-        if (chessBoard[0][col]->getStrType() == "P" || chessBoard[7][col]->getStrType() == "P") {
-            return false;  // Pawn found on the first or last row
+        if (chessBoard[0][col] != nullptr && chessBoard[7][col] != nullptr){
+            cerr << col << "checking......" << endl;
+            if (chessBoard[0][col]->getCharType() == 'p' || chessBoard[7][col]->getCharType() == 'P') {
+                return false;  // Pawn found on the first or last row
+            }
         }
     }
+    cerr << "pawn ok" << endl;
 
     // Check neither king is in check (you need to implement this logic in ChessPiece)
     // Assume there's a function isValidMove in ChessPiece that checks if a move is valid
@@ -48,16 +53,19 @@ bool Board::isValidSetup()  {
     for (int row = 0; row < 8; ++row) {
         Coordinate temp = (1, 0);
         for (int col = 0; col < 8; ++col) {
-            if (chessBoard[row][col]->getStrType() == "K") {
-                if (chessBoard[row][col]->getColour() == Colour::White) {
-                    ++whiteKingCount;
-                    if (chessBoard[row][col]->isChecked(chessBoard)) {
-                        return false;  // White king is in check
-                    }
-                } else {
-                    ++blackKingCount;
-                    if (chessBoard[row][col]->isChecked(chessBoard)) {
-                        return false;  // Black king is in check
+            if (chessBoard[row][col] != nullptr){
+                if (chessBoard[row][col]->getCharType() == 'K' || 
+                    chessBoard[row][col]->getCharType() == 'k') {
+                    if (chessBoard[row][col]->getColour() == Colour::White) {
+                        ++whiteKingCount;
+                        if (chessBoard[row][col]->isChecked(chessBoard)) {
+                            return false;  // White king is in check
+                        }
+                    } else {
+                        ++blackKingCount;
+                        if (chessBoard[row][col]->isChecked(chessBoard)) {
+                            return false;  // Black king is in check
+                        }
                     }
                 }
             }
@@ -65,8 +73,10 @@ bool Board::isValidSetup()  {
     }
     if (whiteKingCount == 1 && blackKingCount == 1) {
         gameStart = true;
+        cerr << "found true valid " << endl;
         return true;
     }
+    cerr << "found false valid " << endl;
     return false;
 }
 
@@ -118,10 +128,6 @@ void Board::reset(){
 
 // Setup Piece
 void Board::init(const std::string position, const std::string type, const std::string color) {
-    cerr << position << endl;
-    cerr << type << endl;
-    cerr << color << endl;
-    cerr << "in init" << endl;
     // Find the row and column indices based on the location string
     Coordinate coord;
     istringstream pos(position);
@@ -130,6 +136,8 @@ void Board::init(const std::string position, const std::string type, const std::
     int col = coord.getCol();
 
     cerr << row << " " << col << endl;
+
+
 
     removePiece(coord);
 
@@ -142,6 +150,7 @@ void Board::init(const std::string position, const std::string type, const std::
         chessBoard[row][col] = new Bishop(coord, color);
     } else if (type == "N" || type == "n") {
         chessBoard[row][col] = new Knight(coord, color);
+        cerr << "knight made ------------" << endl;
     } else if (type == "R" || type == "r") {
         chessBoard[row][col] = new Rook(coord, color);
     } else if (type == "P" || type == "p") {
@@ -149,6 +158,7 @@ void Board::init(const std::string position, const std::string type, const std::
     }
 
     chessDisplay[row][col] = chessBoard[row][col]->getCharType();
+    cerr << chessBoard[row][col]->getCharType() << "chekingsadklfas;jfkasl;fdjal;dfj;" << endl;
 
     if (color == "white") {
         player1Pieces.push_back(chessBoard[row][col]);
@@ -161,6 +171,45 @@ void Board::init(const std::string position, const std::string type, const std::
     notifyAllObservers();
     // Handle other piece types as needed
     
+}
+
+void Board::defaultSetup(){
+    cerr << "enter default " << endl;
+
+    init("a2", "P", "White");
+    init("b2", "P", "White");
+    init("c2", "P", "White");
+    init("d2", "P", "White");
+    init("e2", "P", "White");
+    init("f2", "P", "White");
+    init("g2", "P", "White");
+    init("h2", "P", "White");
+    init("a1", "R", "White");
+    init("b1", "N", "White");
+    init("c1", "B", "White");
+    init("d1", "Q", "White");
+    init("e1", "K", "White");
+    init("f1", "B", "White");
+    init("g1", "N", "White");
+    init("h1", "R", "White");
+
+    // Black pieces
+    init("a7", "P", "Black");
+    init("b7", "P", "Black");
+    init("c7", "P", "Black");
+    init("d7", "P", "Black");
+    init("e7", "P", "Black");
+    init("f7", "P", "Black");
+    init("g7", "P", "Black");
+    init("h7", "P", "Black");
+    init("a8", "r", "Black");
+    init("b8", "n", "Black");
+    init("c8", "b", "Black");
+    init("d8", "q", "Black");
+    init("e8", "k", "Black");
+    init("f8", "b", "Black");
+    init("g8", "n", "Black");
+    init("h8", "r", "Black");
 }
 
 // Remove
@@ -195,6 +244,14 @@ void Board::removePiece(Coordinate coord, bool needNotify){
         }
     }
 
+    cerr << "out" << endl;
+    if (needNotify) {
+        notifyAllObservers();
+    }
+}
+
+void Board::updatePieces() {
+    cerr << "update piece" << endl;
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
             // create an empty pointer to that place
@@ -204,10 +261,6 @@ void Board::removePiece(Coordinate coord, bool needNotify){
                 chessBoard[row][col]->getAllMoves(chessBoard);
             }
         }
-    }
-    cerr << "out" << endl;
-    if (needNotify) {
-        notifyAllObservers();
     }
 }
 

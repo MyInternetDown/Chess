@@ -46,9 +46,13 @@ int main() {
         if (cmd2 == "done") {
           cerr << "done" << endl;
           if (game.isValidSetup()) {
+            game.updatePieces();
             break;
           }
-        } else if (cmd2 == "+") {
+        } else if(cmd2 == "default") {
+          game.defaultSetup();
+        }
+        else if (cmd2 == "+") {
           string piece, location, colour;
           cin >> piece >> location;
           cerr << "input ...................... " << endl;

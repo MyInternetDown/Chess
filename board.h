@@ -63,6 +63,8 @@ public:
 	void create(const string playerA, const string playerB);
 
 	void removePiece(Coordinate pos, bool needNotify = false);
+	void updatePieces();
+	void defaultSetup();
 
 	void reset();
 

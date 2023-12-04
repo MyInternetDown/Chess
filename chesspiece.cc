@@ -112,6 +112,7 @@ ChessPiece::~ChessPiece() {
 
 string ChessPiece::getStrType() const {
     
+    
 }
 
 Coordinate ChessPiece::getRandMove() const {
