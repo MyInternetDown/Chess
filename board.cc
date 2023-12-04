@@ -30,7 +30,7 @@ Board::Board() :
 }
 
 bool Board::isValidSetup()  {
-    //cerr << "enter valid" << endl;
+    cerr << "enter valid" << endl;
     gameStart = false;
     // Check if there is exactly one white king and one black king
     int whiteKingCount = 0;
@@ -45,25 +45,27 @@ bool Board::isValidSetup()  {
             }
         }
     }
-    //cerr << "pawn ok" << endl;
+    cerr << "pawn ok" << endl;
 
     // Check neither king is in check (you need to implement this logic in ChessPiece)
     // Assume there's a function isValidMove in ChessPiece that checks if a move is valid
     // and a function isChecked in ChessPiece that checks if a king is in check
     for (int row = 0; row < 8; ++row) {
-        Coordinate temp = (1, 0);
         for (int col = 0; col < 8; ++col) {
             if (chessBoard[row][col] != nullptr){
-                if (chessBoard[row][col]->getCharType() == 'K' || 
-                    chessBoard[row][col]->getCharType() == 'k') {
-                    if (chessBoard[row][col]->getColour() == Colour::White) {
+                //cerr << " found a piece" << endl;
+                if (chessBoard[row][col]->getPiece() == K) {
+                    //cerr << "found a king" << endl;
+                    if (chessBoard[row][col]->getColour() == White) {
                         ++whiteKingCount;
                         if (chessBoard[row][col]->isChecked(chessBoard)) {
+                            //cerr << "white king not good" << endl;
                             return false;  // White king is in check
                         }
                     } else {
                         ++blackKingCount;
                         if (chessBoard[row][col]->isChecked(chessBoard)) {
+                            //cerr << "balck king not good" << endl;
                             return false;  // Black king is in check
                         }
                     }
@@ -71,9 +73,11 @@ bool Board::isValidSetup()  {
             }
         }
     }
+    cerr << whiteKingCount << " " << blackKingCount << " count" << endl;
     if (whiteKingCount == 1 && blackKingCount == 1) {
         gameStart = true;
         cerr << "found true valid " << endl;
+        updatePieces();
         return true;
     }
     cerr << "found false valid " << endl;
@@ -158,7 +162,6 @@ void Board::init(const std::string position, const std::string type, const std::
     }
 
     chessDisplay[row][col] = chessBoard[row][col]->getCharType();
-
     //notifyAllObservers();
     // Handle other piece types as needed
     
@@ -209,7 +212,7 @@ void Board::removePiece(Coordinate coord, bool needNotify){
     int col = coord.getCol();
     //cerr << "remove" << endl;
     if (chessBoard[row][col] != nullptr) {
-        cerr << "in remove not null" << endl;
+        //cerr << "in remove not null" << endl;
         if (chessBoard[row][col]->getColour() == White) {
             for(int i = 0; i < player1Pieces.size(); i++) {
                 if (player1Pieces[i] == chessBoard[row][col]) {
@@ -242,13 +245,14 @@ void Board::removePiece(Coordinate coord, bool needNotify){
 }
 
 void Board::updatePieces() {
-    //cerr << "update piece" << endl;
+    cerr << "update piece" << endl;
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
             // create an empty pointer to that place
             if (chessBoard[row][col] != nullptr) {
+
                 //cerr << "updatein  " << row << " " << col << " " << chessBoard[row][col]->getCharType() <<endl;
-                chessBoard[row][col]->getAllMoves(chessBoard);
+                chessBoard[row][col]->update(chessBoard);
             }
         }
     }
@@ -292,6 +296,7 @@ void Board::move() {
             while (!found) {
                 int randomIndex = rand() % player1Pieces.size();
                 ChessPiece* piece = player1Pieces[randomIndex];
+                //cerr << " checkpoint" << randomIndex << endl;
                 if (!piece->possibleMoves.empty()) {
                     found = true;
                     absMove(piece->location, piece->getRandMove());
@@ -480,8 +485,9 @@ void Board::absMove(Coordinate startPos, Coordinate endPos){
     ((startPos.getRow() + startPos.getCol()) % 2 == 0) ? BLACK : WHITE;
     pieceToMove->hasMoved = true;
 
-    updatePieces();
     turn = !turn;
+    updatePieces();
+    cerr << "move finished" << endl;
     notifyAllObservers();
 }
 

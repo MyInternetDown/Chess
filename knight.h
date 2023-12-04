@@ -12,7 +12,7 @@ public:
 
     // Override the getAllMoves function for the Knight
     void getAllMoves(ChessPiece* board[8][8])  override;
-
+    void getAllCheckMoves(ChessPiece* board[8][8]) override;
 };
 
 #endif

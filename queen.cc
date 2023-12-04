@@ -44,7 +44,6 @@ void Queen::getAllMoves(ChessPiece* board[8][8]) {
             newCol += move.second;
         }
     }
-
 }
 /*
 vector<Coordinate> Queen::getAllAttackMoves(ChessPiece* board[8][8]) const {
@@ -61,16 +60,24 @@ vector<Coordinate> Queen::getAllAttackMoves(ChessPiece* board[8][8]) const {
     return attackMoves;
 }
 
-vector<Coordinate> Queen::getAllCheckMoves(ChessPiece* board[8][8]) {
-    vector<Coordinate> checkMoves;
 
-    for (const auto &move : possibleMoves) {
-        // Add move to attack moves if an opponent's piece is encountered
-        if (board[move.getRow()][move.getCol()]->getPiece() == K) {
-            checkMoves.push_back(move);
-        }
-    }
-
-    return checkMoves;
-}
 */
+
+void Queen::getAllCheckMoves(ChessPiece* board[8][8]) {
+
+    checkMoves.clear();
+    for (const auto move : possibleMoves) {
+        // Add move to attack moves if an opponent's piece is encountered
+        string tempCol = colourToStr.find(colour)->second;
+        Queen temp(move, tempCol);
+        board[location.getRow()][location.getCol()] = nullptr;
+        temp.getAllMoves(board);
+        for (auto &fMove : temp.possibleMoves) {
+            if ((board[fMove.getRow()][fMove.getCol()] != nullptr) &&
+                (board[fMove.getRow()][fMove.getCol()]->getPiece() == K) ){
+                checkMoves.push_back(move);
+            }
+        }
+        board[location.getRow()][location.getCol()] = this;
+    }
+}

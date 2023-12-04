@@ -62,8 +62,10 @@ bool King::isChecked(ChessPiece* board[8][8]) const {
     for (int i = 0; i < 8; i++){
         for (int j = 0; j < 8; j++) {
             if(board[i][j] != nullptr && i != row && j != col) {
-                for (Coordinate move: board[i][j]->possibleMoves) {
+                //cerr << "found piece validating" << endl;
+                for (const Coordinate &move: board[i][j]->possibleMoves) {
                     if (location == move) {
+                        cerr << "location found equal" << endl;
                         return true;
                     }
                 }

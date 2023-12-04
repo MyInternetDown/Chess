@@ -13,11 +13,12 @@ class Board;
 
 class ChessPiece {
 	PieceType piecetype;
-	Colour colour;
+	
 	string pos;
 	
 
 public:
+	Colour colour;
 	Coordinate previousLoc;
 	Coordinate location;
 	vector<Coordinate> attackMoves;
@@ -52,7 +53,10 @@ public:
 	// Gets all possible locations where this piece can eat another piece
 	virtual void getAllAttackMoves(ChessPiece* board[8][8]);
 
-	virtual void getAllCheckMoves(ChessPiece* board[8][8]);
+	virtual void getAllCheckMoves(ChessPiece* board[8][8]) = 0;
+
+
+	virtual void update(ChessPiece* board[8][8]);
 
 	// Checks if the current piece can move to the current position noted down
 	// to do
@@ -73,7 +77,6 @@ public:
 	// Get the vecotrs of the possible moves
 	//virtual vector<vector<int>> getPossibleMoves();
 	// Gets the type of Piece
-	string getStrType() const;
 	// Gets the value of if the piece has moved
 	virtual bool moved() const;
 	// Check is Empty

@@ -16,7 +16,7 @@ int main() {
 
   while (true) {
     cin >> cmd;
-    cerr << cmd << " ...............................................0 " << endl;
+    //cerr << cmd << " ...............................................0 " << endl;
     if (cmd == "game") {
       string player1, player2;
       cin >> player1 >> player2;

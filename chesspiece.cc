@@ -67,7 +67,7 @@ void ChessPiece::setEmpty() {
     // Set type and white based on the default values in the maps
     // You might want to reset other members to their default values
     // or update them according to your specific requirements
-    possibleMoves.clear();
+   // possibleMoves.clear();
 }
 
 Colour ChessPiece::getColour() const{
@@ -88,26 +88,25 @@ void ChessPiece::getAllAttackMoves(ChessPiece* board[8][8]){
 
     for (const auto &move : possibleMoves) {
         // Add move to attack moves if an opponent's piece is encountered
-        if (board[move.getRow()][move.getCol()]->getColour() != getColour()) {
+        if ((board[move.getRow()][move.getCol()] != nullptr) &&
+            board[move.getRow()][move.getCol()]->getColour() != getColour()) {
             attackMoves.push_back(move);
         }
     }
 
-
 }
 
-void ChessPiece::getAllCheckMoves(ChessPiece* board[8][8]) {
-
-    checkMoves.clear();
-    
-    for (const auto &move : possibleMoves) {
-        // Add move to attack moves if an opponent's piece is encountered
-        
-        if (board[move.getRow()][move.getCol()]->getPiece() == K) {
-            checkMoves.push_back(move);
-        }
-    }
+void ChessPiece::update(ChessPiece* board[8][8]) {
+    //cerr << "update 1" << endl;
+    getAllMoves(board);
+    //cerr << "update 2" << endl;
+    getAllAttackMoves(board);
+    //cerr << "update 3" << endl;
+    getAllCheckMoves(board);
+    //cerr << "update 4" << endl;
+    getAllDangerPositions(board);
 }
+
 
 
 
@@ -142,10 +141,6 @@ ChessPiece::~ChessPiece() {
     checkMoves.clear();
 }
 
-string ChessPiece::getStrType() const {
-
-    
-}
 
 Coordinate ChessPiece::getRandMove() const {
     int randomIndex = rand() % possibleMoves.size();
