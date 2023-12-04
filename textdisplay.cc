@@ -22,7 +22,12 @@ TextDisplay::TextDisplay()
 // When notified, checks the cell and changes the value if it is on or off
 void TextDisplay::notify(char chessBoard[8][8])
 {
-
+  for (int i = 0; i < 8; ++i)
+  {
+    for (int j = 0; j < 8; ++j) {
+      theDisplay[i][j] = chessBoard[i][j];
+    }
+  }
 }
 
 TextDisplay::~TextDisplay() {}
@@ -36,8 +41,10 @@ SubscriptionType TextDisplay::subType()
 // Goes through the display by the vector and prints out all the values
 ostream &operator<<(ostream &out, const TextDisplay &td)
 {
+  int count = 8;
   for (int i = 0; i < 8; ++i)
   {
+    out << count << " "; 
     for (int j = 0; j < 8; ++j)
     {
       out << td.theDisplay[i][j];

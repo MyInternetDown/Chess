@@ -34,8 +34,8 @@ private:
 
 	bool isWon;
 	TextDisplay *td; // The text display.
-  	GraphicsDisplay *gd; // graphics display
-  	Xwindow *windowX;
+  	//GraphicsDisplay *gd; // graphics display
+  	//Xwindow *windowX;
 	std::vector<Observer*> observers;
 	bool gameStart;
 	vector<ChessPiece*> player2Pieces;

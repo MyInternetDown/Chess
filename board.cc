@@ -6,14 +6,15 @@ const char BLACK = '_';
 
 Board::Board() : 
     turn{true}, 
-    player1(H),   
-    player1Pieces(),
-    player2(H),
-    player2Pieces(),
-    isWon(false),
-    td{nullptr}, 
-    gd{nullptr}, 
-    windowX{new Xwindow()} {
+    player1{H},   
+    player1Pieces{},
+    player2{H},
+    player2Pieces{},
+    isWon{false},
+    td{nullptr}
+    //gd{nullptr}, 
+    //windowX{new Xwindow()} 
+    {
     // Populate the board with ChessPiece objects at their respective positions
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
@@ -71,12 +72,17 @@ bool Board::isValidSetup()  {
 
 
 void Board::create(const string playerA, const string playerB){
-    int n = 0;
-    //td = new TextDisplay(n);
+    //cerr << "increate" << endl;
+    td = new TextDisplay();
+    //cerr << "1" << endl;
     //gd = new GraphicsDisplay(windowX ,n);
+    attach(td);
+    //cerr << "2" << endl;
     // to do make attach
     player1 = convertStringToMoveType(playerA);
+    //cerr << "3" << endl;
     player2 = convertStringToMoveType(playerB);
+    //cerr << "4" << endl;
 }
 
 bool Board::getTurn(){
@@ -111,6 +117,10 @@ void Board::reset(){
 
 // Setup Piece
 void Board::init(const std::string position, const std::string type, const std::string color) {
+    cerr << position << endl;
+    cerr << type << endl;
+    cerr << color << endl;
+    cerr << "in init" << endl;
     // Find the row and column indices based on the location string
     Coordinate coord;
     istringstream pos(position);
@@ -118,20 +128,22 @@ void Board::init(const std::string position, const std::string type, const std::
     int row = coord.getRow();
     int col = coord.getCol();
 
+    cerr << row << " " << col << endl;
+
     removePiece(coord);
 
     // Create the appropriate ChessPiece based on the type
-    if (type == "K") {
+    if (type == "K" || type == "k") {
         chessBoard[row][col] = new King(coord, color);
-    } else if (type == "Q") {
+    } else if (type == "Q" || type == "q") {
         chessBoard[row][col] =  new Queen(coord, color);
-    } else if (type == "B") {
+    } else if (type == "B" || type == "b") {
         chessBoard[row][col] = new Bishop(coord, color);
-    } else if (type == "N") {
+    } else if (type == "N" || type == "n") {
         chessBoard[row][col] = new Knight(coord, color);
-    } else if (type == "R") {
+    } else if (type == "R" || type == "r") {
         chessBoard[row][col] = new Rook(coord, color);
-    } else if (type == "P") {
+    } else if (type == "P" || type == "p") {
         chessBoard[row][col] = new Pawn(coord, color);
     }
 
@@ -155,7 +167,9 @@ void Board::init(const std::string position, const std::string type, const std::
 void Board::removePiece(Coordinate coord, bool needNotify){
     int row = coord.getRow();
     int col = coord.getCol();
+    cerr << "remove" << endl;
     if (chessBoard[row][col] != nullptr) {
+        cerr << "in remove not null" << endl;
         if (chessBoard[row][col]->getColour() == White) {
             for(int i = 0; i < player1Pieces.size(); i++) {
                 if (player1Pieces[i] == chessBoard[row][col]) {
@@ -185,11 +199,13 @@ void Board::removePiece(Coordinate coord, bool needNotify){
         for (int col = 0; col < 8; ++col) {
             // create an empty pointer to that place
             if (chessBoard[row][col] != nullptr) {
+                cerr << "error" << endl;
+                cerr << row <<" " << col << "pppppppppppppppppppppppppppppppppppppppp" << endl;
                 chessBoard[row][col]->getAllMoves(chessBoard);
             }
         }
     }
-
+    cerr << "out" << endl;
     if (needNotify) {
         notifyAllObservers();
     }
@@ -258,7 +274,7 @@ void Board::move() {
 Board::~Board() {
     reset();
     delete td;
-    delete gd;
+    //delete gd;
     observers.clear();
 }
 

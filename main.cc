@@ -40,31 +40,33 @@ int main() {
     }
     else if (cmd == "setup") {
       string cmd2;
+      cerr << "setup enter" << endl;
       while (true) {
         cin >> cmd2;
         if (cmd2 == "done") {
+          cerr << "done" << endl;
           if (game.isValidSetup()) {
             break;
           }
         } else if (cmd2 == "+") {
           string piece, location, colour;
           cin >> piece >> location;
-          char c;
-          // Convert type to uppercase
-          for (char &c : piece) {
-            c = std::toupper(c);
-          }
-          string myString(1, c);
-
+          cerr << "input ...................... " << endl;
+          cerr << piece << endl;
+          cerr << location << endl;
+          
           // Infer color based on the case of the type
           if (std::isupper(piece[0])) {
-            colour = "White";
-        } else {
-            colour = "Black";
-        }
+              colour = "White";
+          } else {
+              colour = "Black";
+          }
+          cerr << "check again" << endl;
 
           try {
-            game.init(location, myString, colour);
+            cerr << piece << endl;
+            game.init(location, piece, colour);
+            cerr << "hel" << endl;
           } catch (const std::invalid_argument &e) {
               std::cerr << "Error: " << e.what() << std::endl;
           }

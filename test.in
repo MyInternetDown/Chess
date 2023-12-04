@@ -1,1 +1,9 @@
-game human human
+game computer1 computer1
+setup
++ K a1
++ k b6
+done
+move
+move
+move
+
