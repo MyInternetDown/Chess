@@ -47,6 +47,8 @@ private:
 public:
 	MoveType player1;
 	MoveType player2;
+	int player1Score;
+	int player2Score;
 	ChessPiece *chessBoard[8][8];
 	char chessDisplay[8][8];
     // Constructor
@@ -86,7 +88,7 @@ public:
     // Function to check if a position is within the bounds of the board
     bool isValidPosition(const Coordinate &pos) const;
 
-	vector<int> checkWin(Colour player);
+	void checkWin(Colour player);
 	
 	bool checkStale(Colour player) ;
 

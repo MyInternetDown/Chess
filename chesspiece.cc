@@ -104,6 +104,8 @@ void ChessPiece::update(ChessPiece* board[8][8]) {
     getAllAttackMoves(board);
     //cerr << "update 3" << endl;
     getAllCheckMoves(board);
+
+    getAllEvadeMoves(board);
     //cerr << "update 4" << endl;
 }
 
@@ -133,12 +135,27 @@ void ChessPiece::getAllDangerPositions(ChessPiece* board[8][8]) {
     dangerSquares.erase(std::unique(dangerSquares.begin(), dangerSquares.end()), dangerSquares.end());
 }
 
+void ChessPiece::getAllEvadeMoves(ChessPiece* board[8][8]) {
+    evadeMoves.clear(); 
+
+    for (Coordinate move : dangerSquares) {
+        if (move == location) {
+            for (const auto& coord : possibleMoves) {
+                if (std::find(dangerSquares.begin(), dangerSquares.end(), coord) == dangerSquares.end()) {
+                    evadeMoves.push_back(coord);
+                }
+            }
+        }
+    }
+}
+
 
 ChessPiece::~ChessPiece() {
     possibleMoves.clear();
     dangerSquares.clear();
     attackMoves.clear();
     checkMoves.clear();
+    evadeMoves.clear();
 }
 
 

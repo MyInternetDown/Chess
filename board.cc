@@ -6,8 +6,10 @@ const char BLACK = '_';
 
 Board::Board() : 
     turn{true}, 
+    player1Score{0},
     player1{H},   
     player1Pieces{},
+    player2Score{0},
     player2{H},
     player2Pieces{},
     isWon{false},
@@ -363,6 +365,38 @@ void Board::move() {
                     return;
                 }
             }
+        } else if (player1 == L3) {
+            for (ChessPiece* piece : player1Pieces) {
+                if (!piece->evadeMoves.empty()) {
+                    cerr << "evading" << endl;
+                    absMove(piece->location, piece->evadeMoves[0]);
+                    return;
+                }
+            }
+            for (ChessPiece* piece : player1Pieces) {
+                if (!piece->checkMoves.empty()) {
+                    cerr << "checking" << endl;
+                    absMove(piece->location, piece->checkMoves[0]);
+                    return;
+                }
+            }
+            for (ChessPiece* piece : player1Pieces) {
+                if (!piece->attackMoves.empty()) {
+                    cerr << "attacking ___________________" << endl;
+                    absMove(piece->location, piece->attackMoves[0]);
+                    return;
+                }
+            }
+            while (!found) {
+                int randomIndex = rand() % player1Pieces.size();
+                ChessPiece* piece = player1Pieces[randomIndex];
+                //cerr << " checkpoint" << randomIndex << endl;
+                if (!piece->possibleMoves.empty()) {
+                    found = true;
+                    absMove(piece->location, piece->getRandMove());
+                    return;
+                }
+            }
         }
 
     }
@@ -434,14 +468,14 @@ bool Board::checkStale(Colour player) {
     return false;
 }
 
-vector<int> Board::checkWin(Colour player) {
+void Board::checkWin(Colour player) {
     if (player == White) {
         for (ChessPiece* piece : player1Pieces) {
             if(piece->getPiece() == K) {
                 if (piece->isChecked(chessBoard) == true) {
                     if (piece->possibleMoves.size() == 0) {
                         isWon = true;
-                        return {1, 0};
+                        player2Score++;
                     }
                 }
             }
@@ -452,13 +486,12 @@ vector<int> Board::checkWin(Colour player) {
                 if (piece->isChecked(chessBoard) == true) {
                     if (piece->possibleMoves.size() == 0) {
                         isWon = true;
-                        return {0, 1};
+                        player1Score++;
                     }
                 }
             }
         }
     }
-    return {0, 0};
 }
 
 
