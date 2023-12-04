@@ -18,6 +18,7 @@ class ChessPiece {
 	
 
 public:
+	Coordinate previousLoc;
 	Coordinate location;
 	vector<Coordinate> attackMoves;
 	vector<Coordinate> dangerSquares;

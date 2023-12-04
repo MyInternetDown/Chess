@@ -16,6 +16,7 @@ int main() {
 
   while (true) {
     cin >> cmd;
+    cerr << cmd << " ...............................................0 " << endl;
     if (cmd == "game") {
       string player1, player2;
       cin >> player1 >> player2;
@@ -29,7 +30,11 @@ int main() {
       }
       game.reset();
     }
+    else if (cmd == "end") {
+      break;
+    }
     else if (cmd == "move") {
+      cerr << count << endl;
       if ((game.player1 == H && game.getTurn())
         ||(game.player2 == H && !game.getTurn())) {
         string moveAt, moveTo;
@@ -38,9 +43,8 @@ int main() {
         game.humanMove(moveAt, moveTo);
       } else {
         game.move();
-        
+
       }
-      cerr << count << endl;
       count ++;
     }
     else if (cmd == "setup") {

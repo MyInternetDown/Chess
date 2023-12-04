@@ -10,7 +10,7 @@ Queen::Queen(Coordinate pos, string white)
 
 void Queen::getAllMoves(ChessPiece* board[8][8]) {
     // Implement the Queen's move logic here
-    vector<Coordinate> moves;
+    possibleMoves.clear();
 
     // Queen moves diagonally and linearly (horizontally and vertically)
     // Adding all possible moves for the Queen

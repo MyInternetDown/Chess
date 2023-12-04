@@ -101,14 +101,6 @@ bool Board::getTurn(){
 }
 
 void Board::reset(){
-    for (ChessPiece* piece : player1Pieces) {
-        delete piece;
-    }
-    for (ChessPiece* piece : player2Pieces) {
-        delete piece;
-    }
-    player1Pieces.clear();
-    player2Pieces.clear();
 
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
@@ -227,7 +219,7 @@ void Board::removePiece(Coordinate coord, bool needNotify){
             }
         } else {
             for(int i = 0; i < player2Pieces.size(); i++) {
-                if (player1Pieces[i] == chessBoard[row][col]) {
+                if (player2Pieces[i] == chessBoard[row][col]) {
                     player2Pieces.erase(player2Pieces.begin()+i);
                     break;
                 }
@@ -336,11 +328,26 @@ void Board::move() {
 
 // Destructor
 Board::~Board() {
-    reset();
+    cerr << "delete board1" << endl;
+    for (ChessPiece* piece : player1Pieces) {
+        delete piece;
+    }
+    cerr << "delete board1-----" << endl;
+    for (ChessPiece* piece : player2Pieces) {
+        delete piece;
+    }
+    player1Pieces.clear();
+    player2Pieces.clear();
+    cerr << "delete board2" << endl;
+    detach(td);
+    cerr << "delete board3" << endl;
     delete td;
+    cerr << "delete board4" << endl;
     //delete gd;
-    observers.clear();
 }
+
+
+
 bool Board::checkStale(Colour player) {
     if (player == White) {
         for (ChessPiece* piece : player1Pieces) {
@@ -452,7 +459,7 @@ void Board::absMove(Coordinate startPos, Coordinate endPos){
         removePiece(endPos);
     }
     ChessPiece* pieceToMove = chessBoard[startPos.getRow()][startPos.getCol()];
-    cerr << "absMove" << startPos << " " << endPos <<  " " << pieceToMove->getCharType() << endl;
+    cerr << "absMove ----------------------------" << startPos << " " << endPos <<  " " << pieceToMove->getCharType() << endl;
 
     // Check if there is a piece at the source location
     assert(pieceToMove != nullptr);
@@ -463,6 +470,9 @@ void Board::absMove(Coordinate startPos, Coordinate endPos){
     chessBoard[endPos.getRow()][endPos.getCol()] = pieceToMove;
 
     // Update the piece's location (if needed)
+    if (pieceToMove->getPiece() == P) {
+        pieceToMove->previousLoc = startPos;
+    }
     pieceToMove->move(endPos);
 
     chessDisplay[endPos.getRow()][endPos.getCol()] = pieceToMove->getCharType();

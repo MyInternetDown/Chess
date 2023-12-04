@@ -10,6 +10,7 @@ using namespace std;
 // Constructor
 ChessPiece::ChessPiece(Coordinate pos, string white, string type)
     : location(pos),
+      previousLoc(pos),
       piecetype(parsePieceType(type)),
       colour(parseColour(white)),
       hasMoved(false){
@@ -134,6 +135,9 @@ void ChessPiece::getAllDangerPositions(ChessPiece* board[8][8]) {
 
 ChessPiece::~ChessPiece() {
     possibleMoves.clear();
+    dangerSquares.clear();
+    attackMoves.clear();
+    checkMoves.clear();
 }
 
 string ChessPiece::getStrType() const {
