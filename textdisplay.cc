@@ -40,7 +40,7 @@ void TextDisplay::notify(char chessBoard[8][8])
     }
     cerr << endl;
   }
-  cerr << "  abcdefgh" << endl;
+  cerr << "  abcdefgh" << endl << endl << endl;
 }
 
 TextDisplay::~TextDisplay() {}

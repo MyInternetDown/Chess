@@ -14,7 +14,7 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
     const int row = location.getRow();
     const int col = location.getCol();
 
-    cerr << "enter king moves" << endl;
+    //cerr << "enter king moves" << endl;
 
     // King moves one square in any direction
     vector<pair<int, int>> kingMoves = {

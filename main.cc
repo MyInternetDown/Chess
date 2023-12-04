@@ -12,6 +12,7 @@ int main() {
   Board game;
   // You will need to make changes this code.
   int point1, point2 = 0;
+  int count = 1;
 
   while (true) {
     cin >> cmd;
@@ -33,11 +34,13 @@ int main() {
         ||(game.player2 == H && !game.getTurn())) {
         string moveAt, moveTo;
         cin >> moveAt >> moveTo;
-        cerr << moveAt << " " << moveTo << endl;
+        //cerr << moveAt << " " << moveTo << endl;
         game.humanMove(moveAt, moveTo);
       } else {
         game.move();
       }
+      cerr << count << endl;
+      count ++;
     }
     else if (cmd == "setup") {
       string cmd2;
@@ -45,7 +48,7 @@ int main() {
       while (true) {
         cin >> cmd2;
         if (cmd2 == "done") {
-          cerr << "done" << endl;
+          //cerr << "done" << endl;
           if (game.isValidSetup()) {
             game.updatePieces();
             break;
