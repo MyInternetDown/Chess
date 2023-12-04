@@ -364,15 +364,18 @@ void Board::humanMove(string startPos, string endPos, char promote) {
 }
 
 bool Board::canMove(Coordinate startPos, Coordinate endPos) {
+    cerr << "enter check move able" << endl;
     ChessPiece* piece = chessBoard[startPos.getRow()][startPos.getCol()];
 
     if (piece != nullptr) {
+        cerr << "found a piece at pos" << endl;
         if ((getTurn() && piece->getColour() == White) || 
             (!getTurn() && piece->getColour() == Black)) {
             auto it = find(piece->possibleMoves.begin(), 
             piece->possibleMoves.end(), endPos);
 
             if (it != piece->possibleMoves.end()) {
+                cerr << "ready to go" << endl;
                 return true;
             }
         }
@@ -382,6 +385,7 @@ bool Board::canMove(Coordinate startPos, Coordinate endPos) {
 
 
 void Board::absMove(Coordinate startPos, Coordinate endPos){
+    cerr << " moving piece" << endl;
     // make for displayer to do
     if (chessBoard[endPos.getRow()][endPos.getCol()] != nullptr) {
         removePiece(endPos);
@@ -398,15 +402,13 @@ void Board::absMove(Coordinate startPos, Coordinate endPos){
     // Update the piece's location (if needed)
     pieceToMove->move(endPos);
 
+    chessDisplay[endPos.getRow()][endPos.getCol()] = pieceToMove->getCharType();
+    chessDisplay[startPos.getRow()][startPos.getCol()] = 
+    (startPos.getRow() + endPos.getCol() & 2 == 0) ? BLACK : WHITE;
 
-    for (int row = 0; row < 8; ++row) {
-        for (int col = 0; col < 8; ++col) {
-            // create an empty pointer to that place
-            if (chessBoard[row][col] != nullptr) {
-                chessBoard[row][col]->getAllMoves(chessBoard);
-            }
-        }
-    }
+
+    updatePieces();
+    turn = !turn;
     notifyAllObservers();
 }
 
