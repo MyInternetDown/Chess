@@ -135,7 +135,7 @@ void Board::init(const std::string position, const std::string type, const std::
     int row = coord.getRow();
     int col = coord.getCol();
 
-    cerr << row << " " << col << endl;
+    //cerr << row << " " << col << endl;
 
 
 
@@ -150,7 +150,6 @@ void Board::init(const std::string position, const std::string type, const std::
         chessBoard[row][col] = new Bishop(coord, color);
     } else if (type == "N" || type == "n") {
         chessBoard[row][col] = new Knight(coord, color);
-        cerr << "knight made ------------" << endl;
     } else if (type == "R" || type == "r") {
         chessBoard[row][col] = new Rook(coord, color);
     } else if (type == "P" || type == "p") {
@@ -158,17 +157,17 @@ void Board::init(const std::string position, const std::string type, const std::
     }
 
     chessDisplay[row][col] = chessBoard[row][col]->getCharType();
-    cerr << chessBoard[row][col]->getCharType() << "chekingsadklfas;jfkasl;fdjal;dfj;" << endl;
+    //cerr << chessBoard[row][col]->getCharType() << "chekingsadklfas;jfkasl;fdjal;dfj;" << endl;
 
-    if (color == "white") {
+    if (color == "White") {
         player1Pieces.push_back(chessBoard[row][col]);
-    } else if (color == "black") {
+    } else if (color == "Black") {
         player2Pieces.push_back(chessBoard[row][col]);
     }
 
     chessDisplay[row][col] = chessBoard[row][col]->getCharType();
 
-    notifyAllObservers();
+    //notifyAllObservers();
     // Handle other piece types as needed
     
 }
@@ -256,8 +255,6 @@ void Board::updatePieces() {
         for (int col = 0; col < 8; ++col) {
             // create an empty pointer to that place
             if (chessBoard[row][col] != nullptr) {
-                cerr << "error" << endl;
-                cerr << row <<" " << col << "pppppppppppppppppppppppppppppppppppppppp" << endl;
                 chessBoard[row][col]->getAllMoves(chessBoard);
             }
         }
@@ -293,6 +290,8 @@ void Board::changeTurn(string color) {
 
 
 void Board::move() {
+    // check error handling if ther are no more pieces to move to do
+    cerr << " computer time to move" << endl;
     bool found = false;
     if (turn && player1 != H) {
         if (player1 == L1) {
@@ -308,10 +307,14 @@ void Board::move() {
     }
 
     if (!turn && player2 != H) {
-        if (player1 == L1) {
+        //cerr << "computer turn" << endl;
+        if (player2 == L1) {
+            //cerr << " level robot" <<endl;
             while (!found) {
-                int randomIndex = rand() % player1Pieces.size();
-                ChessPiece* piece = player1Pieces[randomIndex];
+                //cerr << "stop" << player2Pieces.size() << endl;
+                int randomIndex = rand() % player2Pieces.size();
+                //cerr << "random " << randomIndex << endl;
+                ChessPiece* piece = player2Pieces[randomIndex];
                 if (!piece->possibleMoves.empty()) {
                     found = true;
                     absMove(piece->location, piece->getRandMove());
@@ -350,7 +353,7 @@ void Board::detach(Observer *o){
 
 
 void Board::humanMove(string startPos, string endPos, char promote) {
-    cerr << "enter human mover" << endl;
+    cerr << "humanMove" << endl;
     Coordinate coordStart;
     Coordinate coordEnd;
     istringstream pos1(startPos);
@@ -358,24 +361,22 @@ void Board::humanMove(string startPos, string endPos, char promote) {
     pos1 >> coordStart;
     pos2 >> coordEnd;
     if (canMove(coordStart, coordEnd)) {
-        cerr << "can moves piece" << endl;
         absMove(coordStart, coordEnd);
     }
 }
 
 bool Board::canMove(Coordinate startPos, Coordinate endPos) {
-    cerr << "enter check move able" << endl;
+    //cerr << "canMove" << endl;
     ChessPiece* piece = chessBoard[startPos.getRow()][startPos.getCol()];
 
     if (piece != nullptr) {
-        cerr << "found a piece at pos" << endl;
+        //cerr << "found a piece at pos" << endl;
         if ((getTurn() && piece->getColour() == White) || 
             (!getTurn() && piece->getColour() == Black)) {
             auto it = find(piece->possibleMoves.begin(), 
             piece->possibleMoves.end(), endPos);
 
             if (it != piece->possibleMoves.end()) {
-                cerr << "ready to go" << endl;
                 return true;
             }
         }
@@ -385,12 +386,14 @@ bool Board::canMove(Coordinate startPos, Coordinate endPos) {
 
 
 void Board::absMove(Coordinate startPos, Coordinate endPos){
-    cerr << " moving piece" << endl;
+   
     // make for displayer to do
     if (chessBoard[endPos.getRow()][endPos.getCol()] != nullptr) {
         removePiece(endPos);
     }
     ChessPiece* pieceToMove = chessBoard[startPos.getRow()][startPos.getCol()];
+    cerr << "absMove" << startPos << " " << endPos <<  " " << pieceToMove->getCharType() << endl;
+
     // Check if there is a piece at the source location
     assert(pieceToMove != nullptr);
 

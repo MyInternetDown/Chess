@@ -33,7 +33,7 @@ int main() {
         ||(game.player2 == H && !game.getTurn())) {
         string moveAt, moveTo;
         cin >> moveAt >> moveTo;
-        cerr << moveAt << " " << moveTo << endl;
+        //cerr << moveAt << " " << moveTo << endl;
         game.humanMove(moveAt, moveTo);
       } else {
         game.move();
@@ -45,7 +45,7 @@ int main() {
       while (true) {
         cin >> cmd2;
         if (cmd2 == "done") {
-          cerr << "done" << endl;
+          //cerr << "done" << endl;
           if (game.isValidSetup()) {
             game.updatePieces();
             break;
