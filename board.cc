@@ -105,10 +105,10 @@ void Board::reset(){
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
             chessBoard[row][col] = nullptr;
-            if ((row * 8 + col) % 2 == 0) {
-                chessDisplay[row][col] = WHITE;
-            } else {
+            if ((row + col) % 2 == 0) {
                 chessDisplay[row][col] = BLACK;
+            } else {
+                chessDisplay[row][col] = WHITE;
             }
         }
     }
@@ -148,7 +148,7 @@ void Board::init(const std::string position, const std::string type, const std::
         chessBoard[row][col] = new Pawn(coord, color);
     }
 
-    chessDisplay[row][col] = chessBoard[row][col]->getCharType();
+    //chessDisplay[row][col] = chessBoard[row][col]->getCharType();
     //cerr << chessBoard[row][col]->getCharType() << "chekingsadklfas;jfkasl;fdjal;dfj;" << endl;
 
     if (color == "White") {
@@ -227,11 +227,11 @@ void Board::removePiece(Coordinate coord, bool needNotify){
         }
         delete chessBoard[row][col];
         chessBoard[row][col] = nullptr;
-        if (row * 8 + col % 2 == 0) {
-            chessDisplay[row][col] == WHITE;
+        if ((row + col) % 2 == 0) {
+            chessDisplay[row][col] == BLACK;
         }
         else {
-            chessDisplay[row][col] == BLACK;
+            chessDisplay[row][col] == WHITE;
         }
     }
 
@@ -242,12 +242,12 @@ void Board::removePiece(Coordinate coord, bool needNotify){
 }
 
 void Board::updatePieces() {
-    cerr << "update piece" << endl;
+    //cerr << "update piece" << endl;
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
             // create an empty pointer to that place
             if (chessBoard[row][col] != nullptr) {
-                cerr << "updatein  " << row << " " << col << " " << chessBoard[row][col]->getCharType() <<endl;
+                //cerr << "updatein  " << row << " " << col << " " << chessBoard[row][col]->getCharType() <<endl;
                 chessBoard[row][col]->getAllMoves(chessBoard);
             }
         }
@@ -477,7 +477,7 @@ void Board::absMove(Coordinate startPos, Coordinate endPos){
 
     chessDisplay[endPos.getRow()][endPos.getCol()] = pieceToMove->getCharType();
     chessDisplay[startPos.getRow()][startPos.getCol()] = 
-    (startPos.getRow() + endPos.getCol() & 2 == 0) ? BLACK : WHITE;
+    ((startPos.getRow() + startPos.getCol()) % 2 == 0) ? BLACK : WHITE;
     pieceToMove->hasMoved = true;
 
     updatePieces();
