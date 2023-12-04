@@ -285,6 +285,41 @@ void Board::changeTurn(string color) {
     }
 }
 
+bool Board::moveL1(Colour player) {
+
+    int randomIndex = rand() % (player == White) ? player1Pieces.size() : player2Pieces.size();
+    ChessPiece* piece = (player == White) ? player1Pieces[randomIndex] : player2Pieces[randomIndex];
+
+    //cerr << " checkpoint" << randomIndex << endl;
+    if (!piece->possibleMoves.empty()) {
+        absMove(piece->location, piece->getRandMove());
+        return true;
+    }
+}
+
+bool Board::moveL2(Colour player) {
+    if (player == White) {
+        for (ChessPiece* piece : player1Pieces) {
+            if (!piece->checkMoves.empty()) {
+                absMove(piece->location, piece->checkMoves[0]);
+                return true;
+            }
+        }
+        for (ChessPiece* piece : player1Pieces) {
+            if (!piece->attackMoves.empty()) {
+                absMove(piece->location, piece->attackMoves[0]);
+                return true;
+            }
+        }
+
+        return moveL1(White);
+    }
+}
+
+bool Board::moveL3(Colour player) {
+
+}
+
 
 void Board::move() {
     // check error handling if ther are no more pieces to move to do
@@ -305,9 +340,31 @@ void Board::move() {
             }
         } else if (player1 == L2) {
             for (ChessPiece* piece : player1Pieces) {
-
+                if (!piece->checkMoves.empty()) {
+                    cerr << "checking" << endl;
+                    absMove(piece->location, piece->checkMoves[0]);
+                    return;
+                }
+            }
+            for (ChessPiece* piece : player1Pieces) {
+                if (!piece->attackMoves.empty()) {
+                    cerr << "attacking ___________________" << endl;
+                    absMove(piece->location, piece->attackMoves[0]);
+                    return;
+                }
+            }
+            while (!found) {
+                int randomIndex = rand() % player1Pieces.size();
+                ChessPiece* piece = player1Pieces[randomIndex];
+                //cerr << " checkpoint" << randomIndex << endl;
+                if (!piece->possibleMoves.empty()) {
+                    found = true;
+                    absMove(piece->location, piece->getRandMove());
+                    return;
+                }
             }
         }
+
     }
 
     if (!turn && player2 != H) {
@@ -355,22 +412,21 @@ Board::~Board() {
 
 bool Board::checkStale(Colour player) {
     if (player == White) {
-        for (ChessPiece* piece : player1Pieces) {
-            if(piece->getPiece() == K) {
-                if (piece->isChecked(chessBoard) == false) {
-                    if (piece->possibleMoves.size() == 0) {
-                        return true;
-                    }
+        if (player1Pieces.size() == 1){
+            assert(player1Pieces[0]->getPiece() == K);
+            if (player1Pieces[0]->isChecked(chessBoard) == false) {
+                if (player1Pieces[0]->possibleMoves.size() == 0) {
+                    return true;
                 }
             }
         }
     } else {
-        for (ChessPiece* piece : player2Pieces) {
-            if(piece->getPiece() == K) {
-                if (piece->isChecked(chessBoard) == false) {
-                    if (piece->possibleMoves.size() == 0) {
-                        return true;
-                    }
+        if (player2Pieces.size() == 1){
+            assert(player2Pieces[0]->getPiece() == K);
+                
+            if (player1Pieces[0]->isChecked(chessBoard) == false) {
+                if (player1Pieces[0]->possibleMoves.size() == 0) {
+                    return true;
                 }
             }
         }

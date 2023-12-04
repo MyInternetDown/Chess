@@ -49,7 +49,7 @@ void Bishop::getAllMoves(ChessPiece* board[8][8]) {
 void Bishop::getAllCheckMoves(ChessPiece* board[8][8]) {
 
     checkMoves.clear();
-    for (const auto move : possibleMoves) {
+    for (const auto &move : possibleMoves) {
         // Add move to attack moves if an opponent's piece is encountered
         string tempCol = colourToStr.find(colour)->second;
         Bishop temp(move, tempCol);

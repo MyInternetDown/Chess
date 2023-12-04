@@ -57,7 +57,7 @@ vector<Coordinate> Knight::getAllAttackMoves(ChessPiece* board[8][8]) const {
 void Knight::getAllCheckMoves(ChessPiece* board[8][8]) {
 
     checkMoves.clear();
-    for (const auto move : possibleMoves) {
+    for (const auto &move : possibleMoves) {
         // Add move to attack moves if an opponent's piece is encountered
         string tempCol = colourToStr.find(colour)->second;
         Knight temp(move, tempCol);

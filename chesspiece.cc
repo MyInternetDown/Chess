@@ -97,6 +97,7 @@ void ChessPiece::getAllAttackMoves(ChessPiece* board[8][8]){
 }
 
 void ChessPiece::update(ChessPiece* board[8][8]) {
+    getAllDangerPositions(board);
     //cerr << "update 1" << endl;
     getAllMoves(board);
     //cerr << "update 2" << endl;
@@ -104,7 +105,6 @@ void ChessPiece::update(ChessPiece* board[8][8]) {
     //cerr << "update 3" << endl;
     getAllCheckMoves(board);
     //cerr << "update 4" << endl;
-    getAllDangerPositions(board);
 }
 
 

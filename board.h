@@ -94,6 +94,10 @@ public:
 
 	void changeTurn(string color);
 
+	bool moveL1(Colour player);
+	bool moveL2(Colour player);
+	bool moveL3(Colour player);
+	bool moveL4(Colour player);
 	void move();
 
 	void humanMove(string startPos, string endPos, char promote = ' ');
