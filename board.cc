@@ -29,6 +29,7 @@ Board::Board() :
 }
 
 bool Board::isValidSetup()  {
+    gameStart = false;
     // Check if there is exactly one white king and one black king
     int whiteKingCount = 0;
     int blackKingCount = 0;
@@ -62,6 +63,7 @@ bool Board::isValidSetup()  {
         }
     }
     if (whiteKingCount == 1 && blackKingCount == 1) {
+        gameStart = true;
         return true;
     }
     return false;
@@ -178,6 +180,16 @@ void Board::removePiece(Coordinate coord, bool needNotify){
             chessDisplay[row][col] == BLACK;
         }
     }
+
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            // create an empty pointer to that place
+            if (chessBoard[row][col] != nullptr) {
+                chessBoard[row][col]->getAllMoves(chessBoard);
+            }
+        }
+    }
+
     if (needNotify) {
         notifyAllObservers();
     }
@@ -202,19 +214,46 @@ bool Board::isValidPosition(const Coordinate &pos) const {
            pos.getCol() >= 0 && pos.getCol() < 8;
 }
 
+void Board::changeTurn(string color) {
+    if (parseColour(color) == White) {
+        turn = true;
+    } else {
+        turn = false;
+    }
+}
+
 
 void Board::move() {
-
-
-    for (int row = 0; row < 8; ++row) {
-        for (int col = 0; col < 8; ++col) {
-            // create an empty pointer to that place
-            if (chessBoard[row][col] != nullptr) {
-                chessBoard[row][col]->getAllMoves(chessBoard);
+    bool found = false;
+    if (turn && player1 != H) {
+        if (player1 == L1) {
+            while (!found) {
+                int randomIndex = rand() % player1Pieces.size();
+                ChessPiece* piece = player1Pieces[randomIndex];
+                if (!piece->possibleMoves.empty()) {
+                    found = true;
+                    absMove(piece->location, piece->getRandMove());
+                }
             }
         }
     }
+
+    if (!turn && player2 != H) {
+        if (player1 == L1) {
+            while (!found) {
+                int randomIndex = rand() % player1Pieces.size();
+                ChessPiece* piece = player1Pieces[randomIndex];
+                if (!piece->possibleMoves.empty()) {
+                    found = true;
+                    absMove(piece->location, piece->getRandMove());
+                }
+            }
+        }
+    }
+
 }
+
+
 // Destructor
 Board::~Board() {
     reset();
@@ -223,9 +262,6 @@ Board::~Board() {
     observers.clear();
 }
 
-void Board::notify(Board *cb) {
-  
-}
 
 void Board::notifyAllObservers() {
   for (auto &observer : observers) {
@@ -241,6 +277,66 @@ void Board::attach(Observer *o) {
 
 void Board::detach(Observer *o){
     observers.erase(std::remove(observers.begin(), observers.end(), o), observers.end());
+}
+
+
+void Board::humanMove(string startPos, string endPos, char promote) {
+    Coordinate coordStart;
+    Coordinate coordEnd;
+    istringstream pos1(startPos);
+    istringstream pos2(endPos);
+    pos1 >> coordStart;
+    pos2 >> coordEnd;
+    if (canMove(coordStart, coordEnd)) {
+        absMove(coordStart, coordEnd);
+    }
+}
+
+bool Board::canMove(Coordinate startPos, Coordinate endPos) {
+    ChessPiece* piece = chessBoard[startPos.getRow()][startPos.getCol()];
+
+    if (piece != nullptr) {
+        if ((getTurn() && piece->getColour() == White) || 
+            (!getTurn() && piece->getColour() == Black)) {
+            auto it = find(piece->possibleMoves.begin(), 
+            piece->possibleMoves.end(), endPos);
+
+            if (it != piece->possibleMoves.end()) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
+void Board::absMove(Coordinate startPos, Coordinate endPos){
+    // make for displayer to do
+    if (chessBoard[endPos.getRow()][endPos.getCol()] != nullptr) {
+        removePiece(endPos);
+    }
+    ChessPiece* pieceToMove = chessBoard[startPos.getRow()][startPos.getCol()];
+    // Check if there is a piece at the source location
+    assert(pieceToMove != nullptr);
+
+    chessBoard[startPos.getRow()][startPos.getCol()] = nullptr;
+
+    // Move the piece to the destination location
+    chessBoard[endPos.getRow()][endPos.getCol()] = pieceToMove;
+
+    // Update the piece's location (if needed)
+    pieceToMove->move(endPos);
+
+
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            // create an empty pointer to that place
+            if (chessBoard[row][col] != nullptr) {
+                chessBoard[row][col]->getAllMoves(chessBoard);
+            }
+        }
+    }
+    notifyAllObservers();
 }
 
 

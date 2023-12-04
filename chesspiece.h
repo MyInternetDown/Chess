@@ -7,6 +7,7 @@
 #include "coordinate.h"
 #include <algorithm>
 #include "observer.h"
+#include <cstdlib>
 
 class Board;
 
@@ -59,6 +60,7 @@ public:
 
 	int getPieceRow() const;
 	int getPieceCol() const;
+	Coordinate getRandMove() const;
 
 	virtual PieceType getPiece() const;
 	// Get the vecotrs of the possible moves
@@ -77,9 +79,7 @@ public:
 	virtual bool isChecked(ChessPiece* board[8][8]) const;
 
 	// Move Piece
-	void move(Coordinate moveHere) {
-		//to do
-	}
+	void move(Coordinate moveHere);
 };
 
 static vector<int> getPos(const std::string &cmd); // converts a coordinate in the form of letter-number

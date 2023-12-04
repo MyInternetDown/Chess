@@ -2,6 +2,9 @@
 #include "chesspiece.h"
 #include <sstream>
 #include <vector>
+#include <cstdlib>
+using namespace std;
+
 
 
 // Constructor
@@ -108,7 +111,14 @@ ChessPiece::~ChessPiece() {
 }
 
 string ChessPiece::getStrType() const {
+    
 }
+
+Coordinate ChessPiece::getRandMove() const {
+    int randomIndex = rand() % possibleMoves.size();
+    return possibleMoves[randomIndex];
+}
+
 
 char ChessPiece::getCharType() const {
     if (colour == White) {
@@ -129,6 +139,10 @@ bool ChessPiece::isChecked(ChessPiece* board[8][8]) const {
 bool ChessPiece::isEmpty() const {
     return false;
     // to do
+}
+
+void ChessPiece::move(Coordinate moveHere) {
+    location = moveHere;
 }
 
 

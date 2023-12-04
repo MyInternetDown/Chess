@@ -2,10 +2,12 @@
 #include <string>
 #include "board.h"
 #include <cctype> 
+#include <cstdlib>
 using namespace std;
 
 
 int main() {
+  srand(time(0));
   string cmd, aux;
   Board game;
   // You will need to make changes this code.
@@ -27,10 +29,14 @@ int main() {
       game.reset();
     }
     else if (cmd == "move") {
-      //first check compter
-
-      string moveAt, moveTo;
-      cin >> moveAt >> moveTo;
+      if ((game.player1 == H && game.getTurn())
+        ||(game.player2 == H && !game.getTurn())) {
+        string moveAt, moveTo;
+        cin >> moveAt >> moveTo;
+        game.humanMove(moveAt, moveTo);
+      } else {
+        game.move();
+      }
     }
     else if (cmd == "setup") {
       string cmd2;
@@ -76,8 +82,6 @@ int main() {
           cin >> colour;
           //switch piece to colour
         }
-
-
       }
     }
   }

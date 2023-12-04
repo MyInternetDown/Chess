@@ -16,6 +16,8 @@
 #include "window.h"
 #include <vector>
 #include "observer.h"
+#include <cassert>  
+
 
 using namespace std;
 
@@ -29,21 +31,22 @@ class Board {
 private:
 
 	bool turn;
-	MoveType player1;
-	vector<ChessPiece*> player1Pieces;
-	MoveType player2;
-	vector<ChessPiece*> player2Pieces;
+
 	bool isWon;
 	TextDisplay *td; // The text display.
   	GraphicsDisplay *gd; // graphics display
   	Xwindow *windowX;
 	std::vector<Observer*> observers;
+	bool gameStart;
+	vector<ChessPiece*> player2Pieces;
+	vector<ChessPiece*> player1Pieces;
 
 
 	
 
 public:
-
+	MoveType player1;
+	MoveType player2;
 	ChessPiece *chessBoard[8][8];
 	char chessDisplay[8][8];
     // Constructor
@@ -83,13 +86,21 @@ public:
 
     // Destructor
 
+	void changeTurn(string color);
+
 	void move();
+
+	void humanMove(string startPos, string endPos, char promote = ' ');
+
+	bool canMove(Coordinate startPos, Coordinate endPos);
+
+	void absMove(Coordinate startPos, Coordinate endPos);
 
     ~Board();
 
-	void notify(Board *cb);
-
 	SubscriptionType subType();
+
+
 
 	void notifyAllObservers();
 
