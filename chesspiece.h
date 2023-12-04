@@ -21,6 +21,8 @@ public:
 	Colour colour;
 	Coordinate previousLoc;
 	Coordinate location;
+	vector<Coordinate> blockKing;
+	vector<Coordinate> evadeMoves;
 	vector<Coordinate> attackMoves;
 	vector<Coordinate> dangerSquares;
 	vector<Coordinate> checkMoves;
@@ -52,6 +54,7 @@ public:
 
 	// Gets all possible locations where this piece can eat another piece
 	virtual void getAllAttackMoves(ChessPiece* board[8][8]);
+	virtual void getAllEvadeMoves(ChessPiece* board[8][8]);
 
 	virtual void getAllCheckMoves(ChessPiece* board[8][8]) = 0;
 
