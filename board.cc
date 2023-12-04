@@ -474,6 +474,11 @@ void Board::checkWin(Colour player) {
             if(piece->getPiece() == K) {
                 if (piece->isChecked(chessBoard) == true) {
                     if (piece->possibleMoves.size() == 0) {
+                        for (ChessPiece* pieceOther : player1Pieces) {
+                            if(pieceOther->blockKing.size() != 0) {
+                                return;
+                            }
+                        }
                         isWon = true;
                         player2Score++;
                     }
@@ -485,6 +490,11 @@ void Board::checkWin(Colour player) {
             if(piece->getPiece() == K) {
                 if (piece->isChecked(chessBoard) == true) {
                     if (piece->possibleMoves.size() == 0) {
+                        for (ChessPiece* pieceOther : player2Pieces) {
+                            if(pieceOther->blockKing.size() != 0) {
+                                return;
+                            }
+                        }
                         isWon = true;
                         player1Score++;
                     }

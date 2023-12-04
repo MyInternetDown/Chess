@@ -149,6 +149,10 @@ void ChessPiece::getAllEvadeMoves(ChessPiece* board[8][8]) {
     }
 }
 
+void getAllBlockKing(ChessPiece* board[8][8]) {
+
+}
+
 
 ChessPiece::~ChessPiece() {
     possibleMoves.clear();
@@ -177,7 +181,7 @@ bool ChessPiece::moved() const{
     return hasMoved;
 }
 
-bool ChessPiece::isChecked(ChessPiece* board[8][8]) const {
+bool ChessPiece::isChecked(ChessPiece* board[8][8]) {
     return false;
     // to do
 }

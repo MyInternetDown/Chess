@@ -51,7 +51,7 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
     
 }
 
-bool King::isChecked(ChessPiece* board[8][8]) const {
+bool King::isChecked(ChessPiece* board[8][8]) {
     const int row = location.getRow();
     const int col = location.getCol();
 
@@ -66,6 +66,7 @@ bool King::isChecked(ChessPiece* board[8][8]) const {
                 for (const Coordinate &move: board[i][j]->possibleMoves) {
                     if (location == move) {
                         cerr << "location found equal" << endl;
+                        getBlockPlaces(board[i][j]->location, board);
                         return true;
                     }
                 }
@@ -77,4 +78,8 @@ bool King::isChecked(ChessPiece* board[8][8]) const {
 
 void King::getAllCheckMoves(ChessPiece* board[8][8]) {
     checkMoves.clear();
+}
+
+void getBlockPlaces(Coordinate attacker, ChessPiece* board[8][8]) {
+
 }
