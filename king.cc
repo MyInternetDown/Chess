@@ -71,3 +71,9 @@ bool King::isChecked(ChessPiece* board[8][8]) const {
     //to do
     return false;
 }
+
+vector<Coordinate> King::getAllCheckMoves(ChessPiece* board[8][8]) {
+    vector<Coordinate> checkMoves;
+    // can't check cause it will check itself
+    return checkMoves;
+}

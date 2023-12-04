@@ -36,7 +36,7 @@ public:
 
 	
 	// Destructor
-	~ChessPiece();
+	virtual ~ChessPiece();
 
 	// Gets all possible moves on where this chesspiece and move to given a vector board of the locations of all the other pieces.
 	virtual void getAllMoves(ChessPiece* board[8][8]) = 0;
@@ -46,6 +46,8 @@ public:
 
 	// Gets all possible locations where this piece can eat another piece
 	virtual vector<Coordinate> getAllAttackMoves(ChessPiece* board[8][8]) const =0;
+
+	virtual vector<Coordinate> getAllCheckMoves(ChessPiece* board[8][8]) = 0;
 
 	// Checks if the current piece can move to the current position noted down
 	// to do
@@ -81,10 +83,5 @@ public:
 	// Move Piece
 	void move(Coordinate moveHere);
 };
-
-static vector<int> getPos(const std::string &cmd); // converts a coordinate in the form of letter-number
-// into the corresponding index in Board
-
-static std::string getCor(int index);
 
 #endif 

@@ -53,3 +53,16 @@ vector<Coordinate> Knight::getAllAttackMoves(ChessPiece* board[8][8]) const {
 
     return attackMoves;
 }
+
+vector<Coordinate> Knight::getAllCheckMoves(ChessPiece* board[8][8]) {
+    vector<Coordinate> checkMoves;
+
+    for (const auto &move : possibleMoves) {
+        // Add move to attack moves if an opponent's piece is encountered
+        if (board[move.getRow()][move.getCol()]->getPiece() == K) {
+            checkMoves.push_back(move);
+        }
+    }
+
+    return checkMoves;
+}

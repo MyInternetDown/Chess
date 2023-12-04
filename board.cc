@@ -307,6 +307,9 @@ void Board::move() {
                 }
             }
         }
+        if (player1 == L2) {
+            
+        }
     }
 
     if (!turn && player2 != H) {

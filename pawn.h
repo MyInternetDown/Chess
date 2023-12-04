@@ -18,6 +18,7 @@ public:
     //bool enPassant(vector<int>pos, vector<vector<int>>prevMove);
 
     // Get whether the pawn has moved
+    vector<Coordinate> getAllCheckMoves(ChessPiece* board[8][8]) override;
 };
 
 #endif

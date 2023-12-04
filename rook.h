@@ -15,7 +15,7 @@ public:
 
     // Override the getAllAttackMoves function for the Rook
     vector<Coordinate> getAllAttackMoves(ChessPiece* board[8][8]) const override;
-
+    vector<Coordinate> getAllCheckMoves(ChessPiece* board[8][8]) override;
 };
 
 #endif

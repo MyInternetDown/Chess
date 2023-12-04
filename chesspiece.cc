@@ -107,11 +107,11 @@ std::vector<Coordinate> ChessPiece::getAllDangerPositions(ChessPiece* board[8][8
 }
 
 ChessPiece::~ChessPiece() {
-    // to do
+    possibleMoves.clear();
 }
 
 string ChessPiece::getStrType() const {
-    
+
     
 }
 
@@ -151,20 +151,5 @@ void ChessPiece::move(Coordinate moveHere) {
 
 //void move(vector<int> moveHere);
 
-vector<int> getPos(const std::string &cmd)
-{
-	int col = cmd[0] - 'a';
-	int row = cmd[1] - '1';
-	vector<int> position = {row, col};
-	return position;
-}
 
-
-std::string getCor(int index) {
-    // Convert an index to a coordinate string, e.g., 0 -> "a1", 1 -> "b1", etc.
-    int row = index / 8;
-    int col = index % 8;
-    char colChar = 'a' + col;
-    return std::string(1, colChar) + std::to_string(row + 1);
-}
 
