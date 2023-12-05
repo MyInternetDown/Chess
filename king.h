@@ -18,5 +18,6 @@ public:
     void getAllBlockKing(vector<Coordinate> protectPos) override;
     void adjustPossibleMoves(ChessPiece* board[8][8]) override;
 };
+void printVector(const std::vector<Coordinate>& vec);
 
 #endif
