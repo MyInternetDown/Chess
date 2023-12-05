@@ -321,18 +321,20 @@ void Board::changeTurn(string color) {
     }
 }
 
-
+// to move a piece on the board
 void Board::move() {
+    // check if the game is initialized
     if (!initialized){
         cerr << "not init game" << endl;
         return;
     }
-    // check error handling if ther are no more pieces to move to do
-    
+    // check error handling if there are no more pieces to move to do
     bool found = false;
+    // check if it's the turn of player 1 (White) and the player is not human
     if (turn && player1 != H) {
         cerr << " computer 1 " << endl;
         if (player1 == L1) {
+            // level 1: move to block the opponent's king
             for (ChessPiece* piece : player1Pieces) {
                 if (!piece->blockKing.empty()) {
                     cerr << " bloooooooooooooock +++++++++++" << endl;
@@ -353,6 +355,7 @@ void Board::move() {
                 }
             }
         } else if (player1 == L2) {
+            // level 2: move to block, check, or attack the opponent
             for (ChessPiece* piece : player1Pieces) {
                 if (!piece->blockKing.empty()) {
                     cerr << " bloooooooooooooock +++++++++++" << endl;
@@ -389,6 +392,7 @@ void Board::move() {
                 }
             }
         } else if (player1 == L3) {
+            // level 3: move to block, evade, check, or attack the opponent
             for (ChessPiece* piece : player1Pieces) {
                 if (!piece->blockKing.empty()) {
                     cerr << " bloooooooooooooock +++++++++++" << endl;
@@ -435,10 +439,12 @@ void Board::move() {
         }
 
     }
+    // check if it's the turn of player 2 (Black) and the player is not human
     if (!turn && player2 != H) {
         cerr << " computer 2" << endl;
         //cerr << "computer turn" << endl;
         if (player2 == L1) {
+            // level 1: move to block the opponent's king
             for (ChessPiece* piece : player2Pieces) {
                 if (!piece->blockKing.empty()) {
                     cerr << " bloooooooooooooock +++++++++++" << endl;
@@ -461,6 +467,7 @@ void Board::move() {
                 }
             }
         }else if (player2 == L2) {
+            // level 2: move to block, check, or attack the opponent
             for (ChessPiece* piece : player2Pieces) {
                 if (!piece->blockKing.empty()) {
                     cerr << " bloooooooooooooock +++++++++++" << endl;
@@ -497,6 +504,7 @@ void Board::move() {
                 }
             }
         } else if (player2 == L3) {
+            // level 3: move to block, evade, check, or attack the opponent
             for (ChessPiece* piece : player2Pieces) {
                 if (!piece->blockKing.empty()) {
                     cerr << " bloooooooooooooock +++++++++++" << endl;
@@ -544,6 +552,7 @@ void Board::move() {
     }
 }
 
+// check if a computer move results in pawn promotion
 void Board::checkComputerPromote() {
     if (checkPromote()) {
         std::vector<std::string> options = {"Q", "R", "B", "N"};
@@ -552,7 +561,6 @@ void Board::checkComputerPromote() {
         promote(options[randomIndex]);
     }
 }
-
 
 // Destructor
 Board::~Board() {
@@ -574,6 +582,7 @@ Board::~Board() {
     //delete gd;
 }
 
+// update the check status for a king and its pieces
 void Board::updateCheck(ChessPiece* king, bool check) {
     for (int i =0; i < 8; ++ i ) {
         for (int j = 0; j < 8; ++j) {
@@ -584,11 +593,12 @@ void Board::updateCheck(ChessPiece* king, bool check) {
     }
 }
 
-
+// check for stalemate for a player
 bool Board::checkStale(Colour player) {
    // return false;
 
     if (player == White) {
+        // check for stalemate for white player
         for (const auto &chessPiece: player1Pieces) {
             if (chessPiece->possibleMoves.size() != 0) {
                 return false;
@@ -599,6 +609,7 @@ bool Board::checkStale(Colour player) {
 
     
     } else {
+        // check for stalemate for black player
         for (const auto &chessPiece: player2Pieces) {
             if (chessPiece->possibleMoves.size() != 0) {
                 return false;
@@ -610,9 +621,11 @@ bool Board::checkStale(Colour player) {
     return false;
 }
 
+// promote a pawn to a specified piece type
 void Board::promote(string type) {
     cerr << "enter promotion" << endl;
     if (!turn) {
+        // promote pawn on the 7th rank for white
         cerr << "1" << endl;
         for (const auto& piece : chessBoard[7]) {
             if (piece != nullptr && piece->getPiece() == P) {
@@ -623,6 +636,7 @@ void Board::promote(string type) {
             }
         }
     } else {
+        // promote pawn on the 8th rank for black
         cerr << "2" << endl;
         for (const auto& piece : chessBoard[0]) {
             if (piece != nullptr && piece->getPiece() == P) {
@@ -637,8 +651,10 @@ void Board::promote(string type) {
     notifyAllObservers();
 }
 
+// check if pawn promotion is possible
 bool Board::checkPromote() {
     cerr << "check promote" << endl;
+    // check if there is a pawn on the 1st or 8th rank
     for (const auto& piece : chessBoard[0]) {
         if (piece != nullptr && piece->getPiece() == P) {
             return true;
@@ -655,10 +671,12 @@ bool Board::checkPromote() {
     return false;
 }
 
+// check for checkmate and update the game state
 void Board::checkWin(Colour player) {
    // return;
     cerr << "check for check mate" << endl;
     if (player == White) {
+        // check for checkmate for white player
         cerr << "enter Check" << endl;
         for (ChessPiece* piece : player1Pieces) {
             if(piece->getPiece() == K) {
@@ -682,6 +700,7 @@ void Board::checkWin(Colour player) {
             }
         }
     } else {
+        // check for checkmate for black player
         for (ChessPiece* piece : player2Pieces) {
             if(piece->getPiece() == K) {
                 if (piece->isChecked(chessBoard)) {
@@ -702,8 +721,7 @@ void Board::checkWin(Colour player) {
     }
 }
 
-
-
+// notify all observers (display) about changes in the game state
 void Board::notifyAllObservers() {
   for (auto &observer : observers) {
         if (observer->subType() == SubscriptionType::All) {
@@ -712,15 +730,17 @@ void Board::notifyAllObservers() {
     }
 }
 
+// attach an observer to the board
 void Board::attach(Observer *o) { 
   observers.emplace_back(o);
 }
 
+// detach an observer from the board
 void Board::detach(Observer *o){
     observers.erase(std::remove(observers.begin(), observers.end(), o), observers.end());
 }
 
-
+// when a human player to make a move
 void Board::humanMove(string startPos, string endPos, char promote) {
     if(!initialized) {
         cerr << "not init game" << endl;
@@ -737,6 +757,7 @@ void Board::humanMove(string startPos, string endPos, char promote) {
     }
 }
 
+// check if a move from startPos to endPos is valid
 bool Board::canMove(Coordinate startPos, Coordinate endPos) {
     //cerr << "canMove" << endl;
     ChessPiece* piece = chessBoard[startPos.getRow()][startPos.getCol()];
@@ -756,7 +777,7 @@ bool Board::canMove(Coordinate startPos, Coordinate endPos) {
     return false;
 }
 
-
+// execute an absolute move on the chessboard
 void Board::absMove(Coordinate startPos, Coordinate endPos){
     assert(startPos != endPos);
    
@@ -781,15 +802,21 @@ void Board::absMove(Coordinate startPos, Coordinate endPos){
     }
     pieceToMove->move(endPos);
 
+    // update the display with the moved piece
     chessDisplay[endPos.getRow()][endPos.getCol()] = pieceToMove->getCharType();
     chessDisplay[startPos.getRow()][startPos.getCol()] = 
     ((startPos.getRow() + startPos.getCol()) % 2 == 0) ? BLACK : WHITE;
     pieceToMove->hasMoved = true;
 
+    // switch the turn to the other player
     turn = !turn;
     updatePieces();
     cerr << "move finished" << chessBoard[endPos.getRow()][endPos.getCol()]->getCharType() << endl;
+
+    // notify all observers (display) about the changes
     notifyAllObservers();
+
+    // check for stalemate and checkmate conditions, update scores, and reset the game if it's won
     if (chessBoard[endPos.getRow()][endPos.getCol()]->getColour() == White) {
         if(checkStale(Black)) {
             cerr << "Black STALE ===========================================" << endl;
@@ -816,7 +843,7 @@ void Board::absMove(Coordinate startPos, Coordinate endPos){
     }
 }
 
-
+// parse a string representing a chess position into a Coordinate
 Coordinate parseCoordinate(const std::string pos) {
     Coordinate c;
     istringstream iss(pos);
