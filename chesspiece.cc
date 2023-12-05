@@ -100,7 +100,7 @@ void ChessPiece::updateFirst(ChessPiece* board[8][8]) {
 }
 
 void ChessPiece::update(ChessPiece* board[8][8]) {
-    
+    blockKing.clear();
     getAllDangerPositions(board);
     //cerr << "update 1" << endl;
     //cerr << "update 2" << endl;
