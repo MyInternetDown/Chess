@@ -33,7 +33,7 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
             possibleMoves.push_back({newRow, newCol});
         }
     }
-    
+    /*
     if (!moved()) {
         if (col == 4 && board[row][0] != nullptr && board[row][0]->getPiece() == PieceType::R && board[row][0]->getColour() == getColour()
         && !board[row][0]->moved() && board[row][col - 1] == nullptr && board[row][col - 2] == nullptr)
@@ -52,13 +52,17 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
             evadeMoves.push_back(coord);
         }
     }
-    possibleMoves = evadeMoves;
+    */
+    
 
     
 }
 
 bool King::isChecked(ChessPiece* board[8][8]) {
+    bool found = false;
+    protectKing.clear();
     const int row = location.getRow();
+
     const int col = location.getCol();
 
     //cerr << "enter king moves" << endl;
@@ -69,24 +73,37 @@ bool King::isChecked(ChessPiece* board[8][8]) {
         for (int j = 0; j < 8; j++) {
             if(board[i][j] != nullptr && !(i == row && j == col)) {
 
-                cerr << "found piece validating" << endl;
+                //cerr << "found piece validating" << endl;
                 for (const Coordinate &move: board[i][j]->possibleMoves) {
-                    cerr << board[i][j]->getCharType() << " ...." << move << endl;
+                    //cerr << board[i][j]->getCharType() << " ...." << move << endl;
                     if (location == move) {
-                        cerr << "location found equal" << endl;
-                        //getBlockPlaces(board[i][j]->location, board);
-                        return true;
+                       // cerr << "location found equal" << endl;
+                        found = true;
+                        if (board[i][j]->getPiece() != N) {
+                            int dx = move.getRow() - location.getRow();
+                            int dy = move.getCol() - location.getRow();
+                            int steps = std::max(std::abs(dx), std::abs(dy));
+
+                            for (int i = 0; i < steps - 1; ++i) {
+                                int newX = move.getRow() + i * dx / steps;
+                                int newY = move.getCol() + i * dy / steps;
+                                protectKing.push_back(Coordinate(newX, newY));
+                            }
+                        }
                     }
                 }
             }
         }
     }
-    return false;
+    return found;
 }
 
 void King::getAllCheckMoves(ChessPiece* board[8][8]) {
     checkMoves.clear();
 }
 
+void King::getAllBlockKing(vector<Coordinate> protectPos) {
+    blockKing = evadeMoves;
+}
 //void getBlockPlaces(Coordinate attacker, ChessPiece* board[8][8]) {
 

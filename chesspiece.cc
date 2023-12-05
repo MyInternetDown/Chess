@@ -95,16 +95,18 @@ void ChessPiece::getAllAttackMoves(ChessPiece* board[8][8]){
     }
 
 }
+void ChessPiece::updateFirst(ChessPiece* board[8][8]) {
+    getAllMoves(board);
+}
 
 void ChessPiece::update(ChessPiece* board[8][8]) {
+    
     getAllDangerPositions(board);
     //cerr << "update 1" << endl;
-    getAllMoves(board);
     //cerr << "update 2" << endl;
     getAllAttackMoves(board);
     //cerr << "update 3" << endl;
     getAllCheckMoves(board);
-
     getAllEvadeMoves(board);
     //cerr << "update 4" << endl;
 }
@@ -123,8 +125,7 @@ void ChessPiece::getAllDangerPositions(ChessPiece* board[8][8]) {
             // Check if the current piece is of the opposing color and not an empty square
             if (currentPiece != nullptr && currentPiece->getColour() != getColour()) {
                 // Get all possible moves for the current piece and add them to dangerSquares
-                std::vector<Coordinate> enemyMoves = currentPiece->possibleMoves;
-                dangerSquares.insert(dangerSquares.end(), enemyMoves.begin(), enemyMoves.end());
+                dangerSquares.insert(dangerSquares.end(), currentPiece->possibleMoves.begin(), currentPiece->possibleMoves.end());
             }
         }
     }
@@ -137,14 +138,20 @@ void ChessPiece::getAllDangerPositions(ChessPiece* board[8][8]) {
 
 void ChessPiece::getAllEvadeMoves(ChessPiece* board[8][8]) {
     evadeMoves.clear(); 
-
-    for (Coordinate move : dangerSquares) {
-        if (move == location) {
-            for (const auto& coord : possibleMoves) {
-                if (std::find(dangerSquares.begin(), dangerSquares.end(), coord) == dangerSquares.end()) {
-                    evadeMoves.push_back(coord);
-                }
+    if (std::find(dangerSquares.begin(), dangerSquares.end(), location) == dangerSquares.end()) {
+        for (const auto& coord : possibleMoves) {
+            if (std::find(dangerSquares.begin(), dangerSquares.end(), coord) == dangerSquares.end()) {
+                evadeMoves.push_back(coord);
             }
+        }
+    }
+}
+
+void ChessPiece::getAllBlockKing(vector<Coordinate> protectPos){
+    blockKing.clear();
+    for (const auto& coord : possibleMoves) {
+        if (std::find(protectPos.begin(), protectPos.end(), coord) != protectPos.end()) {
+            blockKing.push_back(coord);
         }
     }
 }

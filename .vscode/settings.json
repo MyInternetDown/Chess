@@ -53,6 +53,9 @@
         "cwctype": "cpp",
         "fstream": "cpp",
         "iostream": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "list": "cpp",
+        "mutex": "cpp",
+        "valarray": "cpp"
     }
 }
