@@ -64,7 +64,7 @@ int main() {
         else if (cmd2 == "+") {
           string piece, location, colour;
           cin >> piece >> location;
-          cerr << "input ...................... " << endl;
+          cerr << "input ...................... " << piece << " " << location << endl;
           cerr << piece << endl;
           cerr << location << endl;
           

@@ -69,7 +69,7 @@ bool King::isChecked(ChessPiece* board[8][8]) {
 
     for (int i = 0; i < 8; i++){
         for (int j = 0; j < 8; j++) {
-            if(board[i][j] != nullptr && i != row && j != col) {
+            if(board[i][j] != nullptr && !(i == row && j == col)) {
 
                 cerr << "found piece validating" << endl;
                 for (const Coordinate &move: board[i][j]->possibleMoves) {

@@ -534,7 +534,8 @@ bool Board::checkStale(Colour player) {
     if (player == White) {
         if (player1Pieces.size() == 1){
             assert(player1Pieces[0]->getPiece() == K);
-            if (player1Pieces[0]->isChecked(chessBoard) == false) {
+            cerr << " stale check king ..............." << endl;
+            if (!player1Pieces[0]->isChecked(chessBoard)) {
                 if (player1Pieces[0]->possibleMoves.size() == 0) {
                     return true;
                 }
@@ -544,8 +545,8 @@ bool Board::checkStale(Colour player) {
         if (player2Pieces.size() == 1){
             assert(player2Pieces[0]->getPiece() == K);
                 
-            if (player1Pieces[0]->isChecked(chessBoard) == false) {
-                if (player1Pieces[0]->possibleMoves.size() == 0) {
+            if (!player2Pieces[0]->isChecked(chessBoard)) {
+                if (player2Pieces[0]->possibleMoves.size() == 0) {
                     return true;
                 }
             }
