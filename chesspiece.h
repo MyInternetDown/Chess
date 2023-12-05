@@ -56,12 +56,10 @@ public:
 	// Gets all possible locations where this piece can eat another piece
 	virtual void getAllAttackMoves(ChessPiece* board[8][8]);
 	virtual void getAllEvadeMoves(ChessPiece* board[8][8]);
-	//virtual void getAllBlockKing(ChessPiece* board[8][8]);
+	virtual void getAllBlockKing(vector<Coordinate> protectPos);
 
 	virtual void getAllCheckMoves(ChessPiece* board[8][8]) = 0;
-
-
-
+	virtual void updateFirst(ChessPiece* board[8][8]);
 	virtual void update(ChessPiece* board[8][8]);
 
 	// Checks if the current piece can move to the current position noted down

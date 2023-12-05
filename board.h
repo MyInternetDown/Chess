@@ -34,8 +34,8 @@ private:
 
 	bool isWon;
 	TextDisplay *td; // The text display.
-  	GraphicsDisplay *gd; // graphics display
-  	Xwindow *windowX;
+  	//GraphicsDisplay *gd; // graphics display
+  	//Xwindow *windowX;
 	std::vector<Observer*> observers;
 	bool gameStart;
 	vector<ChessPiece*> player2Pieces;
@@ -64,6 +64,7 @@ public:
 	void removePiece(Coordinate pos, bool needNotify = false);
 	void updatePieces();
 	void defaultSetup();
+	void updateCheck(ChessPiece* king, bool check = false);
 
 	void reset();
 

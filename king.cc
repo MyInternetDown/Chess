@@ -72,11 +72,11 @@ bool King::isChecked(ChessPiece* board[8][8]) {
         for (int j = 0; j < 8; j++) {
             if(board[i][j] != nullptr && !(i == row && j == col)) {
 
-                cerr << "found piece validating" << endl;
+                //cerr << "found piece validating" << endl;
                 for (const Coordinate &move: board[i][j]->possibleMoves) {
                     cerr << board[i][j]->getCharType() << " ...." << move << endl;
                     if (location == move) {
-                        cerr << "location found equal" << endl;
+                       // cerr << "location found equal" << endl;
                         found = true;
                         if (board[i][j]->getPiece() != N) {
                             int dx = move.getRow() - location.getRow();
@@ -101,5 +101,8 @@ void King::getAllCheckMoves(ChessPiece* board[8][8]) {
     checkMoves.clear();
 }
 
+void King::getAllBlockKing(vector<Coordinate> protectPos) {
+    blockKing = evadeMoves;
+}
 //void getBlockPlaces(Coordinate attacker, ChessPiece* board[8][8]) {
 
