@@ -26,7 +26,7 @@ public:
 	vector<Coordinate> attackMoves;
 	vector<Coordinate> dangerSquares;
 	vector<Coordinate> checkMoves;
-	vector<Coordinate> blockPos;
+	vector<Coordinate> protectKing;
 
 	vector<Coordinate> possibleMoves;
 	bool hasMoved;

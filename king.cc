@@ -58,7 +58,10 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
 }
 
 bool King::isChecked(ChessPiece* board[8][8]) {
+    bool found = false;
+    protectKing.clear();
     const int row = location.getRow();
+
     const int col = location.getCol();
 
     //cerr << "enter king moves" << endl;
@@ -74,14 +77,24 @@ bool King::isChecked(ChessPiece* board[8][8]) {
                     cerr << board[i][j]->getCharType() << " ...." << move << endl;
                     if (location == move) {
                         cerr << "location found equal" << endl;
-                        //getBlockPlaces(board[i][j]->location, board);
-                        return true;
+                        found = true;
+                        if (board[i][j]->getPiece() != N) {
+                            int dx = move.getRow() - location.getRow();
+                            int dy = move.getCol() - location.getRow();
+                            int steps = std::max(std::abs(dx), std::abs(dy));
+
+                            for (int i = 0; i < steps - 1; ++i) {
+                                int newX = move.getRow() + i * dx / steps;
+                                int newY = move.getCol() + i * dy / steps;
+                                protectKing.push_back(Coordinate(newX, newY));
+                            }
+                        }
                     }
                 }
             }
         }
     }
-    return false;
+    return found;
 }
 
 void King::getAllCheckMoves(ChessPiece* board[8][8]) {
