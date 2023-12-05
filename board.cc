@@ -13,6 +13,7 @@ Board::Board() :
     player2{H},
     player2Pieces{},
     isWon{false},
+    initialized{false},
     //gd{nullptr}, 
     // windowX{new Xwindow()} 
     td{nullptr}
@@ -33,7 +34,7 @@ Board::Board() :
 
 bool Board::isValidSetup()  {
     cerr << "enter valid" << endl;
-    gameStart = false;
+    initialized = false;
     // Check if there is exactly one white king and one black king
     int whiteKingCount = 0;
     int blackKingCount = 0;
@@ -76,9 +77,9 @@ bool Board::isValidSetup()  {
         }
     }
     cerr << whiteKingCount << " " << blackKingCount << " count" << endl;
-    if (whiteKingCount == 1 && blackKingCount == 1) {
-        gameStart = true;
+    if (whiteKingCount == 1 && blackKingCount == 1 ) {
         cerr << "found true valid " << endl;
+        initialized = true;
         return true;
     }
     cerr << "found false valid " << endl;
@@ -117,9 +118,17 @@ void Board::reset(){
                 chessDisplay[row][col] = WHITE;
             }
         }
+        notifyAllObservers();
     }
-    player1 = H;
-    player2 = H;
+    for (ChessPiece* piece : player1Pieces) {
+        delete piece;
+    }
+    for (ChessPiece* piece : player2Pieces) {
+        delete piece;
+    }
+    player1Pieces.clear();
+    player2Pieces.clear();
+    initialized = false;
     isWon = false;
     turn = false;
 }
@@ -206,6 +215,15 @@ void Board::defaultSetup(){
     init("f8", "b", "Black");
     init("g8", "n", "Black");
     init("h8", "r", "Black");
+}
+
+void Board::resign() {
+    if (turn) {
+        player2Score++;
+    } else {
+        player1Score++;
+    }
+    reset();
 }
 
 // Remove
@@ -299,6 +317,10 @@ void Board::changeTurn(string color) {
 
 
 void Board::move() {
+    if (!initialized){
+        cerr << "not init game" << endl;
+        return;
+    }
     // check error handling if ther are no more pieces to move to do
     
     bool found = false;
@@ -536,7 +558,9 @@ bool Board::checkStale(Colour player) {
                 return false;
             }
         }
+        isWon = true;
         return true;
+
     
     } else {
         for (const auto &chessPiece: player2Pieces) {
@@ -544,6 +568,7 @@ bool Board::checkStale(Colour player) {
                 return false;
             }
         }
+        isWon = true;
         return true;
     }
     return false;
@@ -568,7 +593,7 @@ void Board::checkWin(Colour player) {
                                 return;
                             }
                         }
-                        cerr << "WIN ===========================================" << endl;
+                        cerr << "Black WIN ===========================================" << endl;
                         isWon = true;
                         player2Score++;
                     }
@@ -586,7 +611,7 @@ void Board::checkWin(Colour player) {
                                 return;
                             }
                         }
-                        cerr << "WIN ===========================================" << endl;
+                        cerr << "White WIN ===========================================" << endl;
                         isWon = true;
                         player1Score++;
                     }
@@ -616,6 +641,9 @@ void Board::detach(Observer *o){
 
 
 void Board::humanMove(string startPos, string endPos, char promote) {
+    if(!initialized) {
+        cerr << "not init game" << endl;
+    }
     cerr << "humanMove" << endl;
     Coordinate coordStart;
     Coordinate coordEnd;
@@ -649,6 +677,7 @@ bool Board::canMove(Coordinate startPos, Coordinate endPos) {
 
 
 void Board::absMove(Coordinate startPos, Coordinate endPos){
+    assert(startPos != endPos);
    
     // make for displayer to do
     if (chessBoard[endPos.getRow()][endPos.getCol()] != nullptr) {
@@ -682,19 +711,27 @@ void Board::absMove(Coordinate startPos, Coordinate endPos){
     notifyAllObservers();
     if (chessBoard[endPos.getRow()][endPos.getCol()]->getColour() == White) {
         if(checkStale(Black)) {
-            cerr << "STALE ===========================================" << endl;
+            cerr << "Black STALE ===========================================" << endl;
             player1Score++;
             player2Score++;
+            
+        } else {
+            checkWin(Black);
         }
-        checkWin(Black);
     } else {
         cerr << "black" << endl;
         if(checkStale(White)) {
-            cerr << "STALE ===========================================" << endl;
+            cerr << "White STALE ===========================================" << endl;
             player1Score++;
             player2Score++;
+            
+        } else {
+            checkWin(White);
         }
-        checkWin(White);
+    }
+    if (isWon) {
+        cerr << "GAME OVER" << endl;
+        reset();
     }
 }
 
