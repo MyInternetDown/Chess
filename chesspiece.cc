@@ -151,7 +151,9 @@ void ChessPiece::getAllBlockKing(vector<Coordinate> protectPos){
     blockKing.clear();
     for (const auto& coord : possibleMoves) {
         if (std::find(protectPos.begin(), protectPos.end(), coord) != protectPos.end()) {
-            blockKing.push_back(coord);
+            if (coord != location) {
+                blockKing.push_back(coord);
+            }
         }
     }
 }
