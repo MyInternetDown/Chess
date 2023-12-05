@@ -130,6 +130,8 @@ public:
 
 };
 
+int getDifference(Coordinate from, Coordinate curr, bool horizontal = true;);
+
 #endif
 
 

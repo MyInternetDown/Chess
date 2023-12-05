@@ -209,6 +209,7 @@ bool ChessPiece::isEmpty() const {
 
 // Move the chess piece to a new location
 void ChessPiece::move(Coordinate moveHere) {
+    previousLoc = location;
     location = moveHere;
 }
 

@@ -664,7 +664,6 @@ bool Board::checkPromote() {
 
     // Check the 8th row
     for (const auto& piece : chessBoard[7]) {
-        cerr << "pickels" << endl;
         if (piece != nullptr && piece->getPiece() == P) {
             return true;
         }
@@ -676,14 +675,13 @@ bool Board::checkCastle(){
     cerr << "check castle" << endl;
     for (const auto& piece : chessBoard[0]) {
         if (piece != nullptr && piece->getPiece() == K) {
-
+                
             return true;
         }
     }
 
     // Check the 8th row
     for (const auto& piece : chessBoard[7]) {
-        cerr << "pickels" << endl;
         if (piece != nullptr && piece->getPiece() == K) {
             return true;
         }
@@ -868,4 +866,9 @@ Coordinate parseCoordinate(const std::string pos) {
     istringstream iss(pos);
     iss >> c;
     return c;
+}
+
+// Helper to check the change in location.
+int getDifference(Coordinate from, Coordinate curr, bool horizontal) {
+    
 }
