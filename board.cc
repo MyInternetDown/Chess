@@ -605,7 +605,7 @@ void Board::checkWin(Colour player) {
             if(piece->getPiece() == K) {
                 if (piece->isChecked(chessBoard)) {
                     updateCheck(piece, true);
-                    if (piece->possibleMoves.size() == 0) {
+                    if (piece->evadeMoves.size() == 0) {
                         for (ChessPiece* pieceOther : player2Pieces) {
                             if(pieceOther->blockKing.size() != 0) {
                                 return;
