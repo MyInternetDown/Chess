@@ -40,10 +40,7 @@ private:
 	bool gameStart;
 	vector<ChessPiece*> player2Pieces;
 	vector<ChessPiece*> player1Pieces;
-
-
 	
-
 public:
 	MoveType player1;
 	MoveType player2;

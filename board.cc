@@ -93,6 +93,7 @@ void Board::create(const string playerA, const string playerB){
     //cerr << "1" << endl;
     //gd = new GraphicsDisplay(windowX ,n);
     attach(td);
+    //attach(gd);
     //cerr << "2" << endl;
     // to do make attach
     player1 = convertStringToMoveType(playerA);
@@ -522,6 +523,7 @@ Board::~Board() {
     player2Pieces.clear();
     cerr << "delete board2" << endl;
     detach(td);
+    //detach(gd); // dispaly
     cerr << "delete board3" << endl;
     delete td;
     cerr << "delete board4" << endl;
