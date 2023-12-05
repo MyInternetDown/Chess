@@ -42,6 +42,7 @@ class Coordinate {
         int getCol(void) const;
         ~Coordinate();
         friend std::istream &operator>>(std::istream &in, Coordinate &c);
+        string getStr();
 };
 
 bool operator==(const Coordinate &left, const Coordinate &right);

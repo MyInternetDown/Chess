@@ -13,9 +13,10 @@ Board::Board() :
     player2{H},
     player2Pieces{},
     isWon{false},
-    td{nullptr},
-    gd{nullptr}, 
-    windowX{new Xwindow()} 
+    initialized{false},
+    //gd{nullptr}, 
+    // windowX{new Xwindow()} 
+    td{nullptr}
     {
     // Populate the board with ChessPiece objects at their respective positions
     for (int row = 0; row < 8; ++row) {
@@ -33,7 +34,7 @@ Board::Board() :
 
 bool Board::isValidSetup()  {
     cerr << "enter valid" << endl;
-    gameStart = false;
+    initialized = false;
     // Check if there is exactly one white king and one black king
     int whiteKingCount = 0;
     int blackKingCount = 0;
@@ -76,10 +77,9 @@ bool Board::isValidSetup()  {
         }
     }
     cerr << whiteKingCount << " " << blackKingCount << " count" << endl;
-    if (whiteKingCount == 1 && blackKingCount == 1) {
-        gameStart = true;
+    if (whiteKingCount == 1 && blackKingCount == 1 ) {
         cerr << "found true valid " << endl;
-        updatePieces();
+        initialized = true;
         return true;
     }
     cerr << "found false valid " << endl;
@@ -91,9 +91,9 @@ void Board::create(const string playerA, const string playerB){
     //cerr << "increate" << endl;
     td = new TextDisplay();
     //cerr << "1" << endl;
-    gd = new GraphicsDisplay(windowX);
+    //gd = new GraphicsDisplay(windowX);
     attach(td);
-    attach(gd);
+    //attach(gd);
     //cerr << "2" << endl;
     // to do make attach
     player1 = convertStringToMoveType(playerA);
@@ -118,9 +118,17 @@ void Board::reset(){
                 chessDisplay[row][col] = WHITE;
             }
         }
+        notifyAllObservers();
     }
-    player1 = H;
-    player2 = H;
+    for (ChessPiece* piece : player1Pieces) {
+        delete piece;
+    }
+    for (ChessPiece* piece : player2Pieces) {
+        delete piece;
+    }
+    player1Pieces.clear();
+    player2Pieces.clear();
+    initialized = false;
     isWon = false;
     turn = false;
 }
@@ -209,6 +217,15 @@ void Board::defaultSetup(){
     init("h8", "r", "Black");
 }
 
+void Board::resign() {
+    if (turn) {
+        player2Score++;
+    } else {
+        player1Score++;
+    }
+    reset();
+}
+
 // Remove
 void Board::removePiece(Coordinate coord, bool needNotify){
     int row = coord.getRow();
@@ -255,6 +272,16 @@ void Board::updatePieces() {
             if (chessBoard[row][col] != nullptr) {
 
                 //cerr << "updatein  " << row << " " << col << " " << chessBoard[row][col]->getCharType() <<endl;
+                chessBoard[row][col]->updateFirst(chessBoard);
+            }
+        }
+    }
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            // create an empty pointer to that place
+            if (chessBoard[row][col] != nullptr) {
+
+                //cerr << "updatein  " << row << " " << col << " " << chessBoard[row][col]->getCharType() <<endl;
                 chessBoard[row][col]->update(chessBoard);
             }
         }
@@ -287,80 +314,26 @@ void Board::changeTurn(string color) {
         turn = false;
     }
 }
-/*
-bool Board::moveL1(Colour player) {
 
-    int randomIndex = rand() % (player == White) ? player1Pieces.size() : player2Pieces.size();
-    ChessPiece* piece = (player == White) ? player1Pieces[randomIndex] : player2Pieces[randomIndex];
-
-    //cerr << " checkpoint" << randomIndex << endl;
-    if (!piece->possibleMoves.empty()) {
-        absMove(piece->location, piece->getRandMove());
-        return true;
-    }
-}
-
-bool Board::moveL2(Colour player) {
-    if (player == White) {
-        for (ChessPiece* piece : player1Pieces) {
-            if (!piece->checkMoves.empty()) {
-                absMove(piece->location, piece->checkMoves[0]);
-                return true;
-            }
-        }
-        for (ChessPiece* piece : player1Pieces) {
-            if (!piece->attackMoves.empty()) {
-                absMove(piece->location, piece->attackMoves[0]);
-                return true;
-            }
-        }
-
-        return moveL1(White);
-    }
-}
-
-bool Board::moveL3(Colour player) {
-    for (ChessPiece* piece : player1Pieces) {
-        if (!piece->evadeMoves.empty()) {
-            cerr << "evading" << endl;
-            absMove(piece->location, piece->evadeMoves[0]);
-            return;
-        }
-    }
-    for (ChessPiece* piece : player1Pieces) {
-        if (!piece->checkMoves.empty()) {
-            cerr << "checking" << endl;
-            absMove(piece->location, piece->checkMoves[0]);
-            return;
-        }
-    }
-    for (ChessPiece* piece : player1Pieces) {
-        if (!piece->attackMoves.empty()) {
-            cerr << "attacking ___________________" << endl;
-            absMove(piece->location, piece->attackMoves[0]);
-            return;
-        }
-    }
-    while (!found) {
-        int randomIndex = rand() % player1Pieces.size();
-        ChessPiece* piece = player1Pieces[randomIndex];
-        //cerr << " checkpoint" << randomIndex << endl;
-        if (!piece->possibleMoves.empty()) {
-            found = true;
-            absMove(piece->location, piece->getRandMove());
-            return;
-        }
-    }
-}
-*/
 
 void Board::move() {
+    if (!initialized){
+        cerr << "not init game" << endl;
+        return;
+    }
     // check error handling if ther are no more pieces to move to do
     
     bool found = false;
     if (turn && player1 != H) {
         cerr << " computer 1 " << endl;
         if (player1 == L1) {
+            for (ChessPiece* piece : player1Pieces) {
+                if (!piece->blockKing.empty()) {
+                    cerr << " bloooooooooooooock +++++++++++" << endl;
+                    absMove(piece->location, piece->blockKing[0]);
+                    return;
+                }
+            }
             while (!found) {
                 int randomIndex = rand() % player1Pieces.size();
                 ChessPiece* piece = player1Pieces[randomIndex];
@@ -372,6 +345,13 @@ void Board::move() {
                 }
             }
         } else if (player1 == L2) {
+            for (ChessPiece* piece : player1Pieces) {
+                if (!piece->blockKing.empty()) {
+                    cerr << " bloooooooooooooock +++++++++++" << endl;
+                    absMove(piece->location, piece->blockKing[0]);
+                    return;
+                }
+            }
             for (ChessPiece* piece : player1Pieces) {
                 if (!piece->checkMoves.empty()) {
                     cerr << "checking" << endl;
@@ -397,6 +377,13 @@ void Board::move() {
                 }
             }
         } else if (player1 == L3) {
+            for (ChessPiece* piece : player1Pieces) {
+                if (!piece->blockKing.empty()) {
+                    cerr << " bloooooooooooooock +++++++++++" << endl;
+                    absMove(piece->location, piece->blockKing[0]);
+                    return;
+                }
+            }
             for (ChessPiece* piece : player1Pieces) {
                 if (!piece->evadeMoves.empty()) {
                     cerr << "evading" << endl;
@@ -436,6 +423,13 @@ void Board::move() {
         cerr << " computer 2" << endl;
         //cerr << "computer turn" << endl;
         if (player2 == L1) {
+            for (ChessPiece* piece : player2Pieces) {
+                if (!piece->blockKing.empty()) {
+                    cerr << " bloooooooooooooock +++++++++++" << endl;
+                    absMove(piece->location, piece->blockKing[0]);
+                    return;
+                }
+            }
             //cerr << " level robot" <<endl;
             while (!found) {
                 //cerr << "stop" << player2Pieces.size() << endl;
@@ -448,6 +442,13 @@ void Board::move() {
                 }
             }
         }else if (player2 == L2) {
+            for (ChessPiece* piece : player2Pieces) {
+                if (!piece->blockKing.empty()) {
+                    cerr << " bloooooooooooooock +++++++++++" << endl;
+                    absMove(piece->location, piece->blockKing[0]);
+                    return;
+                }
+            }
             for (ChessPiece* piece : player2Pieces) {
                 if (!piece->checkMoves.empty()) {
                     cerr << "checking" << endl;
@@ -473,6 +474,13 @@ void Board::move() {
                 }
             }
         } else if (player2 == L3) {
+            for (ChessPiece* piece : player2Pieces) {
+                if (!piece->blockKing.empty()) {
+                    cerr << " bloooooooooooooock +++++++++++" << endl;
+                    absMove(piece->location, piece->blockKing[0]);
+                    return;
+                }
+            }
             for (ChessPiece* piece : player2Pieces) {
                 if (!piece->evadeMoves.empty()) {
                     cerr << "evading" << endl;
@@ -506,6 +514,12 @@ void Board::move() {
             }
         }
     }
+    if (checkPromote()) {
+        std::vector<std::string> options = {"Q", "R", "B", "N"};
+        int randomIndex = std::rand() % options.size();
+        cerr << "promote to " << options[randomIndex] << endl;
+        promote(options[randomIndex]);
+    }
 }
 
 
@@ -523,52 +537,105 @@ Board::~Board() {
     player2Pieces.clear();
     cerr << "delete board2" << endl;
     detach(td);
-    detach(gd); // dispaly
+    //detach(gd); // dispaly
     cerr << "delete board3" << endl;
     delete td;
     cerr << "delete board4" << endl;
-    delete gd;
+    //delete gd;
+}
+
+void Board::updateCheck(ChessPiece* king, bool check) {
+    for (int i =0; i < 8; ++ i ) {
+        for (int j = 0; j < 8; ++j) {
+            if(chessBoard[i][j] != nullptr && chessBoard[i][j]->getColour() == king->getColour() && check) {
+                chessBoard[i][j]->getAllBlockKing(king->protectKing);
+            }
+        }
+    }
 }
 
 
-
 bool Board::checkStale(Colour player) {
-    if (player == White) {
-        if (player1Pieces.size() == 1){
-            assert(player1Pieces[0]->getPiece() == K);
-            cerr << " stale check king ..............." << !player1Pieces[0]->isChecked(chessBoard) << endl;
+   // return false;
 
-            if (!player1Pieces[0]->isChecked(chessBoard)) {
-                cerr << player1Pieces[0]->possibleMoves.size() << endl;
-                if (player1Pieces[0]->possibleMoves.size() == 0) {
-                    return true;
-                }
+    if (player == White) {
+        for (const auto &chessPiece: player1Pieces) {
+            if (chessPiece->possibleMoves.size() != 0) {
+                return false;
+            }
+        }
+        isWon = true;
+        return true;
+
+    
+    } else {
+        for (const auto &chessPiece: player2Pieces) {
+            if (chessPiece->possibleMoves.size() != 0) {
+                return false;
+            }
+        }
+        isWon = true;
+        return true;
+    }
+    return false;
+}
+
+void Board::promote(string type) {
+    cerr << "enter promotion" << endl;
+    if (!turn) {
+        cerr << "1" << endl;
+        for (const auto& piece : chessBoard[7]) {
+            if (piece != nullptr && piece->getPiece() == P) {
+                Coordinate temp(piece->location);
+                removePiece(temp);
+                init(temp.getStr(), type, "White");
+                chessDisplay[temp.getRow()][temp.getCol()] =  chessBoard[temp.getRow()][temp.getCol()]->getCharType();
             }
         }
     } else {
-        if (player2Pieces.size() == 1){
-            assert(player2Pieces[0]->getPiece() == K);
-                
-            if (!player2Pieces[0]->isChecked(chessBoard)) {
-                if (player2Pieces[0]->possibleMoves.size() == 0) {
-                    return true;
-                }
+        cerr << "2" << endl;
+        for (const auto& piece : chessBoard[0]) {
+            if (piece != nullptr && piece->getPiece() == P) {
+                Coordinate temp(piece->location);
+                removePiece(temp);
+                init(temp.getStr(), type, "Black");
+                chessDisplay[temp.getRow()][temp.getCol()] =  chessBoard[temp.getRow()][temp.getCol()]->getCharType();
             }
+        }
+    } 
+
+    notifyAllObservers();
+}
+
+bool Board::checkPromote() {
+    cerr << "check promote" << endl;
+    for (const auto& piece : chessBoard[0]) {
+        if (piece != nullptr && piece->getPiece() == P) {
+            return true;
+        }
+    }
+
+    // Check the 8th row
+    for (const auto& piece : chessBoard[7]) {
+        cerr << "pickels" << endl;
+        if (piece != nullptr && piece->getPiece() == P) {
+            return true;
         }
     }
     return false;
 }
 
 void Board::checkWin(Colour player) {
+   // return;
     cerr << "check for check mate" << endl;
     if (player == White) {
         cerr << "enter Check" << endl;
         for (ChessPiece* piece : player1Pieces) {
             if(piece->getPiece() == K) {
-                cerr << "found king    " << piece->isChecked(chessBoard) <<  endl;
-                cerr << "found king    " << piece->evadeMoves.size() <<  endl;
-
+                //cerr << "found king    " << piece->isChecked(chessBoard) <<  endl;
+                //cerr << "found king    " << piece->evadeMoves.size() <<  endl;
                 if (piece->isChecked(chessBoard)) {
+                    updateCheck(piece, true);
                     cerr << "is in check" << endl;
                     if (piece->evadeMoves.size() == 0) {
                         cerr << "check no blocks" << endl;
@@ -577,7 +644,7 @@ void Board::checkWin(Colour player) {
                                 return;
                             }
                         }
-                        cerr << "WIN ===========================================" << endl;
+                        cerr << "Black WIN ===========================================" << endl;
                         isWon = true;
                         player2Score++;
                     }
@@ -588,13 +655,14 @@ void Board::checkWin(Colour player) {
         for (ChessPiece* piece : player2Pieces) {
             if(piece->getPiece() == K) {
                 if (piece->isChecked(chessBoard)) {
-                    if (piece->possibleMoves.size() == 0) {
+                    updateCheck(piece, true);
+                    if (piece->evadeMoves.size() == 0) {
                         for (ChessPiece* pieceOther : player2Pieces) {
                             if(pieceOther->blockKing.size() != 0) {
                                 return;
                             }
                         }
-                        cerr << "WIN ===========================================" << endl;
+                        cerr << "White WIN ===========================================" << endl;
                         isWon = true;
                         player1Score++;
                     }
@@ -624,6 +692,9 @@ void Board::detach(Observer *o){
 
 
 void Board::humanMove(string startPos, string endPos, char promote) {
+    if(!initialized) {
+        cerr << "not init game" << endl;
+    }
     cerr << "humanMove" << endl;
     Coordinate coordStart;
     Coordinate coordEnd;
@@ -657,6 +728,7 @@ bool Board::canMove(Coordinate startPos, Coordinate endPos) {
 
 
 void Board::absMove(Coordinate startPos, Coordinate endPos){
+    assert(startPos != endPos);
    
     // make for displayer to do
     if (chessBoard[endPos.getRow()][endPos.getCol()] != nullptr) {
@@ -690,19 +762,27 @@ void Board::absMove(Coordinate startPos, Coordinate endPos){
     notifyAllObservers();
     if (chessBoard[endPos.getRow()][endPos.getCol()]->getColour() == White) {
         if(checkStale(Black)) {
-            cerr << "STALE ===========================================" << endl;
+            cerr << "Black STALE ===========================================" << endl;
             player1Score++;
             player2Score++;
+            
+        } else {
+            checkWin(Black);
         }
-        checkWin(Black);
     } else {
         cerr << "black" << endl;
         if(checkStale(White)) {
-            cerr << "STALE ===========================================" << endl;
+            cerr << "White STALE ===========================================" << endl;
             player1Score++;
             player2Score++;
+            
+        } else {
+            checkWin(White);
         }
-        checkWin(White);
+    }
+    if (isWon) {
+        cerr << "GAME OVER" << endl;
+        reset();
     }
 }
 

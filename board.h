@@ -31,13 +31,12 @@ class Board {
 private:
 
 	bool turn;
-
+	bool initialized;
 	bool isWon;
 	TextDisplay *td; // The text display.
-  	GraphicsDisplay *gd; // graphics display
-  	Xwindow *windowX;
+  	//GraphicsDisplay *gd; // graphics display
+  	//Xwindow *windowX;
 	std::vector<Observer*> observers;
-	bool gameStart;
 	vector<ChessPiece*> player2Pieces;
 	vector<ChessPiece*> player1Pieces;
 	
@@ -64,8 +63,13 @@ public:
 	void removePiece(Coordinate pos, bool needNotify = false);
 	void updatePieces();
 	void defaultSetup();
+	void updateCheck(ChessPiece* king, bool check = false);
 
 	void reset();
+
+	bool checkPromote();
+	void promote(string type);
+    
 
 	bool getTurn();
     // Copy assignment operator
@@ -73,6 +77,8 @@ public:
 
     // Move assignment operator
     Board &operator=(Board &&other);
+
+	void resign();
 
 	bool isValidSetup();
 

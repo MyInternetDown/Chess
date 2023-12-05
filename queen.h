@@ -16,5 +16,6 @@ public:
     // Override the getAllAttackMoves function for the Queen
     //vector<Coordinate> getAllAttackMoves(ChessPiece* board[8][8]) const override;
     void getAllCheckMoves(ChessPiece* board[8][8]) override;
+    void adjustPossibleMoves(ChessPiece* board[8][8]) override;
 };
 #endif

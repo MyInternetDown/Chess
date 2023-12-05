@@ -26,7 +26,7 @@ public:
 	vector<Coordinate> attackMoves;
 	vector<Coordinate> dangerSquares;
 	vector<Coordinate> checkMoves;
-	vector<Coordinate> blockPos;
+	vector<Coordinate> protectKing;
 
 	vector<Coordinate> possibleMoves;
 	bool hasMoved;
@@ -56,13 +56,12 @@ public:
 	// Gets all possible locations where this piece can eat another piece
 	virtual void getAllAttackMoves(ChessPiece* board[8][8]);
 	virtual void getAllEvadeMoves(ChessPiece* board[8][8]);
-	//virtual void getAllBlockKing(ChessPiece* board[8][8]);
+	virtual void getAllBlockKing(vector<Coordinate> protectPos);
 
 	virtual void getAllCheckMoves(ChessPiece* board[8][8]) = 0;
-
-
-
+	virtual void updateFirst(ChessPiece* board[8][8]);
 	virtual void update(ChessPiece* board[8][8]);
+	virtual void adjustPossibleMoves(ChessPiece* board[8][8]) = 0;
 
 	// Checks if the current piece can move to the current position noted down
 	// to do

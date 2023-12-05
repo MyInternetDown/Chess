@@ -72,3 +72,47 @@ void Knight::getAllCheckMoves(ChessPiece* board[8][8]) {
        board[location.getRow()][location.getCol()] = this;
     }
 }
+
+void Knight::adjustPossibleMoves(ChessPiece* board[8][8]) {
+    vector<Coordinate> tempMoves;
+    for (const auto &move : possibleMoves) {
+        // Add move to attack moves if an opponent's piece is encountered
+        string tempCol = colourToStr.find(colour)->second;
+        Knight temp(move, tempCol);
+        board[location.getRow()][location.getCol()] = nullptr;
+        ChessPiece *tempPiece = board[move.getRow()][move.getCol()];
+        //board[move.getRow()][move.getCol()] = nullptr;
+        board[move.getRow()][move.getCol()] = &temp;
+
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
+                    board[i][j]->getAllMoves(board);
+                }
+            }
+        }
+
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if (board[i][j] != nullptr && board[i][j]->getPiece() == K && temp.getColour() == board[i][j]->getColour()) {
+                    if (!board[i][j]->isChecked(board)) {
+                        tempMoves.push_back(move);
+                    }
+                }
+            }
+        }
+
+        //board[move.getRow()][move.getCol()] = nullptr;
+        board[move.getRow()][move.getCol()] = tempPiece;
+        board[location.getRow()][location.getCol()] = this;
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
+                    board[i][j]->getAllMoves(board);
+                }
+            }
+        }
+    }
+    possibleMoves = tempMoves;
+}
+

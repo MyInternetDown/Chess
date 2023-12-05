@@ -41,9 +41,13 @@ int main() {
         cin >> moveAt >> moveTo;
         //cerr << moveAt << " " << moveTo << endl;
         game.humanMove(moveAt, moveTo);
+        if (game.checkPromote()) {
+          string promoteType;
+          cin >> promoteType;
+          game.promote(promoteType);
+        }
       } else {
         game.move();
-
       }
       count ++;
     }
@@ -64,7 +68,7 @@ int main() {
         else if (cmd2 == "+") {
           string piece, location, colour;
           cin >> piece >> location;
-          cerr << "input ...................... " << piece << " " << location << endl;
+          cerr << "input ...................... " << piece << " " << location  << endl;
           cerr << piece << endl;
           cerr << location << endl;
           

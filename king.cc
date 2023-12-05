@@ -46,18 +46,12 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
             possibleMoves.push_back({row, col + 2});
         }
     }
-
-    for (const auto& coord : possibleMoves) {
-        if (std::find(dangerSquares.begin(), dangerSquares.end(), coord) == dangerSquares.end()) {
-            evadeMoves.push_back(coord);
-        }
-    }
-    possibleMoves = evadeMoves;
-
-    
 }
 
 bool King::isChecked(ChessPiece* board[8][8]) {
+    bool found = false;
+    checked = false;
+    protectKing.clear();
     const int row = location.getRow();
     const int col = location.getCol();
 
@@ -69,24 +63,94 @@ bool King::isChecked(ChessPiece* board[8][8]) {
         for (int j = 0; j < 8; j++) {
             if(board[i][j] != nullptr && !(i == row && j == col)) {
 
-                cerr << "found piece validating" << endl;
+                //cerr << "found piece validating" << endl;
                 for (const Coordinate &move: board[i][j]->possibleMoves) {
-                    cerr << board[i][j]->getCharType() << " ...." << move << endl;
+                    //cerr << board[i][j]->getCharType() << " ...." << move << endl;
                     if (location == move) {
-                        cerr << "location found equal" << endl;
-                        //getBlockPlaces(board[i][j]->location, board);
-                        return true;
+                       // cerr << "location found equal" << endl;
+                        found = true;
+                        checked = true;
+                        if (board[i][j]->getPiece() != N) {
+                            int dx = row - i;
+                            int dy = col - j;
+                            int steps = std::max(std::abs(dx), std::abs(dy));
+
+                            for (int k = 0; k < steps; ++k) {
+                                int newX = i + k * dx / steps;
+                                int newY = j + k * dy / steps;
+                                protectKing.push_back(Coordinate(newX, newY));
+                            }
+                        }
                     }
                 }
             }
         }
     }
-    return false;
+    return found;
 }
 
 void King::getAllCheckMoves(ChessPiece* board[8][8]) {
     checkMoves.clear();
+    blockKing = evadeMoves;
+
 }
 
-//void getBlockPlaces(Coordinate attacker, ChessPiece* board[8][8]) {
+void King::getAllBlockKing(vector<Coordinate> protectPos) {
+    blockKing = evadeMoves;
+    printVector(blockKing);
+    cerr << "block" << endl;
 
+}
+
+void King::adjustPossibleMoves(ChessPiece* board[8][8]) {
+    vector<Coordinate> tempMoves;
+    for (const auto &move : possibleMoves) {
+        // Add move to attack moves if an opponent's piece is encountered
+        string tempCol = colourToStr.find(colour)->second;
+        King temp(move, tempCol);
+        board[location.getRow()][location.getCol()] = nullptr;
+        ChessPiece *tempPiece = board[move.getRow()][move.getCol()];
+        //board[move.getRow()][move.getCol()] = nullptr;
+        board[move.getRow()][move.getCol()] = &temp;
+
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
+                    board[i][j]->getAllMoves(board);
+                }
+            }
+        }
+
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if (board[i][j] != nullptr && board[i][j]->getPiece() == K && temp.getColour() == board[i][j]->getColour()) {
+                    if (!board[i][j]->isChecked(board)) {
+                        tempMoves.push_back(move);
+                    }
+                }
+            }
+        }
+
+        //board[move.getRow()][move.getCol()] = nullptr;
+        board[move.getRow()][move.getCol()] = tempPiece;
+        board[location.getRow()][location.getCol()] = this;
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
+                    board[i][j]->getAllMoves(board);
+                }
+            }
+        }
+    }
+    possibleMoves = tempMoves;
+    printVector(possibleMoves);
+    cerr << "adjust" << endl;
+}
+
+void printVector(const std::vector<Coordinate>& vec) {
+    std::cout << "[ ";
+    for (const auto& element : vec) {
+        std::cout << element << " ";
+    }
+    std::cout << "]" << std::endl;
+}
