@@ -56,6 +56,15 @@ Xwindow::Xwindow(int width, int height) {
                              &bitmap,
                              &hotspot_x, &hotspot_y);
 
+  void drawChessPiece(map<char, Pixmap> &pieceMap) {
+    // Retrieve the pixmap from the map
+    Pixmap& bitmap = pieceMap[char];
+    // Store the width and height
+    int bitmapWidth = width;
+    int bitmapHeight = height;
+
+  }
+
   XSetForeground(d,gc,colours[Black]);
 
   // Make window non-resizeable.
