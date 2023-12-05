@@ -521,7 +521,7 @@ void Board::updateCheck(ChessPiece* king, bool check) {
     vector<Coordinate> temp = king->protectKing;
     for (int i =0; i < 8; ++ i ) {
         for (int j = 0; j < 8; ++j) {
-            if(chessBoard[i][j] != nullptr && chessBoard[i][j]->getColour() != king->getColour() && check) {
+            if(chessBoard[i][j] != nullptr && chessBoard[i][j]->getColour() == king->getColour() && check) {
                 chessBoard[i][j]->getAllBlockKing(temp);
             }
         }
@@ -568,7 +568,6 @@ void Board::checkWin(Colour player) {
                 //cerr << "found king    " << piece->evadeMoves.size() <<  endl;
                 if (piece->isChecked(chessBoard)) {
                     updateCheck(piece, true);
-
                     cerr << "is in check" << endl;
                     if (piece->evadeMoves.size() == 0) {
                         cerr << "check no blocks" << endl;
