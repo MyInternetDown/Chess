@@ -86,7 +86,7 @@ void Knight::adjustPossibleMoves(ChessPiece* board[8][8]) {
 
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
-                if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
+                if (board[i][j] != nullptr /*&& temp.getColour() != board[i][j]->getColour()*/) {
                     board[i][j]->getAllMoves(board);
                 }
             }
@@ -107,7 +107,7 @@ void Knight::adjustPossibleMoves(ChessPiece* board[8][8]) {
         board[location.getRow()][location.getCol()] = this;
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
-                if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
+                if (board[i][j] != nullptr /*&& temp.getColour() != board[i][j]->getColour()*/) {
                     board[i][j]->getAllMoves(board);
                 }
             }
