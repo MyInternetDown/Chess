@@ -13,9 +13,9 @@ Board::Board() :
     player2{H},
     player2Pieces{},
     isWon{false},
-    td{nullptr}
-    //gd{nullptr}, 
-    //windowX{new Xwindow()} 
+    td{nullptr},
+    gd{nullptr}, 
+    windowX{new Xwindow()} 
     {
     // Populate the board with ChessPiece objects at their respective positions
     for (int row = 0; row < 8; ++row) {
@@ -91,9 +91,9 @@ void Board::create(const string playerA, const string playerB){
     //cerr << "increate" << endl;
     td = new TextDisplay();
     //cerr << "1" << endl;
-    //gd = new GraphicsDisplay(windowX ,n);
+    gd = new GraphicsDisplay(windowX);
     attach(td);
-    //attach(gd);
+    attach(gd);
     //cerr << "2" << endl;
     // to do make attach
     player1 = convertStringToMoveType(playerA);
@@ -523,11 +523,11 @@ Board::~Board() {
     player2Pieces.clear();
     cerr << "delete board2" << endl;
     detach(td);
-    //detach(gd); // dispaly
+    detach(gd); // dispaly
     cerr << "delete board3" << endl;
     delete td;
     cerr << "delete board4" << endl;
-    //delete gd;
+    delete gd;
 }
 
 
@@ -536,8 +536,10 @@ bool Board::checkStale(Colour player) {
     if (player == White) {
         if (player1Pieces.size() == 1){
             assert(player1Pieces[0]->getPiece() == K);
-            cerr << " stale check king ..............." << endl;
+            cerr << " stale check king ..............." << !player1Pieces[0]->isChecked(chessBoard) << endl;
+
             if (!player1Pieces[0]->isChecked(chessBoard)) {
+                cerr << player1Pieces[0]->possibleMoves.size() << endl;
                 if (player1Pieces[0]->possibleMoves.size() == 0) {
                     return true;
                 }

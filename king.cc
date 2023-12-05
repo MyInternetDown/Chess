@@ -33,10 +33,6 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
             possibleMoves.push_back({newRow, newCol});
         }
     }
-
-
-
-    
     
     if (!moved()) {
         if (col == 4 && board[row][0] != nullptr && board[row][0]->getPiece() == PieceType::R && board[row][0]->getColour() == getColour()
@@ -56,6 +52,8 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
             evadeMoves.push_back(coord);
         }
     }
+    possibleMoves = evadeMoves;
+
     
 }
 

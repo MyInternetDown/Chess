@@ -12,7 +12,7 @@ class GraphicsDisplay: public Observer {
   Xwindow *winFrame;
   const int gridSize;
  public:
-  GraphicsDisplay(Xwindow *winFrame, int n);
+  GraphicsDisplay(Xwindow *winFrame);
   
   void notify(char chessBoard[8][8]) override;
   SubscriptionType subType() override;
