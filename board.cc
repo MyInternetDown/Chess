@@ -77,6 +77,8 @@ bool Board::isValidSetup()  {
         }
     }
     cerr << whiteKingCount << " " << blackKingCount << " count" << endl;
+
+    // check if there is exactly one white king and one black king
     if (whiteKingCount == 1 && blackKingCount == 1 ) {
         cerr << "found true valid " << endl;
         initialized = true;
@@ -86,7 +88,7 @@ bool Board::isValidSetup()  {
     return false;
 }
 
-
+// function to create the chessboard and set up the game
 void Board::create(const string playerA, const string playerB){
     //cerr << "increate" << endl;
     td = new TextDisplay();
@@ -100,18 +102,20 @@ void Board::create(const string playerA, const string playerB){
     //cerr << "3" << endl;
     player2 = convertStringToMoveType(playerB);
     //cerr << "4" << endl;
-
 }
 
+// get the current turn
 bool Board::getTurn(){
     return turn;
 }
 
+// reset the game state
 void Board::reset(){
-
+    // clear the chessboard
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
             chessBoard[row][col] = nullptr;
+            // set the display color for each square
             if ((row + col) % 2 == 0) {
                 chessDisplay[row][col] = BLACK;
             } else {
@@ -120,6 +124,7 @@ void Board::reset(){
         }
         notifyAllObservers();
     }
+    // delete and clear player pieces
     for (ChessPiece* piece : player1Pieces) {
         delete piece;
     }
@@ -178,6 +183,7 @@ void Board::init(const std::string position, const std::string type, const std::
     
 }
 
+// set up the default chessboard
 void Board::defaultSetup(){
     cerr << "enter default " << endl;
 
