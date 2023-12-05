@@ -9,6 +9,7 @@ King::King(Coordinate pos, string white)
     checked = false;
 }
 
+// Get all possible moves for the King
 void King::getAllMoves(ChessPiece* board[8][8]) {
     possibleMoves.clear();
 
@@ -34,6 +35,7 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
         }
     }
     
+    // Check for castling moves if the king hasn't moved
     if (!moved()) {
         if (col == 4 && board[row][0] != nullptr && board[row][0]->getPiece() == PieceType::R && board[row][0]->getColour() == getColour()
         && !board[row][0]->moved() && board[row][col - 1] == nullptr && board[row][col - 2] == nullptr)
@@ -48,6 +50,7 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
     }
 }
 
+// Check if the King is in a checked state
 bool King::isChecked(ChessPiece* board[8][8]) {
     bool found = false;
     checked = false;
@@ -58,7 +61,6 @@ bool King::isChecked(ChessPiece* board[8][8]) {
     //cerr << "enter king moves" << endl;
 
     // King moves one square in any direction
-
     for (int i = 0; i < 8; i++){
         for (int j = 0; j < 8; j++) {
             if(board[i][j] != nullptr && !(i == row && j == col)) {
@@ -70,6 +72,7 @@ bool King::isChecked(ChessPiece* board[8][8]) {
                        // cerr << "location found equal" << endl;
                         found = true;
                         checked = true;
+                        // Calculate and store the squares protecting the king
                         if (board[i][j]->getPiece() != N) {
                             int dx = row - i;
                             int dy = col - j;
@@ -89,12 +92,14 @@ bool King::isChecked(ChessPiece* board[8][8]) {
     return found;
 }
 
+// Get all possible moves to get out of a checked state
 void King::getAllCheckMoves(ChessPiece* board[8][8]) {
     checkMoves.clear();
     blockKing = evadeMoves;
 
 }
 
+// Get all squares that can block an attack on the king
 void King::getAllBlockKing(vector<Coordinate> protectPos) {
     blockKing = evadeMoves;
     printVector(blockKing);
@@ -102,6 +107,7 @@ void King::getAllBlockKing(vector<Coordinate> protectPos) {
 
 }
 
+// Adjust possible moves considering opponent's moves
 void King::adjustPossibleMoves(ChessPiece* board[8][8]) {
     vector<Coordinate> tempMoves;
     for (const auto &move : possibleMoves) {
@@ -113,6 +119,7 @@ void King::adjustPossibleMoves(ChessPiece* board[8][8]) {
         //board[move.getRow()][move.getCol()] = nullptr;
         board[move.getRow()][move.getCol()] = &temp;
 
+        // Update possible moves for all pieces on the board
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
@@ -121,6 +128,7 @@ void King::adjustPossibleMoves(ChessPiece* board[8][8]) {
             }
         }
 
+        // Check if the king is not in a checked state after the move
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 if (board[i][j] != nullptr && board[i][j]->getPiece() == K && temp.getColour() == board[i][j]->getColour()) {
@@ -131,6 +139,7 @@ void King::adjustPossibleMoves(ChessPiece* board[8][8]) {
             }
         }
 
+        // Restore the original state of the board
         //board[move.getRow()][move.getCol()] = nullptr;
         board[move.getRow()][move.getCol()] = tempPiece;
         board[location.getRow()][location.getCol()] = this;
@@ -147,6 +156,7 @@ void King::adjustPossibleMoves(ChessPiece* board[8][8]) {
     cerr << "adjust" << endl;
 }
 
+// Function to print the contents of a vector of Coordinates
 void printVector(const std::vector<Coordinate>& vec) {
     std::cout << "[ ";
     for (const auto& element : vec) {
