@@ -41,9 +41,13 @@ int main() {
         cin >> moveAt >> moveTo;
         //cerr << moveAt << " " << moveTo << endl;
         game.humanMove(moveAt, moveTo);
+        if (game.checkPromote()) {
+          string promoteType;
+          cin >> promoteType;
+          game.promote(promoteType);
+        }
       } else {
         game.move();
-
       }
       count ++;
     }

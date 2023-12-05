@@ -514,6 +514,12 @@ void Board::move() {
             }
         }
     }
+    if (checkPromote()) {
+        std::vector<std::string> options = {"Q", "R", "B", "N"};
+        int randomIndex = std::rand() % options.size();
+        cerr << "promote to " << options[randomIndex] << endl;
+        promote(options[randomIndex]);
+    }
 }
 
 
@@ -570,6 +576,51 @@ bool Board::checkStale(Colour player) {
         }
         isWon = true;
         return true;
+    }
+    return false;
+}
+
+void Board::promote(string type) {
+    cerr << "enter promotion" << endl;
+    if (!turn) {
+        cerr << "1" << endl;
+        for (const auto& piece : chessBoard[7]) {
+            if (piece != nullptr && piece->getPiece() == P) {
+                Coordinate temp(piece->location);
+                removePiece(temp);
+                init(temp.getStr(), type, "White");
+                chessDisplay[temp.getRow()][temp.getCol()] =  chessBoard[temp.getRow()][temp.getCol()]->getCharType();
+            }
+        }
+    } else {
+        cerr << "2" << endl;
+        for (const auto& piece : chessBoard[0]) {
+            if (piece != nullptr && piece->getPiece() == P) {
+                Coordinate temp(piece->location);
+                removePiece(temp);
+                init(temp.getStr(), type, "Black");
+                chessDisplay[temp.getRow()][temp.getCol()] =  chessBoard[temp.getRow()][temp.getCol()]->getCharType();
+            }
+        }
+    } 
+
+    notifyAllObservers();
+}
+
+bool Board::checkPromote() {
+    cerr << "check promote" << endl;
+    for (const auto& piece : chessBoard[0]) {
+        if (piece != nullptr && piece->getPiece() == P) {
+            return true;
+        }
+    }
+
+    // Check the 8th row
+    for (const auto& piece : chessBoard[7]) {
+        cerr << "pickels" << endl;
+        if (piece != nullptr && piece->getPiece() == P) {
+            return true;
+        }
     }
     return false;
 }

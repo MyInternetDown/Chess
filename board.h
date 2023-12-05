@@ -67,6 +67,10 @@ public:
 
 	void reset();
 
+	bool checkPromote();
+	void promote(string type);
+    
+
 	bool getTurn();
     // Copy assignment operator
     Board &operator=(const Board &other);

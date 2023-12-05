@@ -14,6 +14,12 @@ Coordinate::~Coordinate() {
     
 }
 
+string Coordinate::getStr() {
+    std::ostringstream oss;
+    oss << idxToCol.at(col) << row + 1;
+    return oss.str();
+}
+
 
 ostream &operator<<(ostream &out, const Coordinate &c) {
     out << c.idxToCol.at(c.getCol()) << c.getRow() + 1;
