@@ -79,7 +79,6 @@ bool Board::isValidSetup()  {
     if (whiteKingCount == 1 && blackKingCount == 1) {
         gameStart = true;
         cerr << "found true valid " << endl;
-        updatePieces();
         return true;
     }
     cerr << "found false valid " << endl;
