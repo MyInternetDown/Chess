@@ -78,6 +78,9 @@ public:
     // Move assignment operator
     Board &operator=(Board &&other);
 
+	bool checkCastle();
+	
+
 	void resign();
 
 	bool isValidSetup();

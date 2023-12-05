@@ -82,6 +82,7 @@ bool Board::isValidSetup()  {
     if (whiteKingCount == 1 && blackKingCount == 1 ) {
         cerr << "found true valid " << endl;
         initialized = true;
+        notifyAllObservers();
         return true;
     }
     cerr << "found false valid " << endl;
@@ -671,7 +672,25 @@ bool Board::checkPromote() {
     return false;
 }
 
-// check for checkmate and update the game state
+bool Board::checkCastle(){
+    cerr << "check castle" << endl;
+    for (const auto& piece : chessBoard[0]) {
+        if (piece != nullptr && piece->getPiece() == K) {
+
+            return true;
+        }
+    }
+
+    // Check the 8th row
+    for (const auto& piece : chessBoard[7]) {
+        cerr << "pickels" << endl;
+        if (piece != nullptr && piece->getPiece() == K) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Board::checkWin(Colour player) {
    // return;
     cerr << "check for check mate" << endl;

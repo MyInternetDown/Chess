@@ -34,6 +34,8 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
             possibleMoves.push_back({newRow, newCol});
         }
     }
+    //cerr << "king" << endl;
+    //printVector(possibleMoves);
     
     // Check for castling moves if the king hasn't moved
     if (!moved()) {
@@ -102,8 +104,8 @@ void King::getAllCheckMoves(ChessPiece* board[8][8]) {
 // Get all squares that can block an attack on the king
 void King::getAllBlockKing(vector<Coordinate> protectPos) {
     blockKing = evadeMoves;
-    printVector(blockKing);
-    cerr << "block" << endl;
+    //printVector(blockKing);
+    //cerr << "block" << endl;
 
 }
 
@@ -111,6 +113,11 @@ void King::getAllBlockKing(vector<Coordinate> protectPos) {
 void King::adjustPossibleMoves(ChessPiece* board[8][8]) {
     vector<Coordinate> tempMoves;
     for (const auto &move : possibleMoves) {
+        /*
+        if (getColour() == White) {
+            cerr << move << "             - " << endl;
+        }
+        */
         // Add move to attack moves if an opponent's piece is encountered
         string tempCol = colourToStr.find(colour)->second;
         King temp(move, tempCol);
@@ -122,7 +129,7 @@ void King::adjustPossibleMoves(ChessPiece* board[8][8]) {
         // Update possible moves for all pieces on the board
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
-                if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
+                if (board[i][j] != nullptr /*&& temp.getColour() != board[i][j]->getColour()*/) {
                     board[i][j]->getAllMoves(board);
                 }
             }
@@ -134,6 +141,8 @@ void King::adjustPossibleMoves(ChessPiece* board[8][8]) {
                 if (board[i][j] != nullptr && board[i][j]->getPiece() == K && temp.getColour() == board[i][j]->getColour()) {
                     if (!board[i][j]->isChecked(board)) {
                         tempMoves.push_back(move);
+                        //cerr << "push_back" << endl;
+                        //printVector(tempMoves);
                     }
                 }
             }
@@ -145,15 +154,15 @@ void King::adjustPossibleMoves(ChessPiece* board[8][8]) {
         board[location.getRow()][location.getCol()] = this;
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
-                if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
+                if (board[i][j] != nullptr /*&& temp.getColour() != board[i][j]->getColour()*/) {
                     board[i][j]->getAllMoves(board);
                 }
             }
         }
     }
     possibleMoves = tempMoves;
-    printVector(possibleMoves);
-    cerr << "adjust" << endl;
+    //printVector(possibleMoves);
+    //cerr << "adjust" << endl;
 }
 
 // Function to print the contents of a vector of Coordinates
