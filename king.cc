@@ -85,7 +85,7 @@ bool King::isChecked(ChessPiece* board[8][8]) {
                             int dy = j - col;
                             int steps = std::max(std::abs(dx), std::abs(dy));
 
-                            for (int k = 0; k < steps; ++i) {
+                            for (int k = 0; k < steps; ++k) {
                                 int newX = i + k * dx / steps;
                                 int newY = j + k * dy / steps;
                                 protectKing.push_back(Coordinate(newX, newY));
