@@ -539,6 +539,7 @@ bool Board::checkStale(Colour player) {
             if (!player1Pieces[0]->isChecked(chessBoard)) {
                 cerr << player1Pieces[0]->possibleMoves.size() << endl;
                 if (player1Pieces[0]->possibleMoves.size() == 0) {
+                    cerr << "staaalalalalalaalal" << endl;
                     return true;
                 }
             }

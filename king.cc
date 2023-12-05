@@ -62,7 +62,6 @@ bool King::isChecked(ChessPiece* board[8][8]) {
     bool found = false;
     protectKing.clear();
     const int row = location.getRow();
-
     const int col = location.getCol();
 
     //cerr << "enter king moves" << endl;
