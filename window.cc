@@ -55,7 +55,7 @@ Xwindow::Xwindow(int width, int height) {
                              &bitmap_width, &bitmap_height,
                              &bitmap,
                              &hotspot_x, &hotspot_y);
-
+/*
   void drawChessPiece(map<char, Pixmap> &pieceMap) {
     // Retrieve the pixmap from the map
     Pixmap& bitmap = pieceMap[char];
@@ -64,6 +64,7 @@ Xwindow::Xwindow(int width, int height) {
     int bitmapHeight = height;
 
   }
+*/
 
   XSetForeground(d,gc,colours[Black]);
 

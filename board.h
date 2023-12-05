@@ -105,6 +105,8 @@ public:
 	bool moveL4(Colour player);
 	void move();
 
+	void checkComputerPromote();
+
 	void humanMove(string startPos, string endPos, char promote = ' ');
 
 	bool canMove(Coordinate startPos, Coordinate endPos);

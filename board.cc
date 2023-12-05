@@ -331,6 +331,7 @@ void Board::move() {
                 if (!piece->blockKing.empty()) {
                     cerr << " bloooooooooooooock +++++++++++" << endl;
                     absMove(piece->location, piece->blockKing[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -341,6 +342,7 @@ void Board::move() {
                 if (!piece->possibleMoves.empty()) {
                     found = true;
                     absMove(piece->location, piece->getRandMove());
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -349,6 +351,7 @@ void Board::move() {
                 if (!piece->blockKing.empty()) {
                     cerr << " bloooooooooooooock +++++++++++" << endl;
                     absMove(piece->location, piece->blockKing[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -356,6 +359,7 @@ void Board::move() {
                 if (!piece->checkMoves.empty()) {
                     cerr << "checking" << endl;
                     absMove(piece->location, piece->checkMoves[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -363,6 +367,7 @@ void Board::move() {
                 if (!piece->attackMoves.empty()) {
                     cerr << "attacking ___________________" << endl;
                     absMove(piece->location, piece->attackMoves[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -373,6 +378,7 @@ void Board::move() {
                 if (!piece->possibleMoves.empty()) {
                     found = true;
                     absMove(piece->location, piece->getRandMove());
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -381,6 +387,7 @@ void Board::move() {
                 if (!piece->blockKing.empty()) {
                     cerr << " bloooooooooooooock +++++++++++" << endl;
                     absMove(piece->location, piece->blockKing[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -388,6 +395,7 @@ void Board::move() {
                 if (!piece->evadeMoves.empty()) {
                     cerr << "evading" << endl;
                     absMove(piece->location, piece->evadeMoves[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -395,6 +403,7 @@ void Board::move() {
                 if (!piece->checkMoves.empty()) {
                     cerr << "checking" << endl;
                     absMove(piece->location, piece->checkMoves[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -402,6 +411,7 @@ void Board::move() {
                 if (!piece->attackMoves.empty()) {
                     cerr << "attacking ___________________" << endl;
                     absMove(piece->location, piece->attackMoves[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -412,13 +422,13 @@ void Board::move() {
                 if (!piece->possibleMoves.empty()) {
                     found = true;
                     absMove(piece->location, piece->getRandMove());
+                    checkComputerPromote();
                     return;
                 }
             }
         }
 
     }
-
     if (!turn && player2 != H) {
         cerr << " computer 2" << endl;
         //cerr << "computer turn" << endl;
@@ -427,6 +437,7 @@ void Board::move() {
                 if (!piece->blockKing.empty()) {
                     cerr << " bloooooooooooooock +++++++++++" << endl;
                     absMove(piece->location, piece->blockKing[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -439,6 +450,8 @@ void Board::move() {
                 if (!piece->possibleMoves.empty()) {
                     found = true;
                     absMove(piece->location, piece->getRandMove());
+                    checkComputerPromote();
+                    return;
                 }
             }
         }else if (player2 == L2) {
@@ -446,6 +459,7 @@ void Board::move() {
                 if (!piece->blockKing.empty()) {
                     cerr << " bloooooooooooooock +++++++++++" << endl;
                     absMove(piece->location, piece->blockKing[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -453,6 +467,7 @@ void Board::move() {
                 if (!piece->checkMoves.empty()) {
                     cerr << "checking" << endl;
                     absMove(piece->location, piece->checkMoves[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -460,6 +475,7 @@ void Board::move() {
                 if (!piece->attackMoves.empty()) {
                     cerr << "attacking ___________________" << endl;
                     absMove(piece->location, piece->attackMoves[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -470,6 +486,7 @@ void Board::move() {
                 if (!piece->possibleMoves.empty()) {
                     found = true;
                     absMove(piece->location, piece->getRandMove());
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -478,6 +495,7 @@ void Board::move() {
                 if (!piece->blockKing.empty()) {
                     cerr << " bloooooooooooooock +++++++++++" << endl;
                     absMove(piece->location, piece->blockKing[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -485,6 +503,7 @@ void Board::move() {
                 if (!piece->evadeMoves.empty()) {
                     cerr << "evading" << endl;
                     absMove(piece->location, piece->evadeMoves[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -492,6 +511,7 @@ void Board::move() {
                 if (!piece->checkMoves.empty()) {
                     cerr << "checking" << endl;
                     absMove(piece->location, piece->checkMoves[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -499,6 +519,7 @@ void Board::move() {
                 if (!piece->attackMoves.empty()) {
                     cerr << "attacking ___________________" << endl;
                     absMove(piece->location, piece->attackMoves[0]);
+                    checkComputerPromote();
                     return;
                 }
             }
@@ -509,11 +530,15 @@ void Board::move() {
                 if (!piece->possibleMoves.empty()) {
                     found = true;
                     absMove(piece->location, piece->getRandMove());
+                    checkComputerPromote();
                     return;
                 }
             }
         }
     }
+}
+
+void Board::checkComputerPromote() {
     if (checkPromote()) {
         std::vector<std::string> options = {"Q", "R", "B", "N"};
         int randomIndex = std::rand() % options.size();
@@ -525,23 +550,23 @@ void Board::move() {
 
 // Destructor
 Board::~Board() {
-    cerr << "delete board1" << endl;
+    //cerr << "delete board1" << endl;
     for (ChessPiece* piece : player1Pieces) {
         delete piece;
     }
-    cerr << "delete board1-----" << endl;
+    //cerr << "delete board1-----" << endl;
     for (ChessPiece* piece : player2Pieces) {
         delete piece;
     }
     player1Pieces.clear();
     player2Pieces.clear();
-    cerr << "delete board2" << endl;
+    //cerr << "delete board2" << endl;
     detach(td);
     //detach(gd); // dispaly
-    cerr << "delete board3" << endl;
+    //cerr << "delete board3" << endl;
     delete td;
-    cerr << "delete board4" << endl;
     //delete gd;
+    cerr << player1Score << " " << player2Score << endl;
 }
 
 void Board::updateCheck(ChessPiece* king, bool check) {
