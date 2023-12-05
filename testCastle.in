@@ -5,4 +5,5 @@ setup
 + R h1
 + k a8
 done
-move e1 g1
+move e1 c1
+end
