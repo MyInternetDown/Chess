@@ -572,7 +572,6 @@ Board::~Board() {
     //cerr << "delete board3" << endl;
     delete td;
     //delete gd;
-    cerr << player1Score << " " << player2Score << endl;
 }
 
 void Board::updateCheck(ChessPiece* king, bool check) {
