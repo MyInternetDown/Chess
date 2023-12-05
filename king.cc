@@ -60,6 +60,7 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
 
 bool King::isChecked(ChessPiece* board[8][8]) {
     bool found = false;
+    checked = false;
     protectKing.clear();
     const int row = location.getRow();
     const int col = location.getCol();
@@ -78,6 +79,7 @@ bool King::isChecked(ChessPiece* board[8][8]) {
                     if (location == move) {
                        // cerr << "location found equal" << endl;
                         found = true;
+                        checked = true;
                         if (board[i][j]->getPiece() != N) {
                             int dx = move.getRow() - location.getRow();
                             int dy = move.getCol() - location.getRow();
