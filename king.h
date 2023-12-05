@@ -16,6 +16,7 @@ public:
     // Get whether the king has moved
     void getAllCheckMoves(ChessPiece* board[8][8]) override;
     void getAllBlockKing(vector<Coordinate> protectPos) override;
+    void adjustPossibleMoves(ChessPiece* board[8][8]) override;
 };
 
 #endif
