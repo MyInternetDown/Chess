@@ -40,6 +40,22 @@ Xwindow::Xwindow(int width, int height) {
       colours[i]=xcolour.pixel;
   }
 
+  Pixmap bitmap;
+    /* these variables will contain the dimensions of the loaded bitmap. */
+    unsigned int bitmap_width, bitmap_height;
+    /* these variables will contain the location of the hotspot of the   */
+    /* loaded bitmap.                                                    */
+    int hotspot_x, hotspot_y;
+
+    /* load the bitmap found in the file "icon.bmp", create a pixmap     */
+    /* containing its data in the server, and put its ID in the 'bitmap' */
+    /* variable.                                                         */
+    int rc = XReadBitmapFile(d, w,
+                             "<your chess piece>.bmp",
+                             &bitmap_width, &bitmap_height,
+                             &bitmap,
+                             &hotspot_x, &hotspot_y);
+
   XSetForeground(d,gc,colours[Black]);
 
   // Make window non-resizeable.
