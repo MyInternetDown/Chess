@@ -518,11 +518,10 @@ Board::~Board() {
 }
 
 void Board::updateCheck(ChessPiece* king, bool check) {
-    vector<Coordinate> temp = king->protectKing;
     for (int i =0; i < 8; ++ i ) {
         for (int j = 0; j < 8; ++j) {
             if(chessBoard[i][j] != nullptr && chessBoard[i][j]->getColour() == king->getColour() && check) {
-                chessBoard[i][j]->getAllBlockKing(temp);
+                chessBoard[i][j]->getAllBlockKing(king->protectKing);
             }
         }
     }
