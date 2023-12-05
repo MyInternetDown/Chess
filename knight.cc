@@ -8,6 +8,7 @@ Knight::Knight(Coordinate pos, string white)
     // You can add additional initialization for the Knight if needed
 }
 
+// Get all possible moves for the Knight
 void Knight::getAllMoves(ChessPiece* board[8][8]) {
     // Implement the Knight's move logic here
     possibleMoves.clear();
@@ -54,6 +55,8 @@ vector<Coordinate> Knight::getAllAttackMoves(ChessPiece* board[8][8]) const {
 }
 
 */
+
+// Get all moves that put the opponent's king in check
 void Knight::getAllCheckMoves(ChessPiece* board[8][8]) {
 
     checkMoves.clear();
@@ -73,6 +76,7 @@ void Knight::getAllCheckMoves(ChessPiece* board[8][8]) {
     }
 }
 
+// Adjust possible moves considering opponent's moves
 void Knight::adjustPossibleMoves(ChessPiece* board[8][8]) {
     vector<Coordinate> tempMoves;
     for (const auto &move : possibleMoves) {
@@ -84,6 +88,7 @@ void Knight::adjustPossibleMoves(ChessPiece* board[8][8]) {
         //board[move.getRow()][move.getCol()] = nullptr;
         board[move.getRow()][move.getCol()] = &temp;
 
+        // Update possible moves for all pieces on the board
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 if (board[i][j] != nullptr /*&& temp.getColour() != board[i][j]->getColour()*/) {
@@ -92,6 +97,7 @@ void Knight::adjustPossibleMoves(ChessPiece* board[8][8]) {
             }
         }
 
+        // Check if the opponent's king is not in a checked state after the move
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 if (board[i][j] != nullptr && board[i][j]->getPiece() == K && temp.getColour() == board[i][j]->getColour()) {
@@ -102,9 +108,12 @@ void Knight::adjustPossibleMoves(ChessPiece* board[8][8]) {
             }
         }
 
+        // Restore the original state of the board
         //board[move.getRow()][move.getCol()] = nullptr;
         board[move.getRow()][move.getCol()] = tempPiece;
         board[location.getRow()][location.getCol()] = this;
+
+        // Update possible moves for all pieces on the board
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 if (board[i][j] != nullptr /*&& temp.getColour() != board[i][j]->getColour()*/) {
@@ -115,4 +124,3 @@ void Knight::adjustPossibleMoves(ChessPiece* board[8][8]) {
     }
     possibleMoves = tempMoves;
 }
-

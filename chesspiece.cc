@@ -70,18 +70,22 @@ void ChessPiece::setEmpty() {
    // possibleMoves.clear();
 }
 
+// Get the color of the chess piece
 Colour ChessPiece::getColour() const{
     return colour;
 }
-	// Get the position
+
+// Get the position of the chess piece
 Coordinate ChessPiece::getPos() const{
     return location;
 }
 
+// Get the type of the chess piece
 PieceType ChessPiece::getPiece() const{
     return piecetype;
 }
 
+// Update the attack moves of the chess piece based on the current board state
 void ChessPiece::getAllAttackMoves(ChessPiece* board[8][8]){
 
     attackMoves.clear();
@@ -95,11 +99,14 @@ void ChessPiece::getAllAttackMoves(ChessPiece* board[8][8]){
     }
 
 }
+
+// Update the possible moves and adjust them based on specific piece rules
 void ChessPiece::updateFirst(ChessPiece* board[8][8]) {
     getAllMoves(board);
     adjustPossibleMoves(board);
 }
 
+// Update the chess piece's information, 
 void ChessPiece::update(ChessPiece* board[8][8]) {
     blockKing.clear();
     getAllDangerPositions(board);
@@ -112,9 +119,7 @@ void ChessPiece::update(ChessPiece* board[8][8]) {
     //cerr << "update 4" << endl;
 }
 
-
-
-
+// Get all positions on the board that are considered dangerous for the piece
 void ChessPiece::getAllDangerPositions(ChessPiece* board[8][8]) {
     dangerSquares.clear();
 
@@ -137,6 +142,7 @@ void ChessPiece::getAllDangerPositions(ChessPiece* board[8][8]) {
     dangerSquares.erase(std::unique(dangerSquares.begin(), dangerSquares.end()), dangerSquares.end());
 }
 
+// Get all possible moves that allow the piece to escape danger
 void ChessPiece::getAllEvadeMoves(ChessPiece* board[8][8]) {
     evadeMoves.clear(); 
     if (std::find(dangerSquares.begin(), dangerSquares.end(), location) != dangerSquares.end()) {
@@ -148,6 +154,7 @@ void ChessPiece::getAllEvadeMoves(ChessPiece* board[8][8]) {
     }
 }
 
+// Get all possible moves that allow the piece to block the opponent's king
 void ChessPiece::getAllBlockKing(vector<Coordinate> protectPos){
     blockKing.clear();
     for (const auto& coord : possibleMoves) {
@@ -161,8 +168,7 @@ void ChessPiece::getAllBlockKing(vector<Coordinate> protectPos){
 
 //void getAllBlockKing(ChessPiece* board[8][8]) {
 
-
-
+// dtor
 ChessPiece::~ChessPiece() {
     possibleMoves.clear();
     dangerSquares.clear();
@@ -171,13 +177,13 @@ ChessPiece::~ChessPiece() {
     evadeMoves.clear();
 }
 
-
+// Get a random move from the possible moves of the chess piece
 Coordinate ChessPiece::getRandMove() const {
     int randomIndex = rand() % possibleMoves.size();
     return possibleMoves[randomIndex];
 }
 
-
+// Get the character representation of the chess piece based on its color
 char ChessPiece::getCharType() const {
     if (colour == White) {
         return getCharFromPieceType(piecetype);
@@ -186,6 +192,7 @@ char ChessPiece::getCharType() const {
     }
 }
 
+// Check if the chess piece has moved
 bool ChessPiece::moved() const{
     return hasMoved;
 }
@@ -194,11 +201,13 @@ bool ChessPiece::isChecked(ChessPiece* board[8][8]) {
     return false;
     // to do
 }
+
 bool ChessPiece::isEmpty() const {
     return false;
     // to do
 }
 
+// Move the chess piece to a new location
 void ChessPiece::move(Coordinate moveHere) {
     location = moveHere;
 }
@@ -207,6 +216,3 @@ void ChessPiece::move(Coordinate moveHere) {
 
 
 //void move(vector<int> moveHere);
-
-
-
