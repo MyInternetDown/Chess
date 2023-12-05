@@ -81,13 +81,13 @@ bool King::isChecked(ChessPiece* board[8][8]) {
                         found = true;
                         checked = true;
                         if (board[i][j]->getPiece() != N) {
-                            int dx = move.getRow() - location.getRow();
-                            int dy = move.getCol() - location.getRow();
+                            int dx = i - row;
+                            int dy = j - col;
                             int steps = std::max(std::abs(dx), std::abs(dy));
 
-                            for (int i = 0; i < steps; ++i) {
-                                int newX = move.getRow() + i * dx / steps;
-                                int newY = move.getCol() + i * dy / steps;
+                            for (int k = 0; k < steps; ++i) {
+                                int newX = i + k * dx / steps;
+                                int newY = j + k * dy / steps;
                                 protectKing.push_back(Coordinate(newX, newY));
                             }
                         }
