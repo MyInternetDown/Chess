@@ -81,8 +81,8 @@ bool King::isChecked(ChessPiece* board[8][8]) {
                         found = true;
                         checked = true;
                         if (board[i][j]->getPiece() != N) {
-                            int dx = i - row;
-                            int dy = j - col;
+                            int dx = row - i;
+                            int dy = col - j;
                             int steps = std::max(std::abs(dx), std::abs(dy));
 
                             for (int k = 0; k < steps; ++k) {
