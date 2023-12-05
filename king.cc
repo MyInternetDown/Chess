@@ -33,7 +33,7 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
             possibleMoves.push_back({newRow, newCol});
         }
     }
-    
+    /*
     if (!moved()) {
         if (col == 4 && board[row][0] != nullptr && board[row][0]->getPiece() == PieceType::R && board[row][0]->getColour() == getColour()
         && !board[row][0]->moved() && board[row][col - 1] == nullptr && board[row][col - 2] == nullptr)
@@ -52,7 +52,8 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
             evadeMoves.push_back(coord);
         }
     }
-    possibleMoves = evadeMoves;
+    */
+    
 
     
 }
@@ -74,7 +75,7 @@ bool King::isChecked(ChessPiece* board[8][8]) {
 
                 //cerr << "found piece validating" << endl;
                 for (const Coordinate &move: board[i][j]->possibleMoves) {
-                    cerr << board[i][j]->getCharType() << " ...." << move << endl;
+                    //cerr << board[i][j]->getCharType() << " ...." << move << endl;
                     if (location == move) {
                        // cerr << "location found equal" << endl;
                         found = true;

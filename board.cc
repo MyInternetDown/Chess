@@ -530,6 +530,7 @@ void Board::updateCheck(ChessPiece* king, bool check) {
 
 
 bool Board::checkStale(Colour player) {
+   // return false;
     if (player == White) {
         if (player1Pieces.size() == 1){
             assert(player1Pieces[0]->getPiece() == K);
@@ -557,6 +558,7 @@ bool Board::checkStale(Colour player) {
 }
 
 void Board::checkWin(Colour player) {
+   // return;
     cerr << "check for check mate" << endl;
     if (player == White) {
         cerr << "enter Check" << endl;
