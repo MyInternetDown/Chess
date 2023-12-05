@@ -1,2 +1,3 @@
 # chess
-Chess Game Final CS246
+Chess Game 
+
