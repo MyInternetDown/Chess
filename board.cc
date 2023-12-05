@@ -626,7 +626,7 @@ bool Board::checkStale(Colour player) {
 void Board::promote(string type) {
     cerr << "enter promotion" << endl;
     if (!turn) {
-        // promote pawn on the 7th rank for white
+        // Iterate through the last row to find a white pawn to promote
         cerr << "1" << endl;
         for (const auto& piece : chessBoard[7]) {
             if (piece != nullptr && piece->getPiece() == P) {
@@ -637,7 +637,7 @@ void Board::promote(string type) {
             }
         }
     } else {
-        // promote pawn on the 8th rank for black
+        // Iterate through the first row to find a black pawn to promote
         cerr << "2" << endl;
         for (const auto& piece : chessBoard[0]) {
             if (piece != nullptr && piece->getPiece() == P) {
