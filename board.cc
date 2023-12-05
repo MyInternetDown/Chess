@@ -533,7 +533,7 @@ bool Board::checkStale(Colour player) {
    // return false;
 
     if (player == White) {
-        for (auto chessPiece: player1Pieces) {
+        for (const auto &chessPiece: player1Pieces) {
             if (chessPiece->possibleMoves.size() != 0) {
                 false;
             }
@@ -541,7 +541,7 @@ bool Board::checkStale(Colour player) {
         return true;
     
     } else {
-        for (auto chessPiece: player2Pieces) {
+        for (const auto &chessPiece: player2Pieces) {
             if (chessPiece->possibleMoves.size() != 0) {
                 false;
             }
