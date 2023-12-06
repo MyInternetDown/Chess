@@ -91,6 +91,22 @@ void Xwindow::fillRectangle(int x, int y, int width, int height, int colour) {
   XSetForeground(d, gc, colours[Black]);
 }
 
-void Xwindow::drawString(int x, int y, string msg) {
-  XDrawString(d, w, DefaultGC(d, s), x, y, msg.c_str(), msg.length());
+void Xwindow::drawString(int x, int y, string msg, int colour) {
+  XFontStruct * f = XLoadQueryFont(d, "6x13");
+	
+	printMessage(x, y, msg, colour, *f); 
+
+	delete f;
+}
+
+
+void Xwindow::drawStringFont(int x, int y, string msg, string font, int colour) {
+  XFontStruct * f = XLoadQueryFont(d, font.c_str());
+  
+	if ( f == nullptr ){
+		f = XLoadQueryFont(d, "6x13");
+	}
+
+	printMessage(x, y, msg, colour, *f);
+	delete f;
 }
