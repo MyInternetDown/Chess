@@ -135,7 +135,7 @@ void Board::reset(){
     player2Pieces.clear();
     initialized = false;
     isWon = false;
-    turn = false;
+    turn = true;
     notifyAllObservers();
 }
 
@@ -230,7 +230,6 @@ void Board::resign() {
     } else {
         player1Score++;
     }
-    reset();
 }
 
 // Remove

@@ -16,7 +16,6 @@ int main() {
 
   while (true) {
     cin >> cmd;
-    //cerr << cmd << " ...............................................0 " << endl;
     if (cmd == "game") {
       string player1, player2;
       cin >> player1 >> player2;
@@ -28,7 +27,7 @@ int main() {
       } else {
         point1++;
       }
-      game.reset();
+      game.resign();
     }
     else if (cmd == "end") {
       break;
