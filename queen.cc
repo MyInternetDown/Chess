@@ -46,6 +46,44 @@ void Queen::getAllMoves(ChessPiece* board[8][8]) {
         }
     }
 }
+
+void Queen::getAllPotentialMoves(ChessPiece* board[8][8]) {
+    // Implement the Queen's move logic here
+    allPotentialMoves.clear();
+
+    // Queen moves diagonally and linearly (horizontally and vertically)
+    // Adding all possible moves for the Queen
+
+    const int row = location.getRow();
+    const int col = location.getCol();
+
+    // Possible moves relative to the current position
+    vector<pair<int, int>> queenMoves = {
+        {-1, -1}, {-1, 0}, {-1, 1},
+        {0, -1}, {0, 1},
+        {1, -1}, {1, 0}, {1, 1}
+    };
+
+    for (const auto &move : queenMoves) {
+        int newRow = row + move.first;
+        int newCol = col + move.second;
+
+        while (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+            // Check if the destination is empty or contains an opponent's piece
+            if (board[newRow][newCol] == nullptr) {
+                allPotentialMoves.push_back(Coordinate(newRow, newCol));
+            } else if (board[newRow][newCol]->getColour() != getColour() || board[newRow][newCol]->getColour() == getColour()) {
+                allPotentialMoves.push_back(Coordinate(newRow, newCol));
+                break;  // Stop if an opponent's piece is encountered
+            } else {
+                break;  // Stop if own piece is encountered
+            }
+
+            newRow += move.first;
+            newCol += move.second;
+        }
+    }
+}
 /*
 vector<Coordinate> Queen::getAllAttackMoves(ChessPiece* board[8][8]) const {
     // Implement the Queen's attack moves logic here

@@ -28,6 +28,7 @@ public:
 	vector<Coordinate> checkMoves;
 	vector<Coordinate> protectKing;
 	vector<Coordinate> level4Moves;
+	vector<Coordinate> allPotentialMoves;
 
 	vector<Coordinate> possibleMoves;
 	bool hasMoved;
@@ -53,6 +54,7 @@ public:
 
 	// Gets all possible locations where this piece would be under attack given its current position
 	virtual void getAllDangerPositions(ChessPiece* board[8][8]);
+	virtual void getAllPotentialMoves(ChessPiece* board[8][8]) = 0;
 
 	// Gets all possible locations where this piece can eat another piece
 	virtual void getAllAttackMoves(ChessPiece* board[8][8]);

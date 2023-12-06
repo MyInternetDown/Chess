@@ -132,7 +132,7 @@ void ChessPiece::getAllDangerPositions(ChessPiece* board[8][8]) {
             // Check if the current piece is of the opposing color and not an empty square
             if (currentPiece != nullptr && currentPiece->getColour() != getColour()) {
                 // Get all possible moves for the current piece and add them to dangerSquares
-                dangerSquares.insert(dangerSquares.end(), currentPiece->possibleMoves.begin(), currentPiece->possibleMoves.end());
+                dangerSquares.insert(dangerSquares.end(), currentPiece->allPotentialMoves.begin(), currentPiece->allPotentialMoves.end());
             }
         }
     }
@@ -176,6 +176,10 @@ ChessPiece::~ChessPiece() {
     attackMoves.clear();
     checkMoves.clear();
     evadeMoves.clear();
+    allPotentialMoves.clear();
+    blockKing.clear();
+    protectKing.clear();
+
 }
 
 // Get a random move from the possible moves of the chess piece

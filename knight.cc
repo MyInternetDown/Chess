@@ -39,6 +39,37 @@ void Knight::getAllMoves(ChessPiece* board[8][8]) {
         }
     }
 }
+
+void Knight::getAllPotentialMoves(ChessPiece* board[8][8]) {
+    // Implement the Knight's move logic here
+    allPotentialMoves.clear();
+
+    // Knight moves in an L-shaped pattern
+    // Adding all possible L-shaped moves for the Knight
+
+    const int row = location.getRow();
+    const int col = location.getCol();
+
+    // Possible moves relative to the current position
+    vector<pair<int, int>> knightMoves = {
+        {-2, -1}, {-2, 1},
+        {-1, -2}, {-1, 2},
+        {1, -2}, {1, 2},
+        {2, -1}, {2, 1}
+    };
+
+    for (const auto &move : knightMoves) {
+        int newRow = row + move.first;
+        int newCol = col + move.second;
+
+        if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+            // Check if the destination is empty or contains an opponent's piece
+            if (board[newRow][newCol] == nullptr || board[newRow][newCol]->getColour() != getColour() || board[newRow][newCol]->getColour() == getColour()) {
+                allPotentialMoves.push_back(Coordinate(newRow, newCol));
+            }
+        }
+    }
+}
 /*
 vector<Coordinate> Knight::getAllAttackMoves(ChessPiece* board[8][8]) const {
     // Implement the Knight's attack moves logic here

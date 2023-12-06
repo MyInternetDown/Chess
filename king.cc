@@ -24,16 +24,25 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
         {0, -1},             {0, 1},
         {1, -1}, {1, 0}, {1, 1}
     };
-
+    getAllDangerPositions(board);
     for (const auto &move : kingMoves) {
         int newRow = row + move.first;
         int newCol = col + move.second;
 
         if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8 &&
             (board[newRow][newCol] == nullptr || board[newRow][newCol]->getColour() != getColour())) {
+
+            
             possibleMoves.push_back({newRow, newCol});
         }
     }
+
+    for (const auto& coord : possibleMoves) {
+        if (std::find(dangerSquares.begin(), dangerSquares.end(), coord) == dangerSquares.end()) {
+            possibleMoves.push_back(coord);
+        }
+        
+     }
     //cerr << "king" << endl;
     //printVector(possibleMoves);
     
@@ -50,6 +59,60 @@ void King::getAllMoves(ChessPiece* board[8][8]) {
             possibleMoves.push_back({row, col + 2});
         }
     }
+    
+}
+
+
+void King::getAllPotentialMoves(ChessPiece* board[8][8]) {
+    allPotentialMoves.clear();
+
+    const int row = location.getRow();
+    const int col = location.getCol();
+
+    //cerr << "enter king moves" << endl;
+
+    // King moves one square in any direction
+    vector<pair<int, int>> kingMoves = {
+        {-1, -1}, {-1, 0}, {-1, 1},
+        {0, -1},             {0, 1},
+        {1, -1}, {1, 0}, {1, 1}
+    };
+    getAllDangerPositions(board);
+    for (const auto &move : kingMoves) {
+        int newRow = row + move.first;
+        int newCol = col + move.second;
+
+        if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8 &&
+            (board[newRow][newCol] == nullptr || board[newRow][newCol]->getColour() != getColour() || board[newRow][newCol]->getColour() == getColour())) {
+
+            
+            allPotentialMoves.push_back({newRow, newCol});
+        }
+    }
+
+    for (const auto& coord : possibleMoves) {
+        if (std::find(dangerSquares.begin(), dangerSquares.end(), coord) == dangerSquares.end()) {
+            allPotentialMoves.push_back(coord);
+        }
+        
+     }
+    //cerr << "king" << endl;
+    //printVector(possibleMoves);
+    
+    // Check for castling moves if the king hasn't moved
+    if (!moved()) {
+        if (col == 4 && board[row][0] != nullptr && board[row][0]->getPiece() == PieceType::R && board[row][0]->getColour() == getColour()
+        && !board[row][0]->moved() && board[row][col - 1] == nullptr && board[row][col - 2] == nullptr)
+        {
+            allPotentialMoves.push_back({row, col - 2});
+        }
+
+        if (col == 4 && board[row][7] != nullptr && board[row][7]->getPiece() == PieceType::R && board[row][7]->getColour() == getColour()
+        && !board[row][7]->moved() && board[row][col + 1] == nullptr && board[row][col + 2] == nullptr) {
+            allPotentialMoves.push_back({row, col + 2});
+        }
+    }
+    
 }
 
 // Check if the King is in a checked state
@@ -68,7 +131,7 @@ bool King::isChecked(ChessPiece* board[8][8]) {
             if(board[i][j] != nullptr && !(i == row && j == col)) {
 
                 //cerr << "found piece validating" << endl;
-                for (const Coordinate &move: board[i][j]->possibleMoves) {
+                for (const Coordinate &move: board[i][j]->allPotentialMoves) {
                     //cerr << board[i][j]->getCharType() << " ...." << move << endl;
                     if (location == move) {
                         found = true;
@@ -135,17 +198,17 @@ void King::adjustPossibleMoves(ChessPiece* board[8][8]) {
         }
 
         // Check if the king is not in a checked state after the move
-        for (int i = 0; i < 8; ++i) {
-            for (int j = 0; j < 8; ++j) {
-                if (board[i][j] != nullptr && board[i][j]->getPiece() == K && temp.getColour() == board[i][j]->getColour()) {
-                    if (!board[i][j]->isChecked(board)) {
-                        tempMoves.push_back(move);
-                        //cerr << "push_back" << endl;
-                        //printVector(tempMoves);
-                    }
-                }
-            }
+        //for (int i = 0; i < 8; ++i) {
+            //for (int j = 0; j < 8; ++j) {
+        //if (board[i][j] != nullptr && board[i][j]->getPiece() == K && temp.getColour() == board[i][j]->getColour()) {
+        if (!board[move.getRow()][move.getCol()]->isChecked(board)) {
+            tempMoves.push_back(move);
+                //cerr << "push_back" << endl;
+                //printVector(tempMoves);
         }
+        //}
+            //}
+        //}
 
         // Restore the original state of the board
         //board[move.getRow()][move.getCol()] = nullptr;
@@ -159,6 +222,7 @@ void King::adjustPossibleMoves(ChessPiece* board[8][8]) {
             }
         }
     }
+    possibleMoves.clear();
     possibleMoves = tempMoves;
     //printVector(possibleMoves);
     //cerr << "adjust" << endl;

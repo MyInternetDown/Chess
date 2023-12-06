@@ -39,6 +39,38 @@ void Pawn::getAllMoves(ChessPiece* board[8][8]) {
         }
     }
 }
+void Pawn::getAllPotentialMoves(ChessPiece* board[8][8]) {
+    allPotentialMoves.clear();
+
+    const int row = location.getRow();
+    const int col = location.getCol();
+
+    int forwardDirection = (getColour() == Colour::White) ? 1 : -1;
+
+    // Pawn moves forward
+    int newRow = row + forwardDirection;
+    if (newRow >= 0 && newRow < 8 && board[newRow][col] == nullptr) {
+        allPotentialMoves.push_back(Coordinate(newRow, col));
+
+        // Pawn's double move from starting position
+        if (!hasMoved) {
+            newRow += forwardDirection;
+            if (newRow >= 0 && newRow < 8 && board[newRow][col]==nullptr) {
+                allPotentialMoves.push_back(Coordinate(newRow, col));
+            }
+        }
+    }
+
+    // Pawn attacks diagonally
+    for (int colOffset : {-1, 1}) {
+        int newCol = col + colOffset;
+        if ((newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) &&
+            (((!(board[newRow][newCol] == nullptr)) && board[newRow][newCol]->getColour() != getColour()) ||
+            ((board[newRow][newCol] == nullptr) || board[newRow][newCol]->getColour() == getColour()))) {
+            allPotentialMoves.push_back(Coordinate(newRow, newCol));
+        }
+    }
+}
 
 /*
 vector<Coordinate> Pawn::getAllAttackMoves(ChessPiece* board[8][8]) const {
