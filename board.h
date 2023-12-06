@@ -29,7 +29,7 @@ class Board {
 
 
 private:
-
+	// Private data members
 	bool turn;
 	bool initialized;
 	bool isWon;
@@ -41,6 +41,7 @@ private:
 	vector<ChessPiece*> player1Pieces;
 	
 public:
+	// Public data members
 	MoveType player1;
 	MoveType player2;
 	int player1Score;
@@ -56,21 +57,20 @@ public:
     // Move constructor
     Board(Board &&other);
 
+	 // Member functions for board setup and initialization
 	void init(const std::string position, const std::string type, const std::string color);
-
 	void create(const string playerA, const string playerB);
-
-	void removePiece(Coordinate pos, bool needNotify = false);
-	void updatePieces();
 	void defaultSetup();
-	void updateCheck(ChessPiece* king, bool check = false);
-
 	void reset();
 
+	// Member functions for managing pieces on the board
+	void removePiece(Coordinate pos, bool needNotify = false);
+	void updatePieces();
+	void updateCheck(ChessPiece* king, bool check = false);
 	bool checkPromote();
 	void promote(string type);
     
-
+	// Member functions for game state and player actions
 	bool getTurn();
     // Copy assignment operator
     Board &operator=(const Board &other);
@@ -119,16 +119,11 @@ public:
 
     ~Board();
 
+	// Observer pattern related functions
 	SubscriptionType subType();
-
-
-
 	void notifyAllObservers();
-
 	void attach(Observer *o);
-
 	void detach(Observer *o);
-
 };
 
 int getDifference(Coordinate from, Coordinate curr, bool horizontal = true);
