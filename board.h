@@ -79,7 +79,8 @@ public:
     Board &operator=(Board &&other);
 
 	bool checkCastle();
-	
+	void castle();
+	void checkComputerCastle();
 
 	void resign();
 
@@ -130,7 +131,7 @@ public:
 
 };
 
-int getDifference(Coordinate from, Coordinate curr, bool horizontal = true;);
+int getDifference(Coordinate from, Coordinate curr, bool horizontal = true);
 
 #endif
 

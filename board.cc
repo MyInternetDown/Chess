@@ -264,6 +264,8 @@ void Board::removePiece(Coordinate coord, bool needNotify){
             chessDisplay[row][col] == WHITE;
         }
     }
+    chessDisplay[coord.getRow()][coord.getCol()] = 
+    ((coord.getRow() + coord.getCol()) % 2 == 0) ? BLACK : WHITE;
 
     //cerr << "out" << endl;
     if (needNotify) {
@@ -563,6 +565,12 @@ void Board::checkComputerPromote() {
     }
 }
 
+void Board::checkComputerCastle() {
+    if (checkCastle()) {
+        castle();
+    }
+}
+
 // Destructor
 Board::~Board() {
     //cerr << "delete board1" << endl;
@@ -648,8 +656,9 @@ void Board::promote(string type) {
             }
         }
     } 
-
+    updatePieces();
     notifyAllObservers();
+    
 }
 
 // check if pawn promotion is possible
@@ -671,22 +680,90 @@ bool Board::checkPromote() {
     return false;
 }
 
+
+
+
 bool Board::checkCastle(){
-    cerr << "check castle" << endl;
+    //cerr << "check castle" << endl;
     for (const auto& piece : chessBoard[0]) {
         if (piece != nullptr && piece->getPiece() == K) {
-                
-            return true;
+            //cerr << "found white king" << piece->location << " " << piece->previousLoc << endl;
+            if(getDifference(piece->location, piece->previousLoc) == 2) {
+                //cerr << "found castle white" << endl;
+                return true;
+            }
         }
     }
 
     // Check the 8th row
     for (const auto& piece : chessBoard[7]) {
         if (piece != nullptr && piece->getPiece() == K) {
-            return true;
+            //cerr << "found black king" << endl;
+            if(getDifference(piece->location, piece->previousLoc) == 2) {
+                //cerr << "found castle black" << endl;
+                return true;
+            }
         }
     }
     return false;
+}
+
+void Board::castle() {
+    cerr << "enter castle" << endl;
+    if (turn) {
+        cerr << "1" << endl;
+        for (const auto& piece : chessBoard[0]) {
+            if (piece != nullptr && piece->getPiece() == K) {
+                cerr << "castling found " << piece->location.getCol() << endl;
+                Coordinate temp(piece->location);
+                if (piece->location.getCol() == 2)  {
+                    cerr << "castle v1" << endl;
+                    Coordinate rook1(0, 0);
+                    Coordinate rook2(0, 3);
+                    init(rook2.getStr(), "R", "White");
+                    removePiece(rook1);
+                    //chessDisplay[0][0] =chessBoard[0][0]->getCharType();
+                    //chessDisplay[0][3] =chessBoard[0][3]->getCharType();
+                } else {
+                    cerr << "castle v2" << endl;
+                    Coordinate rook1(0, 7);
+                    Coordinate rook2(0, 5);
+                    init(rook2.getStr(), "R", "White");
+                    cerr << "v2 added" << endl;
+                    removePiece(rook1);
+                    cerr << "v2 removed" << endl;
+
+                    //chessDisplay[0][7] = chessBoard[0][7]->getCharType();
+                    //chessDisplay[0][5] = chessBoard[0][5]->getCharType();
+                }
+            }
+        }
+    } else {
+        cerr << "2" << endl;
+        for (const auto& piece : chessBoard[7]) {
+            if (piece != nullptr && piece->getPiece() == P) {
+                Coordinate temp(piece->location);
+                if (piece->location.getCol() == 1) {
+                    Coordinate rook1(7, 0);
+                    Coordinate rook2(7, 2);
+                    init(rook2.getStr(), "R", "Black");
+                    removePiece(rook1);
+                    
+                    //chessDisplay[7][0] =chessBoard[7][0]->getCharType();
+                    //chessDisplay[7][2] =chessBoard[7][2]->getCharType();
+                } else {
+                    Coordinate rook1(7, 7);
+                    Coordinate rook2(7, 4);
+                    init(rook2.getStr(), "R", "Black");
+                    removePiece(rook1);
+                    
+                    //chessDisplay[7][7] =chessBoard[7][7]->getCharType();
+                    //chessDisplay[7][4] =chessBoard[7][4]->getCharType();
+                }
+            }
+        }
+    } 
+    updatePieces();
 }
 
 void Board::checkWin(Colour player) {
@@ -819,10 +896,12 @@ void Board::absMove(Coordinate startPos, Coordinate endPos){
     }
     pieceToMove->move(endPos);
 
+
     // update the display with the moved piece
     chessDisplay[endPos.getRow()][endPos.getCol()] = pieceToMove->getCharType();
     chessDisplay[startPos.getRow()][startPos.getCol()] = 
     ((startPos.getRow() + startPos.getCol()) % 2 == 0) ? BLACK : WHITE;
+    checkComputerCastle();
     pieceToMove->hasMoved = true;
 
     // switch the turn to the other player
@@ -870,5 +949,9 @@ Coordinate parseCoordinate(const std::string pos) {
 
 // Helper to check the change in location.
 int getDifference(Coordinate from, Coordinate curr, bool horizontal) {
-    
+    if (!horizontal) {
+        return (abs(from.getRow() - curr.getRow()));
+    } else {
+        return (abs(from.getCol() - curr.getCol()));
+    }
 }
