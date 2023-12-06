@@ -123,7 +123,6 @@ void Board::reset(){
                 chessDisplay[row][col] = WHITE;
             }
         }
-        notifyAllObservers();
     }
     // delete and clear player pieces
     for (ChessPiece* piece : player1Pieces) {
@@ -137,6 +136,7 @@ void Board::reset(){
     initialized = false;
     isWon = false;
     turn = false;
+    notifyAllObservers();
 }
 
 // Setup Piece

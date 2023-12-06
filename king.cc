@@ -71,7 +71,6 @@ bool King::isChecked(ChessPiece* board[8][8]) {
                 for (const Coordinate &move: board[i][j]->possibleMoves) {
                     //cerr << board[i][j]->getCharType() << " ...." << move << endl;
                     if (location == move) {
-                       cerr << "location found equal king check" << endl;
                         found = true;
                         checked = true;
                         // Calculate and store the squares protecting the king

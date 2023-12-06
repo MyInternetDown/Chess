@@ -13,4 +13,18 @@ move b8 a6
 move d1 h5
 move a6 b8
 move h5 f7
+setup
+default
+done
+move e2 e4
+move e7 e5
+move g1 h3
+move b8 a6
+move f1 c4
+move a6 b8
+move e1 g1
+move b8 a6
+move d1 h5
+move a6 b8
+move h5 f7
 
