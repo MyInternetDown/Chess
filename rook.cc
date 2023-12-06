@@ -148,3 +148,90 @@ void Rook::adjustPossibleMoves(ChessPiece* board[8][8]) {
     possibleMoves = tempMoves;
 }
 
+void Rook::getAllLevel4Moves(ChessPiece* board[8][8]) {
+    level4Moves.clear();
+    for (const auto &move : attackMoves) {
+        string tempCol = colourToStr.find(colour)->second;
+        Rook temp(move, tempCol);
+        board[location.getRow()][location.getCol()] = nullptr;
+        ChessPiece *tempPiece = board[move.getRow()][move.getCol()];
+        //board[move.getRow()][move.getCol()] = nullptr;
+        board[move.getRow()][move.getCol()] = &temp;
+
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
+                    board[i][j]->getAllMoves(board);
+                }
+            }
+        }
+        getAllDangerPositions(board);
+        for (const auto& coord : attackMoves) {
+            if (std::find(dangerSquares.begin(), dangerSquares.end(), coord) == dangerSquares.end()) {
+                level4Moves.push_back(coord);
+            }
+        
+        }
+
+        //board[move.getRow()][move.getCol()] = nullptr;
+        board[move.getRow()][move.getCol()] = tempPiece;
+        board[location.getRow()][location.getCol()] = this;
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
+                    board[i][j]->getAllMoves(board);
+                }
+            }
+        }
+    }
+
+    for (const auto &move : possibleMoves) {
+        // Add move to attack moves if an opponent's piece is encountered
+        string tempCol = colourToStr.find(colour)->second;
+        Rook temp(move, tempCol);
+        board[location.getRow()][location.getCol()] = nullptr;
+        temp.getAllMoves(board);
+        for (auto &fMove : temp.possibleMoves) {
+            if ((board[fMove.getRow()][fMove.getCol()] != nullptr) &&
+                (board[fMove.getRow()][fMove.getCol()]->getPiece() == K) ){
+                level4Moves.push_back(move);
+            }
+        }
+        board[location.getRow()][location.getCol()] = this;
+    }
+
+    for (const auto &move : possibleMoves) {
+        // Add move to attack moves if an opponent's piece is encountered
+        string tempCol = colourToStr.find(colour)->second;
+        Rook temp(move, tempCol);
+        board[location.getRow()][location.getCol()] = nullptr;
+        ChessPiece *tempPiece = board[move.getRow()][move.getCol()];
+        //board[move.getRow()][move.getCol()] = nullptr;
+        board[move.getRow()][move.getCol()] = &temp;
+
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
+                    board[i][j]->getAllMoves(board);
+                }
+            }
+        }
+        getAllDangerPositions(board);
+        for (const auto& coord : possibleMoves) {
+            if (std::find(dangerSquares.begin(), dangerSquares.end(), coord) == dangerSquares.end()) {
+                level4Moves.push_back(coord);
+            }
+        }
+        //board[move.getRow()][move.getCol()] = nullptr;
+        board[move.getRow()][move.getCol()] = tempPiece;
+        board[location.getRow()][location.getCol()] = this;
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if (board[i][j] != nullptr && temp.getColour() != board[i][j]->getColour()) {
+                    board[i][j]->getAllMoves(board);
+                }
+            }
+        }
+    }
+}
+

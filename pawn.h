@@ -8,6 +8,7 @@
 class Pawn : public ChessPiece {
 
 public:
+    bool enpassable;  
     
     // Constructor
     Pawn(Coordinate pos, string white);
@@ -22,7 +23,9 @@ public:
     // Get whether the pawn has moved
     void getAllCheckMoves(ChessPiece* board[8][8]) override;
     void adjustPossibleMoves(ChessPiece* board[8][8]) override;
+    void getAllLevel4Moves(ChessPiece* board[8][8]) override;
     
 };
+void printVector1(const std::vector<Coordinate>& vec);
 
 #endif

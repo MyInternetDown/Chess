@@ -27,6 +27,7 @@ public:
 	vector<Coordinate> dangerSquares;
 	vector<Coordinate> checkMoves;
 	vector<Coordinate> protectKing;
+	vector<Coordinate> level4Moves;
 
 	vector<Coordinate> possibleMoves;
 	bool hasMoved;
@@ -59,6 +60,11 @@ public:
 	virtual void getAllBlockKing(vector<Coordinate> protectPos);
 
 	virtual void getAllCheckMoves(ChessPiece* board[8][8]) = 0;
+
+	// getAllLevel4Moves 
+	// This takes into the concept of specializing in attack moves first while also being safe, this takes into consideration if you were to attack, 
+	// would you be traded, if not then attack, then do your possible moves and only select the possible moves that won't the piece to be eaten.
+	virtual void getAllLevel4Moves(ChessPiece* board[8][8]) = 0;
 	virtual void updateFirst(ChessPiece* board[8][8]);
 	virtual void update(ChessPiece* board[8][8]);
 	virtual void adjustPossibleMoves(ChessPiece* board[8][8]) = 0;

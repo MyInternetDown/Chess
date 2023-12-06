@@ -438,6 +438,52 @@ void Board::move() {
                     return;
                 }
             }
+        } else if (player1 == L4) {
+            for (ChessPiece* piece : player1Pieces) {
+                if (!piece->blockKing.empty()) {
+                    cerr << " bloooooooooooooock +++++++++++" << endl;
+                    absMove(piece->location, piece->blockKing[0]);
+                    checkComputerPromote();
+                    return;
+                }
+            }
+            for (ChessPiece* piece : player1Pieces) {
+                cerr << "entering level 4" << endl;
+                if (!piece->level4Moves.empty()) {
+                    //printVector(piece->level4Moves);
+                    cerr << "level4" << endl;
+                    absMove(piece->location, piece->level4Moves[0]);
+                    checkComputerPromote();
+                    return;
+                }
+            }
+            for (ChessPiece* piece : player1Pieces) {
+                if (!piece->evadeMoves.empty()) {
+                    cerr << "evade" << endl;
+                    absMove(piece->location, piece->evadeMoves[0]);
+                    checkComputerPromote();
+                    return;
+                }
+            }
+            for (ChessPiece* piece : player1Pieces) {
+                if (!piece->attackMoves.empty()) {
+                    cerr << "attacking ___________________" << endl;
+                    absMove(piece->location, piece->attackMoves[0]);
+                    checkComputerPromote();
+                    return;
+                }
+            }
+            while (!found) {
+                int randomIndex = rand() % player1Pieces.size();
+                ChessPiece* piece = player1Pieces[randomIndex];
+                //cerr << " checkpoint" << randomIndex << endl;
+                if (!piece->possibleMoves.empty()) {
+                    found = true;
+                    absMove(piece->location, piece->getRandMove());
+                    checkComputerPromote();
+                    return;
+                }
+            }
         }
 
     }
@@ -542,6 +588,50 @@ void Board::move() {
             while (!found) {
                 int randomIndex = rand() % player2Pieces.size();
                 ChessPiece* piece = player2Pieces[randomIndex];
+                //cerr << " checkpoint" << randomIndex << endl;
+                if (!piece->possibleMoves.empty()) {
+                    found = true;
+                    absMove(piece->location, piece->getRandMove());
+                    checkComputerPromote();
+                    return;
+                }
+            }
+        }else if (player2 == L4) {
+            for (ChessPiece* piece : player2Pieces) {
+                if (!piece->blockKing.empty()) {
+                    cerr << " bloooooooooooooock +++++++++++" << endl;
+                    absMove(piece->location, piece->blockKing[0]);
+                    checkComputerPromote();
+                    return;
+                }
+            }
+            for (ChessPiece* piece : player2Pieces) {
+                if (!piece->level4Moves.empty()) {
+                    cerr << "level4" << endl;
+                    absMove(piece->location, piece->level4Moves[0]);
+                    checkComputerPromote();
+                    return;
+                }
+            }
+            for (ChessPiece* piece : player2Pieces) {
+                if (!piece->evadeMoves.empty()) {
+                    cerr << "evade" << endl;
+                    absMove(piece->location, piece->evadeMoves[0]);
+                    checkComputerPromote();
+                    return;
+                }
+            }
+            for (ChessPiece* piece : player2Pieces) {
+                if (!piece->attackMoves.empty()) {
+                    cerr << "attacking ___________________" << endl;
+                    absMove(piece->location, piece->attackMoves[0]);
+                    checkComputerPromote();
+                    return;
+                }
+            }
+            while (!found) {
+                int randomIndex = rand() % player2Pieces.size();
+                ChessPiece* piece = player1Pieces[randomIndex];
                 //cerr << " checkpoint" << randomIndex << endl;
                 if (!piece->possibleMoves.empty()) {
                     found = true;
