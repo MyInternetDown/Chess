@@ -8,6 +8,7 @@
 class Pawn : public ChessPiece {
 
 public:
+    
     // Constructor
     Pawn(Coordinate pos, string white);
 
